@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+# your own big databases / books stay local; built outputs in site/data/db are small and can be committed
+data/pgn/*
+!data/pgn/.gitkeep
+data/books/*.pdf

@@ -1,0 +1,65 @@
+name: Build game database
+# Run from the Actions tab ("Run workflow"). Downloads PGN archives, builds the Explorer statistics,
+# and commits site/data/db/<name>.json to main, which redeploys the site.
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: Database name shown in the Explorer
+        default: Lichess Elite
+        required: true
+      urls:
+        description: Space-separated download links (.zip, .pgn.zst, .pgn.bz2 or .pgn)
+        required: true
+      min_elo:
+        description: Minimum rating of BOTH players
+        default: '2400'
+      max_ply:
+        description: Depth in half-moves
+        default: '30'
+      min_games:
+        description: Keep a move only if it was played in at least this many games (raise to shrink the file)
+        default: '5'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Download and build
+        env:
+          URLS: ${{ inputs.urls }}
+          DB_NAME: ${{ inputs.name }}
+          MIN_ELO: ${{ inputs.min_elo }}
+          MAX_PLY: ${{ inputs.max_ply }}
+          MIN_GAMES: ${{ inputs.min_games }}
+          NODE_OPTIONS: --max-old-space-size=8000
+        run: |
+          sudo apt-get install -y -qq zstd >/dev/null
+          for u in $URLS; do
+            echo "downloading $u" >&2
+            curl -fsSL --retry 3 -o dl.bin "$u"
+            case "$u" in
+              *.zip) unzip -p dl.bin ;;
+              *.zst) zstd -dc dl.bin ;;
+              *.bz2) bzip2 -dc dl.bin ;;
+              *) cat dl.bin ;;
+            esac
+            printf '\n\n'
+            rm dl.bin
+          done | node scripts/build-gamedb.mjs --name "$DB_NAME" --min-elo "$MIN_ELO" --max-ply "$MAX_PLY" --min-games "$MIN_GAMES" -
+          ls -la site/data/db
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/db
+          git commit -m "Add game database: ${{ inputs.name }}"
+          git push origin HEAD:main

@@ -1,6 +1,7 @@
 // Builds a master-game statistics tree for the Explorer from big PGN files (streams, so multi-GB files are fine).
 //
 //   node scripts/build-gamedb.mjs --name "Masters 2500+" --min-elo 2500 --max-ply 30 --min-games 3 games1.pgn games2.pgn
+//   unzip -p elite.zip | node scripts/build-gamedb.mjs --name "Elite" -      ("-" reads PGN from stdin)
 //
 // Writes site/data/db/<slug>.json and registers it in site/data/db/manifest.json.
 // Tip: drop .pgn files in data/pgn/ and run `npm run build:db -- --name "My DB" data/pgn/*.pgn`.
@@ -36,7 +37,7 @@ const handle = (g) => {
 
 for (const f of files) {
   const s = new GameSplitter();
-  const stream = createReadStream(f, { encoding: 'utf8', highWaterMark: 1 << 22 });
+  const stream = f === '-' ? process.stdin.setEncoding('utf8') : createReadStream(f, { encoding: 'utf8', highWaterMark: 1 << 22 });
   for await (const chunk of stream) {
     for (const g of s.push(chunk)) handle(g);
     if (seen % 50000 < 500 && seen) process.stderr.write(`\r${seen.toLocaleString()} games read, ${used.toLocaleString()} kept`);

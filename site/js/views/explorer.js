@@ -77,15 +77,17 @@ export function render(root, { query }) {
     history.replaceState(null, '', `#/explorer${san.length ? '?m=' + encodeURIComponent(san.join(' ')) : ''}`);
     const nm = san.length ? nameFor(san, game.fen()) : null;
     now.replaceChildren(
+      ...[
       h('b', {}, nm ? nm.line.name : 'Starting position'),
       h('span', {}, nm ? `${nm.line.eco || 'Custom'}${nm.transposed ? ' · by transposition' : !nm.exact ? ` · last named at move ${Math.ceil(nm.ply / 2)}` : ''}` : 'Play any move, or pick a continuation'),
       nm && h('a', { class: 'btn sm', style: 'margin-top:8px;align-self:flex-start', href: `#/opening/${slug(nm.line.fam)}?line=${nm.line.id}` }, `Open ${nm.line.fam}`),
+      ].filter(Boolean),
     );
     moves.replaceChildren(
       ...san
         .flatMap((m, i) => [i % 2 === 0 ? h('span', { class: 'no' }, `${i / 2 + 1}.`) : null, h('span', { class: 'mv' + (i + 1 === san.length ? ' cur' : ''), onclick: () => setPath(san.slice(0, i + 1)) }, m)])
         .filter(Boolean),
-      san.length ? null : h('span', { style: 'color:var(--muted)' }, 'No moves yet'),
+      ...(san.length ? [] : [h('span', { style: 'color:var(--muted)' }, 'No moves yet')]),
     );
     drawTable();
   }
@@ -110,7 +112,7 @@ export function render(root, { query }) {
 
     const head = h('tr', {}, h('th', {}, 'Move'), h('th', {}, 'Leads to'), h('th', {}, 'Lines'), ...dbs.map(({ db }) => h('th', {}, db.name)));
     table.replaceChildren(
-      via && h('p', { style: 'margin:0 0 10px;color:var(--muted)' }, `This position is also reached in ${via.name}. Showing its continuations.`),
+      ...(via ? [h('p', { style: 'margin:0 0 10px;color:var(--muted)' }, `This position is also reached in ${via.name}. Showing its continuations.`)] : []),
       list.length
         ? h(
             'table',

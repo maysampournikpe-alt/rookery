@@ -212,6 +212,28 @@ h2 { font-size: 28px; }
 .leaf .st.done { background: var(--mint); border-color: var(--mint); color: #05281c; }
 .leaf .st.due { border-color: var(--sun); }
 
+/* learn / practice modes */
+.modeline { display: flex; gap: 10px; align-items: center; color: var(--muted); font-weight: 500; margin-top: 10px; }
+.modeline .ml { color: var(--ink); font-weight: 600; }
+.modeline .mn { margin-left: auto; }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+.mode { display: flex; gap: 12px; align-items: center; text-align: left; background: var(--panel); border: 2px solid var(--line); border-radius: 20px; padding: 12px 14px; }
+.mode.on { border-color: var(--sun); background: var(--panel2); }
+.mode.locked { opacity: .6; }
+.mode .ic { font-size: 24px; }
+.mode b { display: block; font: 600 19px var(--display); }
+.mode small { color: var(--muted); font-size: 13px; }
+.under { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
+.under .dots { margin-top: 0; flex: 1; }
+.arrows { display: flex; gap: 8px; }
+.bubble { max-height: 360px; overflow: auto; }
+.bubble p { margin: 0 0 .6em; }
+.bubble p:last-child { margin-bottom: 0; }
+.bubble .nudge { color: var(--coral); font-weight: 600; }
+.bubble .play { margin-top: .8em; }
+.bubble .play strong { font-size: 1.1em; }
+.leaf .st.seen { border-color: var(--sun); background: linear-gradient(90deg, var(--sun) 50%, transparent 50%); }
+
 /* trainer + coach */
 .coach { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: start; }
 .coach-av { width: 76px; height: 76px; border-radius: 50%; background: var(--sun); display: grid; place-items: center; box-shadow: 0 4px 0 var(--sun-edge); }
@@ -271,12 +293,14 @@ progress { width: 100%; accent-color: var(--sun); }
   .split > .left { position: static; }
   .how { grid-template-columns: 1fr; }
   .row2 { grid-template-columns: 1fr; }
+  .modes { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
   .split.train > .status { order: -1; }
   .split.train .seg, .split.train .status .crumb { display: none; }
 }
 @media (max-width: 560px) {
+  .split.train .modes, .split.train .session { display: none; }
   .split.train .big-actions { margin-top: 6px; gap: 8px; }
   .split.train .big-actions .btn { padding: 8px 14px; font-size: 15px; }
   .split.train .big-actions .btn.big { font-size: 17px; padding: 12px 24px; }

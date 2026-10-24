@@ -243,7 +243,8 @@ function labelFor(san, course, side) {
     if (m) return `${course.name}: when ${side === 'white' ? 'Black' : 'White'} plays ${i % 2 === 0 ? `${i / 2 + 1}.` : `${(i + 1) / 2}...`}${m}`;
     return course.name;
   }
-  return `${course.name}: ${named}`;
+  const rest = named.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[,:]?\\s*', 'i'), '').trim();
+  return rest ? `${course.name}: ${rest}` : course.name;
 }
 
 // Builds the lessons and the move tree for one variation, from the point of view of `side`.
@@ -289,6 +290,18 @@ export function buildCourse(fam, course, side) {
       n = n.kids.get(m);
     }
     n.leaf = l;
+  }
+  // name each line by every choice the opponent made on the way ("when White plays 6.Be2, then 8.O-O")
+  const theirs = side === 'white' ? 'Black' : 'White';
+  for (const l of leaves) {
+    let n = tree;
+    const picks = [];
+    l.san.forEach((m, i) => {
+      const mineHere = (i % 2 === 0) === (side === 'white');
+      if (n.kids.size > 1 && !mineHere) picks.push(`${i % 2 === 0 ? i / 2 + 1 + '.' : (i + 1) / 2 + '...'}${m}`);
+      n = n.kids.get(m);
+    });
+    if (picks.length) l.sub = l.name = `${course.name}: when ${theirs} plays ${picks.join(', then ')}`;
   }
   const res = { course, side, leaves, tree };
   cache.set(ck, res);

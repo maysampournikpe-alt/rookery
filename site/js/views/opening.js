@@ -1,7 +1,7 @@
 import { Chess } from '../../vendor/chess.js';
 import { D, nameFor } from '../data.js';
 import { Board } from '../board.js';
-import { counts, isDue, isLearned } from '../store.js';
+import { counts, isDue, isLearned, isDiscovered } from '../store.js';
 import { coursesOf, buildCourse } from '../repertoire.js';
 import { h, plural } from '../ui.js';
 
@@ -51,15 +51,16 @@ export function render(root, { slug, query }) {
 
   function leafRow(l) {
     const done = isLearned(l.id);
+    const seen = isDiscovered(l.id);
     return h(
       'div',
       { class: 'leaf' },
-      h('span', { class: 'st ' + (done ? 'done' : isDue(l.id) ? 'due' : ''), title: done ? 'Learned' : 'Not learned yet' }, '✓'),
+      h('span', { class: 'st ' + (done ? 'done' : seen ? 'seen' : isDue(l.id) ? 'due' : ''), title: done ? 'Learned' : seen ? 'Seen. Practice it to learn it.' : 'Not seen yet' }, '✓'),
       h('span', { class: 'nm' }, l.sub),
-      h('a', { class: 'btn sm primary', href: trainHref(l) }, 'Play this line'),
+      h('a', { class: 'btn sm primary', href: trainHref(l, seen ? 'practice' : 'learn') }, seen ? 'Practice' : 'Learn this line'),
     );
   }
-  const trainHref = (l) => `#/train/${fam.slug}?course=${courseKey}&side=${side}&line=${l.id}`;
+  const trainHref = (l, mode) => `#/train/${fam.slug}?course=${courseKey}&side=${side}&line=${l.id}${mode ? '&mode=' + mode : ''}`;
   const theirs = () => (side === 'white' ? 'Black' : 'White');
 
   // one stretch of forced moves, then "If they play ..." for every reply we cover
@@ -95,13 +96,22 @@ export function render(root, { slug, query }) {
     const built = current();
     const c = built.course;
     const k = counts(built.leaves.map((l) => l.id));
-    const next = built.leaves.find((l) => !isLearned(l.id)) || built.leaves[0];
+    const toLearn = built.leaves.find((l) => !isDiscovered(l.id));
+    const toPractice = built.leaves.find((l) => isDiscovered(l.id) && !isLearned(l.id));
     let node = built.tree;
     for (const m of c.path) node = node.kids.get(m) || node;
     panel.replaceChildren(
       h('h2', {}, c.name),
       h('p', { class: 'blurb' }, c.idea),
-      h('div', { class: 'start-row' }, h('a', { class: 'btn primary big', href: trainHref(next) }, k.learned === 0 ? 'Start learning' : k.learned < k.total ? 'Continue learning' : 'Play the lessons again'), h('span', { class: 'meta' }, `${k.learned} of ${k.total} ${k.total === 1 ? 'lesson' : 'lessons'} learned`)),
+      h(
+        'div',
+        { class: 'start-row' },
+        toLearn
+          ? h('a', { class: 'btn primary big', href: trainHref(toLearn, 'learn') }, k.discovered === 0 ? 'Start learning' : 'Continue learning')
+          : h('a', { class: 'btn primary big', href: trainHref(toPractice || built.leaves[0], 'practice') }, toPractice ? 'Practice your lines' : 'Play the lines again'),
+        toLearn && toPractice ? h('a', { class: 'btn big', href: trainHref(toPractice, 'practice') }, 'Practice') : null,
+        h('span', { class: 'meta' }, `${k.discovered} of ${k.total} lines seen · ${k.learned} learned`),
+      ),
       c.path.length ? h('div', { class: 'tree-head' }, h('b', {}, 'Start with these moves'), h('div', { class: 'seq' }, ...c.path.map((_, i) => chip(c.path, i, i === 0)))) : null,
       h('div', { class: 'tree-head' }, h('b', {}, 'What to play'), h('span', { class: 'legend' }, h('i', { class: 'mine' }, 'Your move'), h('i', { class: 'theirs' }, 'Their move'), 'Tap any move to see it.')),
       renderNode(node, c.path, false),

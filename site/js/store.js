@@ -37,6 +37,18 @@ export function lineState(id) {
   return state.lines[id] || { box: 0, due: 0, ok: 0, fail: 0, last: 0 };
 }
 
+// "discovered" = the lesson was taught in Learn mode; "learned" = a perfect run in Practice
+export function discover(id, meta) {
+  const s = { ...lineState(id), d: 1 };
+  if (meta) s.m = meta;
+  state.lines[id] = s;
+  save();
+}
+
+export function isDiscovered(id) {
+  return !!state.lines[id]?.d;
+}
+
 export function isLearned(id) {
   return lineState(id).box >= LEARNED_BOX;
 }
@@ -102,15 +114,17 @@ export function counts(ids) {
   let learned = 0;
   let due = 0;
   let started = 0;
+  let discovered = 0;
   const now = Date.now();
   for (const id of ids) {
     const s = state.lines[id];
     if (!s) continue;
+    if (s.d) discovered++;
     if (s.box > 0 || s.ok + s.fail > 0) started++;
     if (s.box >= LEARNED_BOX) learned++;
     if (s.box > 0 && s.due <= now) due++;
   }
-  return { learned, due, started, total: ids.length };
+  return { learned, due, started, discovered, total: ids.length };
 }
 
 export function resetAll() {

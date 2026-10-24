@@ -7,7 +7,7 @@ import { h, moveText, plural, progressBar, debounce } from '../ui.js';
 export function render(root, { slug, query }) {
   const fam = D.famBySlug.get(slug);
   if (!fam) {
-    root.replaceChildren(h('div', { class: 'empty' }, 'Opening not found. ', h('a', { href: '#/' }, 'Back to all openings')));
+    root.replaceChildren(h('div', { class: 'empty' }, 'Opening not found. ', h('a', { href: '#/openings' }, 'Back to all openings')));
     return;
   }
   const c = counts(fam.lines.map((l) => l.id));
@@ -114,7 +114,7 @@ export function render(root, { slug, query }) {
   const right = h(
     'div',
     { class: 'right' },
-    h('p', { class: 'crumb' }, h('a', { href: '#/' }, 'Openings'), ' / ', fam.name),
+    h('p', { class: 'crumb' }, h('a', { href: '#/openings' }, 'Openings'), ' / ', fam.name),
     h('h1', { class: 'title' }, fam.name),
     fam.blurb && h('p', { class: 'blurb' }, fam.blurb),
     h(

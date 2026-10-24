@@ -44,13 +44,19 @@ npm run build:data
 
 Every numbered line starting at move 1 is validated with chess.js, named after the deepest known opening it passes through, tagged with the book and page, and skipped if the dataset already has it. Scanned PDFs need OCR first.
 
-**Huge master databases** (multi-GB): stream them in Node and ship the result with the site.
+**Huge master databases** (multi-GB), two ways:
+
+*Without downloading anything*: Actions tab, **Build game database**, Run workflow. Paste one or more download links (for example monthly files from the Lichess Elite Database, `.zip`, `.pgn.zst`, `.pgn.bz2` or `.pgn`), pick the minimum rating, depth and `min_games`. GitHub's servers download and process the files, commit `site/data/db/<name>.json` to `main`, and the site redeploys. The Explorer loads the database only when you open it. Six months of Elite games or fewer keeps it quick.
+
+*On your own machine*:
 
 ```bash
-npm run build:db -- --name "Masters 2500+" --min-elo 2500 --max-ply 30 --min-games 3 data/pgn/*.pgn
+npm run build:db -- --name "Elite 2400+" --min-elo 2400 --max-ply 30 --min-games 5 data/pgn/*.pgn
+# or stream straight from an archive:
+unzip -p lichess_elite_2024-05.zip | npm run build:db -- --name "Elite 2400+" -
 ```
 
-This writes `site/data/db/<name>.json` and registers it in `site/data/db/manifest.json`. Raise `--min-games` to keep the file small.
+Either way the result is `site/data/db/<name>.json`, registered in `site/data/db/manifest.json`. Raise `--min-games` to keep the file small.
 
 **Your own TSV lines**: put `eco<TAB>name<TAB>pgn` files in `data/lines/` and run `npm run build:data`.
 

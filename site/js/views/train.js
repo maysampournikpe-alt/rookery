@@ -286,7 +286,7 @@ export function render(root, { slug, query }) {
   const side = query.get('side') || fam.side;
   const cfg = {
     title: first ? first.name : `Drill: ${fam.name}`,
-    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: '#/' }, 'Openings'), ' / ', h('a', { href: `#/opening/${fam.slug}` }, fam.name), ' / Train'),
+    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: '#/openings' }, 'Openings'), ' / ', h('a', { href: `#/opening/${fam.slug}` }, fam.name), ' / Train'),
     pool: fam.lines,
     side,
     allowSideSwitch: true,
@@ -303,7 +303,7 @@ export function renderReview(root, { query }) {
   const dueLines = () => all.filter((l) => isDue(l.id)).sort((a, b) => lineState(a.id).due - lineState(b.id).due);
   const cfg = {
     title: 'Review',
-    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: '#/' }, 'Openings'), ' / Review'),
+    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: '#/openings' }, 'Openings'), ' / Review'),
     pool: all,
     strict: true,
     sideFor: (l) => famOf(l)?.side || 'white',

@@ -6,7 +6,8 @@ const app = document.getElementById('app');
 let destroy = null;
 
 const routes = [
-  [/^$|^\/$/, 'home', () => import('./views/home.js')],
+  [/^$|^\/$/, 'landing', () => import('./views/home.js')],
+  [/^\/openings$/, 'home', () => import('./views/home.js'), 'renderOpenings'],
   [/^\/opening\/([^/]+)$/, 'home', () => import('./views/opening.js')],
   [/^\/train\/([^/]+)$/, 'home', () => import('./views/train.js')],
   [/^\/review$/, 'review', () => import('./views/train.js'), 'renderReview'],

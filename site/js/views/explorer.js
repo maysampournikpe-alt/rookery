@@ -1,5 +1,5 @@
 import { Chess } from '../../vendor/chess.js';
-import { D, START_FEN, nodeAt, nameFor, dbStatsAt, familyOf, slug, epdOf } from '../data.js';
+import { D, START_FEN, nodeAt, nameFor, dbStatsAt, familyOf, slug, epdOf, loadStaticDbs } from '../data.js';
 import { Board } from '../board.js';
 import { h, moveText, toast, plural } from '../ui.js';
 
@@ -25,7 +25,8 @@ const wdl = (n) => {
   return h('div', { class: 'wdl', title: `${n.w} white wins · ${n.d} draws · ${n.b} black wins` }, h('i', { class: 'w', style: `flex:${n.w}` }, p(n.w) >= 14 ? p(n.w) + '%' : ''), h('i', { class: 'd', style: `flex:${n.d}` }, p(n.d) >= 14 ? p(n.d) + '%' : ''), h('i', { class: 'b', style: `flex:${n.b}` }, p(n.b) >= 14 ? p(n.b) + '%' : ''));
 };
 
-export function render(root, { query }) {
+export async function render(root, { query }) {
+  await loadStaticDbs();
   const game = new Chess();
   let san = [];
   let last = null;

@@ -174,18 +174,26 @@ export async function loadData() {
   } catch (e) {
     console.warn('local storage unavailable', e);
   }
-  try {
-    const m = await (await fetch('data/db/manifest.json')).json();
-    for (const f of m.files) {
-      const db = await (await fetch('data/db/' + f)).json();
-      D.databases.push({ ...db, static: true });
-    }
-  } catch {
-    /* no bundled game databases */
-  }
   buildFamilies();
   D.ready = true;
   return D;
+}
+
+// Bundled game databases can be several MB, so they load only when the Explorer opens.
+let staticDbs;
+export function loadStaticDbs() {
+  staticDbs ||= (async () => {
+    try {
+      const m = await (await fetch('data/db/manifest.json')).json();
+      for (const f of m.files) {
+        const db = await (await fetch('data/db/' + f)).json();
+        D.databases.push({ ...db, static: true });
+      }
+    } catch {
+      /* no bundled game databases */
+    }
+  })();
+  return staticDbs;
 }
 
 export function nodeAt(san) {

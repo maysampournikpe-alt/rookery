@@ -95,7 +95,7 @@ function heroBoard(wrap) {
   return () => (dead = true);
 }
 
-export function render(root) {
+function build(root, landing) {
   const total = D.lines.length;
   const all = counts(D.lines.map((l) => l.id));
   const stop = [];
@@ -110,7 +110,7 @@ export function render(root) {
       h(
         'div',
         { class: 'cta' },
-        h('a', { class: 'btn primary', href: all.due ? '#/review' : '#/opening/italian-game' }, all.due ? `Review ${all.due} due line${all.due > 1 ? 's' : ''}` : 'Start with the Italian Game'),
+        h('a', { class: 'btn primary', href: all.due ? '#/review' : '#/openings' }, all.due ? `Review ${all.due} due line${all.due > 1 ? 's' : ''}` : 'Browse openings'),
         h('a', { class: 'btn', href: '#/explorer' }, 'Open the explorer'),
         h('a', { class: 'btn ghost', href: '#/import' }, 'Import PGN'),
       ),
@@ -175,9 +175,16 @@ export function render(root) {
     if (!list.length) grid.append(h('div', { class: 'empty' }, 'No openings match. Try fewer filters or a different spelling.'));
   }
 
-  root.replaceChildren(hero, toolbar, grid, more);
-  buildToolbar();
-  draw();
-  stop.push(heroBoard(hero));
+  if (landing) {
+    root.replaceChildren(hero);
+    stop.push(heroBoard(hero));
+  } else {
+    root.replaceChildren(h('div', { style: 'padding-top:28px' }, h('p', { class: 'crumb', style: 'margin:0' }, 'Openings'), h('h1', { class: 'title' }, 'All openings')), toolbar, grid, more);
+    buildToolbar();
+    draw();
+  }
   return () => stop.forEach((f) => f());
 }
+
+export const render = (root) => build(root, true);
+export const renderOpenings = (root) => build(root, false);

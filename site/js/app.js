@@ -8,6 +8,7 @@ let destroy = null;
 const routes = [
   [/^$|^\/$|^\/openings$/, 'home', () => import('./views/home.js')],
   [/^\/opening\/([^/]+)$/, 'home', () => import('./views/opening.js')],
+  [/^\/course\/([^/]+)\/([^/]+)$/, 'home', () => import('./views/course.js')],
   [/^\/train\/([^/]+)$/, 'home', () => import('./views/train.js')],
   [/^\/review$/, 'review', () => import('./views/train.js'), 'renderReview'],
   [/^\/explorer$/, 'explorer', () => import('./views/explorer.js')],
@@ -36,7 +37,7 @@ async function route() {
     document.querySelectorAll('#nav a').forEach((a) => a.classList.toggle('on', a.dataset.nav === nav));
     const mod = await load();
     window.scrollTo(0, 0);
-    const out = await mod[fn](app, { slug: m[1] && decodeURIComponent(m[1]), query });
+    const out = await mod[fn](app, { slug: m[1] && decodeURIComponent(m[1]), key: m[2] && decodeURIComponent(m[2]), query });
     destroy = typeof out === 'function' ? out : null;
     chrome();
     app.focus({ preventScroll: true });

@@ -2,7 +2,7 @@ import { Chess } from '../../vendor/chess.js';
 import { D, START_FEN, nameFor } from '../data.js';
 import { Board } from '../board.js';
 import { recordRun, discover, isDiscovered, isLearned, INTERVALS, dueEntries, counts } from '../store.js';
-import { coursesOf, buildCourse } from '../repertoire.js';
+import { coursesOf, buildCourse, tiersOf } from '../repertoire.js';
 import { describeMove } from '../explain.js';
 import { h, sleep, toast } from '../ui.js';
 
@@ -341,12 +341,14 @@ export function render(root, { slug, query }) {
   const side = query.get('side') || fam.side;
   const courses = coursesOf(fam);
   const course = courses.find((c) => c.key === query.get('course')) || courses[0];
-  const built = buildCourse(fam, course, side);
+  const tiers = tiersOf(fam, course, side);
+  const tier = tiers.some((t) => t.key === query.get('tier')) ? query.get('tier') : tiers[0].key;
+  const built = buildCourse(fam, course, side, tier);
   const q = built.leaves;
   const first = q.find((l) => l.id === query.get('line')) || q.find((l) => !isDiscovered(l.id)) || q.find((l) => !isLearned(l.id)) || q[0];
   const requested = query.get('mode');
   const wanted = requested === 'learn' || requested === 'practice' ? requested : isDiscovered(first.id) ? 'practice' : 'learn';
-  const back = `#/opening/${fam.slug}?course=${course.key}&side=${side}`;
+  const back = `#/course/${fam.slug}/${course.key}?side=${side}&tier=${tier}`;
   return mount(root, {
     mode: isDiscovered(first.id) ? wanted : 'learn', // you cannot practice a line you have not seen
     hasModes: true,
@@ -356,11 +358,11 @@ export function render(root, { slug, query }) {
     first,
     label: (l) => l.name,
     pick: (prev, mode) => pickFrom(q, prev, mode),
-    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: back }, `← ${fam.name}`)),
+    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: back }, `← ${course.name}`)),
     emptyTitle: 'All your lines are learned!',
     emptyBody: 'Come back when practice is due, or learn another variation.',
     backHref: back,
-    backLabel: 'Back to the variations',
+    backLabel: 'Back to this variation',
   });
 }
 

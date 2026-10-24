@@ -4,8 +4,12 @@
 //  - every branch of that tree is one lesson
 import { D, nodeAt, hashId } from './data.js';
 
-const MAX_LESSONS = 14; // lessons per variation
-const DEPTH = 22; // half-moves past the start of the variation (hard cap 34 overall)
+// three depths per variation: how many lines to teach and how far past the start of the variation to go
+export const TIERS = {
+  essentials: { label: 'Essentials', hint: 'The main lines. Most players start here.', max: 10, depth: 16 },
+  advanced: { label: 'Advanced', hint: 'More replies from your opponent, and deeper.', max: 30, depth: 24 },
+  expert: { label: 'Expert', hint: 'Every reply we have, as deep as the data goes.', max: 90, depth: 34 },
+};
 
 // [display name, [normalized head names that belong to it], one-sentence idea]
 const CURATED = {
@@ -113,6 +117,12 @@ const CURATED = {
     ['Three Knights', ['three knights'], 'White develops with Nf3 instead of e4 for a calmer game.'],
     ['Stockholm', ['stockholm'], 'White develops the bishop to g5 quickly.'],
   ],
+  'London System': [
+    ['Against ...e6 and ...Bd6', ['classical setup'], 'White builds the London pyramid (d4, e3, c3, Nf3, Bd3) and keeps the bishop safe on g3. Solid and easy to learn.'],
+    ['Against ...c5', ['vs ...c5'], 'Black hits d4 with ...c5. White supports the pawn with c3 and e3 and keeps developing calmly.'],
+    ['Against ...Bf5', ['vs ...bf5'], 'Black copies White\'s bishop move. White develops with Nd2 and can chase the bishop with Nh4.'],
+    ["Against the King's Indian set-up", ["vs the king's indian setup"], 'Against ...g6 and ...Bg7, White plays e3, Be2 and h3, castles, and builds a solid centre.'],
+  ],
   'Pirc Defense': [
     ['Classical', ['classical'], 'White develops normally with Nf3 and Be2.'],
     ['Austrian Attack', ['austrian', 'austrian attack'], 'White plays f4 for a big centre and a quick attack.'],
@@ -193,10 +203,10 @@ export function coursesOf(fam) {
       make(name, keys, idea);
       if (out.length >= 6) break;
     }
-    if (out.length < 4) {
+    if (out.length < 8) {
       const ranked = [...groups].filter(([k, ls]) => !used.has(k) && ls.length >= 3 && !/^\d|^main line|^normal|^with |^\(/.test(k)).sort((a, b) => b[1].length - a[1].length);
       for (const [k, ls] of ranked) {
-        if (out.length >= (CURATED[fam.name] ? 4 : 4)) break;
+        if (out.length >= 8) break;
         const display = ls[0].sub.replace(/^(Declined|Accepted): /, '').split(/[:,]/)[0].trim();
         make(display, [k], `A popular way to play the ${fam.name}.`);
       }
@@ -215,7 +225,8 @@ export function coursesOf(fam) {
   return out;
 }
 
-const SCHEDULES = [
+// how many opponent replies to cover at their 1st, 2nd, 3rd... decision; tried from wide to narrow until the lessons fit
+const BASE = [
   [4, 3, 2, 1],
   [3, 2, 2, 1],
   [3, 2, 1, 1],
@@ -223,6 +234,11 @@ const SCHEDULES = [
   [2, 1, 1, 1],
   [1, 1, 1, 1],
 ];
+const SCHEDULES = {
+  essentials: BASE,
+  advanced: [[6, 5, 4, 3], [5, 4, 3, 2], [4, 4, 3, 2], [4, 3, 3, 2], ...BASE],
+  expert: [[12, 9, 7, 5], [10, 8, 6, 4], [8, 6, 5, 4], [7, 5, 4, 3], [6, 5, 4, 3], [5, 4, 3, 3], [4, 4, 3, 2], ...BASE],
+};
 
 const cache = new Map();
 
@@ -248,8 +264,9 @@ function labelFor(san, course, side) {
 }
 
 // Builds the lessons and the move tree for one variation, from the point of view of `side`.
-export function buildCourse(fam, course, side) {
-  const ck = `${fam.slug}|${course.key}|${side}`;
+export function buildCourse(fam, course, side, tier = 'essentials') {
+  const T = TIERS[tier] || TIERS.essentials;
+  const ck = `${fam.slug}|${course.key}|${side}|${tier}`;
   if (cache.has(ck)) return cache.get(ck);
   let paths = [];
   if (course.custom) {
@@ -257,15 +274,15 @@ export function buildCourse(fam, course, side) {
   } else {
     const start = course.node;
     const mine = (ply) => (ply % 2 === 0) === (side === 'white'); // is the move at index `ply` yours?
-    const maxLen = Math.min(34, course.path.length + DEPTH);
-    for (const sched of SCHEDULES) {
+    const maxLen = Math.min(44, course.path.length + T.depth);
+    for (const sched of SCHEDULES[tier] || BASE) {
       paths = [];
       const walk = (node, path, decisions) => {
         if (!node || !node.kids.size || path.length >= maxLen) return void paths.push(path);
         const kids = [...node.kids].sort((a, b) => b[1].n - a[1].n || (a[0] < b[0] ? -1 : 1));
         if (mine(path.length)) return walk(kids[0][1], [...path, kids[0][0]], decisions);
         let pick = kids;
-        if (kids.length > 1 && kids[0][1].n >= 2) pick = kids.filter((k) => k[1].n >= 2);
+        if (tier !== 'expert' && kids.length > 1 && kids[0][1].n >= 2) pick = kids.filter((k) => k[1].n >= 2);
         pick = pick.slice(0, sched[Math.min(decisions, sched.length - 1)]);
         for (const [m, k] of pick) walk(k, [...path, m], decisions + (pick.length > 1 ? 1 : 0));
       };
@@ -276,7 +293,7 @@ export function buildCourse(fam, course, side) {
         return p;
       });
       paths = dedupe(paths);
-      if (paths.length <= MAX_LESSONS) break;
+      if (paths.length <= T.max) break;
     }
     if (!paths.length) paths = course.path.length ? [course.path] : [];
   }
@@ -303,7 +320,7 @@ export function buildCourse(fam, course, side) {
     });
     if (picks.length) l.sub = l.name = `${course.name}: when ${theirs} plays ${picks.join(', then ')}`;
   }
-  const res = { course, side, leaves, tree };
+  const res = { course, side, tier, leaves, tree };
   cache.set(ck, res);
   return res;
 }
@@ -314,6 +331,18 @@ function dedupe(paths) {
     .filter((k) => !keys.some((o) => o !== k && o.startsWith(k + ' ')))
     .map((k) => (k ? k.split(' ') : []))
     .filter((p) => p.length);
+}
+
+// the depths worth offering for a variation: a deeper level only appears if it adds lines
+export function tiersOf(fam, course, side) {
+  const out = [];
+  let prev = 0;
+  for (const key of course.custom ? ['essentials'] : Object.keys(TIERS)) {
+    const b = buildCourse(fam, course, side, key);
+    if (b.leaves.length > prev || !out.length) out.push({ key, ...TIERS[key], count: b.leaves.length });
+    prev = Math.max(prev, b.leaves.length);
+  }
+  return out;
 }
 
 // All lessons of an opening for one side (used for progress on the home page).

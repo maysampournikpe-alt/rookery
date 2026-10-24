@@ -1,6 +1,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
+import { coursesOf, allLessons } from '../repertoire.js';
 import { h, debounce } from '../ui.js';
 
 const F = { q: '', side: '', all: false };
@@ -17,8 +18,9 @@ function sideBadge(side) {
 }
 
 export function card(fam) {
-  const ids = fam.tiers.essentials.map((l) => l.id);
-  const c = counts(ids);
+  const lessons = allLessons(fam, fam.side);
+  const c = counts(lessons.map((l) => l.id));
+  const nCourses = coursesOf(fam).length;
   const canvas = h('canvas', { 'aria-hidden': 'true' });
   const fen = fenAfter(fam.root.san);
   requestAnimationFrame(() => drawMini(canvas, fen, fam.side));
@@ -31,8 +33,8 @@ export function card(fam) {
       'div',
       { class: 'body' },
       h('h3', {}, fam.name),
-      h('p', {}, fam.blurb || `${fam.tiers.essentials.length} lessons to get you started.`),
-      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${c.learned} of ${c.total} lessons learned`),
+      h('p', {}, fam.blurb || `${nCourses} ways to play the ${fam.name}.`),
+      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${nCourses} variation${nCourses > 1 ? 's' : ''} · ${c.learned} of ${c.total} lessons learned`),
       h('div', { class: 'go' }, (() => { const b = h('div', { class: 'bar' }, h('i')); requestAnimationFrame(() => (b.firstChild.style.width = c.total ? (c.learned / c.total) * 100 + '%' : '0')); return b; })(), h('span', { class: 'play' }, verb)),
     ),
     sideBadge(fam.side),
@@ -74,7 +76,7 @@ export function render(root) {
   }
 
   function draw() {
-    const filtered = D.families.filter((f) => (!F.side || f.side === F.side) && matches(f, F.q.trim()));
+    const filtered = D.families.filter((f) => !f.small && (!F.side || f.side === F.side) && matches(f, F.q.trim()));
     const mine = filtered.filter((f) => f.mine);
     const rest = filtered.filter((f) => !f.mine);
     const searching = F.q.trim() || F.side;

@@ -1,7 +1,8 @@
 import { Chess } from '../../vendor/chess.js';
 import { D, START_FEN, nameFor } from '../data.js';
 import { Board } from '../board.js';
-import { lineState, recordRun, isDue, isLearned, INTERVALS } from '../store.js';
+import { lineState, recordRun, isLearned, INTERVALS, dueEntries } from '../store.js';
+import { coursesOf, buildCourse } from '../repertoire.js';
 import { h, moveText, sleep } from '../ui.js';
 
 const slugCache = new Map();
@@ -179,7 +180,8 @@ function mount(root, cfg) {
   function complete() {
     run.done = true;
     const clean = run.firstBad === Infinity;
-    const s = recordRun(run.target.id, clean);
+    const t = run.target;
+    const s = recordRun(t.id, clean, { san: t.san.join(' '), name: t.sub || t.name || '', fam: t.fam || famOf(t)?.name || '', slug: t.slug || famOf(t)?.slug || '', side: run.side });
     const nm = nameFor(run.played, game.fen())?.line;
     const days = INTERVALS[s.box];
     if (clean) {
@@ -239,18 +241,19 @@ function nextIn(queue, prev) {
 export function render(root, { slug, query }) {
   const fam = D.famBySlug.get(slug);
   if (!fam) return root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that opening.', h('div', {}, h('a', { class: 'btn primary', href: '#/' }, 'See all openings'))));
-  const tier = query.get('tier') || 'essentials';
-  const queue = () => (fam.tiers[tier]?.length ? fam.tiers[tier] : fam.lines);
-  const first = fam.lines.find((l) => l.id === query.get('line')) || nextIn(queue(), null);
-  const label = (l) => l.sub || `${fam.name} main line`;
+  const side = query.get('side') || fam.side;
+  const courses = coursesOf(fam);
+  const course = courses.find((c) => c.key === query.get('course')) || courses[0];
+  const built = buildCourse(fam, course, side);
+  const queue = () => built.leaves;
+  const first = built.leaves.find((l) => l.id === query.get('line')) || nextIn(queue(), null);
   return mount(root, {
-    title: label(first),
-    lessonTitle: label,
-    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: `#/opening/${fam.slug}?side=${query.get('side') || fam.side}` }, `← ${fam.name}`)),
+    title: first.name,
+    lessonTitle: (l) => l.name,
+    crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: `#/opening/${fam.slug}?course=${course.key}&side=${side}` }, `← ${fam.name}: ${course.name}`)),
     queue,
-    counter: (q, i) => (i >= 0 ? `Lesson ${i + 1} of ${q.length} in ${tier[0].toUpperCase() + tier.slice(1)}` : ''),
-    side: query.get('side') || fam.side,
-    allowSide: true,
+    counter: (q, i) => (i >= 0 ? `Lesson ${i + 1} of ${q.length} in the ${course.name}` : ''),
+    side,
     first,
     pick: (prev) => nextIn(queue(), prev),
     emptyTitle: 'Nothing here yet',
@@ -258,17 +261,32 @@ export function render(root, { slug, query }) {
   });
 }
 
+// lessons that are due for practice, rebuilt from what the store remembers about them
+function dueLessons(famFilter) {
+  const out = [];
+  for (const { id, m } of dueEntries()) {
+    if (m?.san) {
+      if (famFilter && m.slug !== famFilter) continue;
+      out.push({ id, san: m.san.split(' '), sub: m.name, name: m.name, fam: m.fam, slug: m.slug, side: m.side });
+    } else {
+      const l = D.byId.get(id);
+      const f = l && famOf(l);
+      if (l && f && (!famFilter || f.slug === famFilter)) out.push({ ...l, name: l.sub || l.name, fam: f.name, slug: f.slug, side: f.side });
+    }
+  }
+  return out;
+}
+
 export function renderReview(root, { query }) {
   const famFilter = query.get('fam');
-  const all = famFilter ? D.famBySlug.get(famFilter)?.lines || [] : D.lines;
-  const queue = () => all.filter((l) => isDue(l.id)).sort((a, b) => lineState(a.id).due - lineState(b.id).due);
+  const queue = () => dueLessons(famFilter);
   return mount(root, {
     title: 'Practice',
-    lessonTitle: (l) => `Practice: ${l.sub || famOf(l)?.name || 'lesson'}`,
+    lessonTitle: (l) => `Practice: ${l.name || l.fam}`,
     crumb: h('p', { class: 'crumb', style: 'margin:0' }, h('a', { href: '#/' }, '← All openings')),
     queue,
     counter: (q) => `${q.length} lesson${q.length === 1 ? '' : 's'} left to practice`,
-    sideFor: (l) => famOf(l)?.side || 'white',
+    sideFor: (l) => l.side || 'white',
     pick: (prev) => queue().find((l) => !prev || l.id !== prev.id) || null,
     emptyTitle: 'All done for today! 🎉',
     emptyBody: 'Nothing to practice right now. Come back tomorrow, or learn a new opening.',

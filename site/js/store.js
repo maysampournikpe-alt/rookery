@@ -47,8 +47,9 @@ export function isDue(id, now = Date.now()) {
 }
 
 // clean = the whole line was played with no mistakes and no hints
-export function recordRun(id, clean) {
+export function recordRun(id, clean, meta) {
   const s = { ...lineState(id) };
+  if (meta) s.m = meta; // remembers the moves, so Practice can replay lessons that are not named openings
   const now = Date.now();
   if (clean) {
     s.box = Math.min(5, s.box + 1);
@@ -84,6 +85,15 @@ export function streak() {
   return st.last === t || st.last === y ? st.count : 0;
 }
 
+// lessons whose practice time has come, oldest first
+export function dueEntries(now = Date.now()) {
+  return Object.entries(state.lines)
+    .filter(([, s]) => s.box > 0 && s.due <= now)
+    .sort((a, b) => a[1].due - b[1].due)
+    .map(([id, s]) => ({ id, m: s.m }));
+}
+
+export const entries = () => Object.entries(state.lines);
 export const xp = () => state.xp;
 export const stars = () => Object.values(state.lines).reduce((n, l) => n + (l.ok || 0), 0);
 export const doneToday = () => state.daily[today()] || 0;

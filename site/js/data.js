@@ -117,35 +117,6 @@ function describeSide(root, fam) {
   return root.san.length % 2 === 1 ? 'white' : 'black';
 }
 
-// Splits a family into Essentials (the ~12 most-studied variations), Advanced (other named lines)
-// and Expert (deep lines from SCID and books). "Most studied" = the variation with the most lines beneath it.
-function tierize(lines, root) {
-  if (lines[0].mine) return { essentials: lines, advanced: [], expert: [] };
-  const core = lines.filter((l) => l.src === 'lichess');
-  const rest = lines.filter((l) => l.src !== 'lichess');
-  const byLength = (a, b) => a.san.length - b.san.length || cmpSan(a.san, b.san);
-  if (core.length <= 12) return { essentials: [...core].sort(byLength), advanced: [], expert: rest };
-  // "Declined: Baltic Defense" groups under "Baltic Defense"
-  const head = (l) => (l.sub || '').replace(/^(Declined|Accepted)(: )?/, '').split(/[:,]/)[0].trim();
-  const size = new Map();
-  for (const l of lines) size.set(head(l), (size.get(head(l)) || 0) + 1);
-  const groups = new Map();
-  for (const l of core) {
-    const k = head(l);
-    if (!k) continue;
-    if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push(l);
-  }
-  const ranked = [...groups].sort((a, b) => size.get(b[0]) - size.get(a[0]));
-  const ess = new Set([core.includes(root) ? root : core[0]]);
-  for (const [, ls] of ranked) {
-    if (ess.size >= 12) break;
-    ess.add([...ls].sort(byLength)[0]);
-  }
-  const essentials = [...ess].sort(byLength);
-  return { essentials, advanced: core.filter((l) => !ess.has(l)), expert: rest };
-}
-
 function buildFamilies() {
   const map = new Map();
   for (const l of D.lines) {
@@ -156,9 +127,7 @@ function buildFamilies() {
     lines.sort((a, b) => cmpSan(a.san, b.san));
     const root = lines.find((l) => l.name === name) || [...lines].sort((a, b) => a.san.length - b.san.length)[0];
     const ecos = [...new Set(lines.map((l) => l.eco).filter(Boolean))].sort();
-    const tiers = tierize(lines, root);
     const fam = {
-      tiers,
       name,
       slug: slug(name),
       lines,
@@ -170,6 +139,7 @@ function buildFamilies() {
       mine: !!lines[0].mine,
       blurb: BLURBS[name] || '',
       maxPly: Math.max(...lines.map((l) => l.san.length)),
+      small: lines.length < 6 && !lines[0].mine, // obscure openings stay out of the main list
     };
     return fam;
   });

@@ -1,0 +1,174 @@
+eco	name	pgn
+C44	Scotch Game: Scotch Gambit: Tactics in Junior Openings, p.5	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Be7 5. c3 dxc3
+C44	Scotch Game: Scotch Gambit: Tactics in Junior Openings, p.5	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Be7 5. c3 dxc3 6. Qd5 Nh6 7. Bxh6
+C21	Center Game: Kieseritzky Variation: Tactics in Junior Openings, p.6	1. e4 e5 2. d4 exd4 3. Nf3 Nc6 4. Bc4 Be7 5. c3 d3 6. Qb3
+C21	Center Game: Kieseritzky Variation: Tactics in Junior Openings, p.6	1. e4 e5 2. d4 exd4 3. Nf3 Nc6 4. Bc4 Bb4+ 5. c3 dxc3 6. O-O Nge7 7. Ng5 O-O
+C44	Scotch Game: Scotch Gambit, London Defense: Tactics in Junior Openings, p.7	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Bb4+ 5. c3 dxc3 6. bxc3 Be7 7. Qd5 d6
+C44	Scotch Game: Scotch Gambit: Tactics in Junior Openings, p.7	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Na5 5. Bxf7+ Kxf7 6. Ne5+ Ke6 7. Qxd4 Nc6
+C44	Scotch Game: Scotch Gambit: 5.O-O: Tactics in Junior Openings, p.8	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Bc5 5. O-O Nge7 6. Ng5 d5 7. exd5 Ne5 8. Bb3 h6 9. Ne4 Bb6 10. h3 Nxd5
+C44	Scotch Game: Scotch Gambit: 5.c3: Tactics in Junior Openings, p.9	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Bc5 5. c3 d5 6. exd5 Nce7 7. Qb3 Nf5
+C50	Italian Game: Deutz Gambit: Tactics in Junior Openings, p.9	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. d4 Bxd4 6. Nxd4 Nxd4 7. f4 Nc6
+C50	Italian Game: Deutz Gambit: Tactics in Junior Openings, p.10	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. d4 Nxd4 6. Nxe5 O-O
+C43	Bishop's Opening: Urusov Gambit: Tactics in Junior Openings, p.10	1. e4 e5 2. Bc4 Nf6 3. d4 exd4 4. Nf3 Nc6 5. O-O Be7 6. e5 Ne4 7. Bd5 Ng5 8. Nxg5 Bxg5 9. Qh5 g6 10. Qxg5 Ne7
+C51	Italian Game: Evans Gambit, Anderssen Variation, Cordel Line: Tactics in Junior Openings, p.11	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Be7 6. d4 Na5 7. Be2 Nf6 8. dxe5 Nxe4
+C51	Italian Game: Evans Gambit, McDonnell Defense: Tactics in Junior Openings, p.11	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5 6. O-O Nf6 7. d4 exd4 8. cxd4 Bb6 9. e5 d5 10. exf6 dxc4 11. Re1+ Kf8 12. Ba3+ Kg8 13. d5 Na5 14. Be7 Qd7 15. fxg7 Kxg7 16. Qd2 Qg4 17. Qc3+ Kg8
+C51	Italian Game: Evans Gambit, McDonnell Defense: Tactics in Junior Openings, p.12	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5 6. O-O Nf6 7. d4 Bb6 8. dxe5 Nxe4
+C51	Italian Game: Evans Gambit, Stone-Ware Variation: Tactics in Junior Openings, p.12	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bd6 6. d4 exd4 7. O-O Na5 8. Qxd4 f6
+C51	Italian Game: Evans Gambit Declined: Tactics in Junior Openings, p.13	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bb6 5. a4 a6 6. a5 Ba7 7. b5 axb5 8. Bxb5 Nf6 9. Ba3 Nxe4 10. Qe2 Nxf2 11. Nxe5 Nd4
+C51	Italian Game: Evans Gambit, McDonnell Defense: Tactics in Junior Openings, p.13	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5 6. O-O d6 7. Bb2 Bg4 8. h3
+C52	Italian Game: Evans Gambit: 5...Ba5 6.d4: Tactics in Junior Openings, p.14	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 Qe7 7. d5 Nd8 8. O-O d6
+C52	Italian Game: Evans Gambit, Tartakower Attack: Tactics in Junior Openings, p.14	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 d6 7. Qb3 Qf6
+C52	Italian Game: Evans Gambit, Laroche Variation: Tactics in Junior Openings, p.15	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 Nf6 7. dxe5 Ng4 8. Bg5 f6 9. exf6 Nxf6 10. e5 h6
+C52	Italian Game: Evans Gambit, Waller Attack: Tactics in Junior Openings, p.15	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O d6 8. Qb3 Qe7 9. e5 dxe5 10. Ba3 Qf6 11. cxd4 e4 12. d5 exf3 13. dxc6 fxg2 14. Rd1 Bb6
+C54	Italian Game: Classical Variation, Greco Gambit, Greco Variation: Tactics in Junior Openings, p.16	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. O-O Nxc3 9. bxc3 Bxc3 10. Qb3 Bxa1 11. Bxf7+ Kf8 12. Bg5 Ne7 13. Ne5 Bxd4 14. Bg6 d5
+C50	Italian Game: Deutz Gambit: Tactics in Junior Openings, p.16	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O Nf6 5. d4 exd4 6. e5 d5 7. exf6 dxc4 8. Re1+ Be6 9. Ng5 Qd5 10. Nc3 Qf5 11. Nce4 Bf8 12. Nxf7 Kxf7 13. Ng5+ Kg8
+C54	Italian Game: Classical Variation, Greco Gambit, Moeller-Therkatz Attack: Tactics in Junior Openings, p.17	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. O-O Bxc3 9. d5 Bf6 10. Re1 Ne7 11. Rxe4 O-O 12. d6 cxd6 13. Qxd6 Nf5 14. Qd5 d6 15. Ng5 Bxg5 16. Bxg5 Qxg5
+C54	Italian Game: Classical Variation, Greco Gambit, Moeller-Therkatz Attack: Tactics in Junior Openings, p.17	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. O-O Bxc3 9. d5 Ne5 10. bxc3 Nxc4 11. Qd4 Ncd6 12. Qxg7 Qf6 13. Qxf6 Nxf6 14. Re1+ Kd8 15. Bg5 Ne8
+C54	Italian Game: Giuoco Piano, Greco's Attack: Tactics in Junior Openings, p.18	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 d5 8. exd5 Nxd5 9. O-O
+B00	Nimzowitsch Defense: Declined Variation: Tactics in Junior Openings, p.18	1. e4 Nc6 2. Nf3 e5 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. e5 Qe7 7. O-O Ne4
+C54	Italian Game: Classical Variation, Greco Gambit, Traditional Line: Tactics in Junior Openings, p.19	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb6 7. e5 Ng4 8. h3 Nh6 9. d5 Ne7
+C54	Italian Game: Classical Variation, Greco Gambit, Greco Variation: Tactics in Junior Openings, p.19	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. O-O Nxc3 9. bxc3 Be7 10. d5 Na5 11. d6 Bxd6 12. Re1+ Be7 13. Bg5 f6 14. Bxf6 gxf6 15. Ne5 h5 16. Qd3 Rh6 17. Qd5 Rh7
+C54	Italian Game: Classical Variation, Greco Gambit, Greco Variation: Tactics in Junior Openings, p.20	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nxe4 8. O-O Nxc3 9. bxc3 Bxc3 10. Qb3 Bxd4 11. Bxf7+ Kf8 12. Bg5 Bf6 13. Rae1 Ne7
+C52	Italian Game: Evans Gambit, Slow Variation: Tactics in Junior Openings, p.20	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. O-O Bb6 7. d4 d6 8. dxe5 dxe5 9. Qb3 Qf6 10. Rd1 Nge7 11. Bg5 Qg6 12. Bxe7 Kxe7 13. Qa3+ Ke8 14. Bb5 Bd7
+C56	Italian Game: Scotch Gambit, Max Lange Attack: Tactics in Junior Openings, p.21	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. e5 d5 6. Bb5 Ne4 7. Nxd4 Bc5 8. Be3 O-O 9. Bxc6 bxc6
+C44	Scotch Game: Scotch Gambit, Kingside Variation: Tactics in Junior Openings, p.21	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. e5 Ng4 6. Bxf7+ Kxf7 7. Ng5+ Kg8 8. Qf3 Nf6
+C44	Scotch Game: Scotch Gambit: Tactics in Junior Openings, p.22	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Nf6 5. O-O d5 6. exd5 Nxd5 7. Nxd4 Nxd4 8. Qxd4 Nf6
+C55	Italian Game: Two Knights Defense: Max Lange, 6.e5 d5: Tactics in Junior Openings, p.22	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Bc5 6. e5 d5 7. exf6 dxc4 8. Re1+ Be6 9. Ng5 Qxf6
+C56	Italian Game: Two Knights Defense, Max Lange Attack, Rubinstein Variation: Tactics in Junior Openings, p.23	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Bc5 6. e5 d5 7. exf6 dxc4 8. Re1+ Be6 9. Ng5 Qd5 10. Nc3 Qf5 11. Nce4 Bf8 12. Nxf7 Kxf7 13. Ng5+ Kg8 14. g4
+C44	Scotch Game: Scotch Gambit, Advance Variation: Tactics in Junior Openings, p.23	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Nf6 5. e5 Qe7 6. O-O Ne4 7. Re1 Nc5
+C44	Scotch Game: Scotch Gambit, Advance Variation: Tactics in Junior Openings, p.24	1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bc4 Nf6 5. e5 d5 6. Bb5 Ne4 7. Nxd4 Be7
+C56	Italian Game: Scotch Gambit, Walbrodt-Baird Gambit: Tactics in Junior Openings, p.24	1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. O-O d5 7. exd5 Nxd5 8. Qb3 Nce7
+C56	Italian Game: Scotch Gambit: Tactics in Junior Openings, p.25	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Be7
+C56	Italian Game: Scotch Gambit: Tactics in Junior Openings, p.25	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d4 exd4 5. O-O Bc5 6. e5 Nh5
+C55	Italian Game: Two Knights Defense: Tactics in Junior Openings, p.26	1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. O-O d6 5. Nc3 Bg4 6. h3 Bh5 7. d3 Nd4
+C43	Petrov's Defense: Modern Attack, 3...Nxe4 4.Bd3 d5 5.Nxe5 Nd7: Tactics in Junior Openings, p.27	1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Bd3 d5 5. Nxe5 Nd7 6. Nc3 Nxe5 7. dxe5 Bb4 8. O-O Nxc3 9. bxc3 Bxc3 10. Rb1 Qe7 11. Rb3 Bxe5 12. Re1 O-O
+C43	Petrov's Defense: Modern Attack, 3...Nxe4 4.Bd3 d5 5.Nxe5 Nc6: Tactics in Junior Openings, p.27	1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Bd3 d5 5. Nxe5 Nc6 6. Nxc6 bxc6 7. Nd2 Bf5 8. Qf3 Qd7
+C43	Petrov's Defense: Modern Attack: Tactics in Junior Openings, p.28	1. e4 e5 2. Nf3 Nf6 3. d4 exd4 4. e5 Ng4 5. Qxd4 d6 6. Bg5 Be7 7. e6
+C43	Petrov's Defense: Modern Attack, 3...Nxe4: Tactics in Junior Openings, p.28	1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Nxe5 d5 5. Bd3 Nd7 6. O-O Nxe5 7. dxe5 Be7 8. c4 Nc5
+C43	Petrov's Defense: Modern Attack, 3...Nxe4 4.Bd3 d5 5.Nxe5: Tactics in Junior Openings, p.29	1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Bd3 d5 5. Nxe5 Nf6 6. O-O Bd6 7. Re1 O-O 8. Nc3 a6 9. Bg5 Be6 10. Re3 Be7 11. Rg3 Kh8 12. Qe2 Nbd7 13. Nxd7 Qxd7 14. Re1 Bd6
+C43	Petrov's Defense: Modern Attack, 3...Nxe4 4.Bd3 d5 5.Nxe5 Nd7: Tactics in Junior Openings, p.29	1. e4 e5 2. Nf3 Nf6 3. d4 Nxe4 4. Bd3 d5 5. Nxe5 Nd7 6. O-O Be7 7. c4 Nxe5 8. dxe5 Be6
+C40	Elephant Gambit: Paulsen Countergambit: Tactics in Junior Openings, p.30	1. e4 e5 2. Nf3 d5 3. exd5 e4 4. Qe2 Nf6 5. d3 Bb4+ 6. c3 O-O 7. dxe4 Bc5 8. Bg5 Re8 9. Nbd2 Be7 10. Bxf6 Bxf6 11. Qd3 Nd7 12. Be2 Nc5 13. Qc2 Qe7 14. O-O-O Bd7 15. Rhe1 a5 16. Nd4 Bxd4 17. cxd4 Nxe4
+C40	Elephant Gambit: 3.exd5: Tactics in Junior Openings, p.30	1. e4 e5 2. Nf3 d5 3. exd5 c6 4. dxc6 bxc6 5. Nc3 Nf6 6. Bc4 e4 7. Qe2 Bg4 8. Nxe4
+C40	Elephant Gambit: Paulsen Countergambit: Tactics in Junior Openings, p.31	1. e4 e5 2. Nf3 d5 3. exd5 e4 4. Qe2 Nf6 5. d3 Bb4+ 6. c3 O-O 7. dxe4 Ba5 8. Bg5 Re8 9. Nbd2 h6 10. Bxf6 Qxf6
+C40	Elephant Gambit: 3.Nxe5: Tactics in Junior Openings, p.31	1. e4 e5 2. Nf3 d5 3. Nxe5 Bd6 4. d4 c5 5. Bb5+ Bd7 6. Nxd7 Nxd7 7. dxc5 Qa5+ 8. Nc3 Be5
+C40	Elephant Gambit: Paulsen Countergambit: Tactics in Junior Openings, p.32	1. e4 e5 2. Nf3 d5 3. exd5 e4 4. Qe2 Nf6 5. d3 Be7 6. dxe4 O-O 7. Nc3 Re8 8. Bd2 b5 9. Qxb5 Na6 10. Nd4 Nxe4 11. Nxe4 Bf6 12. Ne6 fxe6 13. Nxf6+ gxf6 14. O-O-O exd5 15. Bc3 c5
+C40	Elephant Gambit: Paulsen Countergambit: Tactics in Junior Openings, p.32	1. e4 e5 2. Nf3 d5 3. exd5 e4 4. Ne5 Nf6 5. Bb5+ Nbd7 6. Nc3 Bd6 7. d4 exd3 8. Nxd7 Bxd7 9. Bxd7+ Qxd7 10. Qxd3 O-O-O 11. Be3 Qg4 12. O-O Be5 13. h3 Qh5 14. Bd4 Nxd5 15. Bxe5 Qxe5 16. Rfe1 Qd6 17. Qf5+ Qd7
+C40	Latvian Gambit Accepted: Main Line: Tactics in Junior Openings, p.33	1. e4 e5 2. Nf3 f5 3. Nxe5 Qf6 4. d4 fxe4 5. Nc3
+C40	Latvian Gambit Accepted: Foltys-Leonhardt Variation: Tactics in Junior Openings, p.33	1. e4 e5 2. Nf3 f5 3. Nxe5 Qf6 4. Nc4 b5 5. Ne3 c6 6. Nxf5 d5 7. Ng3 Bc5 8. Qe2 Ne7 9. c3 d4
+C40	Latvian Gambit: 3.Nxe5 Qf6 4.d4 d6 5.Nc4 fxe4 6.Nc3: Tactics in Junior Openings, p.34	1. e4 e5 2. Nf3 f5 3. Nxe5 Qf6 4. d4 d6 5. Nc4 fxe4 6. Nc3 Qf7 7. Nxe4 Be7 8. Qe2 Nc6
+C40	Latvian Gambit: 3.Nxe5 Qf6 4.d4 d6: Tactics in Junior Openings, p.34	1. e4 e5 2. Nf3 f5 3. Nxe5 Qf6 4. d4 d6 5. Nf3 fxe4 6. Ng5 h6 7. Nxe4 Qe7 8. Bd3 d5
+C40	Latvian Gambit: 3.Nxe5: Tactics in Junior Openings, p.35	1. e4 e5 2. Nf3 f5 3. Nxe5 Nf6 4. d4 fxe4 5. Bg5 Be7
+C40	Latvian Gambit: Fraser Defense: Tactics in Junior Openings, p.35	1. e4 e5 2. Nf3 f5 3. Nxe5 Nc6 4. d4 Qh4 5. Nf3 Qxe4+ 6. Be2 d5 7. O-O Bd7 8. Nc3 Qe6 9. Ng5 Qf6 10. Nxd5 Qd6
+C20	Center Game: Tactics in Junior Openings, p.36	1. e4 e5 2. d4 d6 3. Nf3 Nc6 4. dxe5 Nxe5 5. Nxe5 dxe5 6. Qxd8+ Kxd8 7. Bc4 f6 8. Be3 Bd6 9. Nc3 c6 10. O-O-O Ke7 11. Rd2 b6 12. Rhd1 Bc7
+C41	Philidor Defense: Nimzowitsch Variation, Rellstab Variation: Tactics in Junior Openings, p.36	1. e4 e5 2. Nf3 d6 3. d4 Nf6 4. dxe5 Nxe4 5. Qd5 Nc5 6. Bg5 Qd7 7. exd6 Bxd6 8. Nc3 O-O 9. O-O-O a6 10. Be3 Qf5
+C41	Philidor Defense: Nimzowitsch Variation, Rellstab Variation: Tactics in Junior Openings, p.37	1. e4 e5 2. Nf3 d6 3. d4 Nf6 4. dxe5 Nxe4 5. Qd5 Nc5 6. Bg5 Be6 7. Bxd8 Bxd5 8. Bxc7 Nbd7 9. exd6 Ne6 10. Nc3 Bc6 11. Bb5 a6 12. Bxc6 bxc6 13. O-O-O Nxc7 14. dxc7 Rc8 15. Rhe1+ Be7 16. Nd4 Nf6 17. Nxc6 Rxc7
+C41	Philidor Defense: Tactics in Junior Openings, p.37	1. e4 e5 2. Nf3 d6 3. Bc4 Bg4 4. Nc3 g6
+C41	Philidor Defense: Nimzowitsch Variation, Rellstab Variation: Tactics in Junior Openings, p.38	1. e4 e5 2. Nf3 d6 3. d4 Nf6 4. dxe5 Nxe4 5. Qd5 f5 6. Bc4 Qe7 7. O-O c6 8. exd6 Qf6 9. Qd3 Bxd6 10. Re1 Nd7 11. Nc3 Nc5 12. Nxe4 fxe4 13. Qd4 Kd7 14. Qxf6 gxf6 15. b4 exf3 16. bxc5 Bxc5 17. Bf4 Bd4
+C41	Philidor Defense: Nimzowitsch Variation, Rellstab Variation: Tactics in Junior Openings, p.38	1. e4 e5 2. Nf3 d6 3. d4 Nf6 4. dxe5 Nxe4 5. Qd5 Nc5 6. Bg5 Be7 7. exd6 Qxd6 8. Nc3 Qxd5 9. Nxd5 Bd6 10. O-O-O Ne6 11. Bh4 Nc6 12. Bc4 a6 13. Rhe1 O-O 14. Bg3 Bxg3 15. hxg3 b5 16. Bb3 Ra7 17. Ne5 Ned4 18. Rxd4 Nxd4 19. Ne7+ Kh8
+B01	Scandinavian Defense: 2...Qxd5 3.d4: Tactics in Junior Openings, p.39	1. e4 d5 2. exd5 Qxd5 3. d4 Nc6 4. Nf3 Bg4 5. Be2 Bxf3 6. Bxf3 Qxd4
+B01	Scandinavian Defense: Valencian Variation: Tactics in Junior Openings, p.39	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd8 4. d4 e6 5. Nf3 h6 6. Bd3 Bb4 7. O-O Bxc3 8. bxc3 Bd7 9. Re1 Nf6 10. Ba3 Bc6 11. Rb1 Nbd7
+B01	Scandinavian Defense: 2...Qxd5, 5.Nf3: Tactics in Junior Openings, p.40	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Nf3 Nc6 6. Bb5 Bd7 7. Bd2 O-O-O 8. a4 e6 9. Ne5 Bb4
+B01	Scandinavian Defense: 2...Qxd5 3.Nc3 Qa5 4.Bc4 Nf6: Tactics in Junior Openings, p.40	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. Bc4 Nf6 5. d3 Bf5 6. Bd2 c6 7. Qe2 Nbd7
+B01	Scandinavian Defense: 2...Qxd5 3.Nc3 Qa5 4.d4 c6 5.Bc4: Tactics in Junior Openings, p.41	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 c6 5. Bc4 Bf5 6. Nf3 Nf6 7. Ne5 e6 8. g4 Be4 9. f3 Bd5 10. Bd2 Bxc4 11. Nxc4 Qc7 12. Qe2 Nbd7 13. O-O-O O-O-O 14. Ne4 Nd5 15. Kb1 Kb8
+B01	Scandinavian Defense: 2...Qxd5, 5.Bc4: Tactics in Junior Openings, p.41	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Bc4 Nc6 6. Bd2 a6
+B01	Scandinavian Defense: 2...Qxd5, 5.Bd2: Tactics in Junior Openings, p.42	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Bd2 Nc6 6. Bb5 Bg4 7. f3 Bf5
+B01	Scandinavian Defense: 2...Qxd5 3.Nc3 Qa5 4.Bc4 Nf6: Tactics in Junior Openings, p.42	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. Bc4 Nf6 5. Qe2 c6 6. Nf3 Bg4
+B01	Scandinavian Defense: Gubinsky-Melts Defense: Tactics in Junior Openings, p.43	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd6 4. Nf3 Nf6 5. d4 Bg4 6. Be3 e6 7. h3 Bh5 8. g4 Bg6 9. Ne5 Nbd7
+B01	Scandinavian Defense: Bronstein Variation: Tactics in Junior Openings, p.43	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd6 4. d4 Nf6 5. Nf3 a6 6. Bc4 b5 7. Bb3 Bb7 8. O-O e6 9. Re1 Be7 10. Ng5 O-O
+B01	Scandinavian Defense: 2...Qxd5 3.Nc3 Qa5 4.Bc4: Tactics in Junior Openings, p.44	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. Bc4 g6 5. Qf3 Nf6 6. Nd5 Bg7
+B01	Scandinavian Defense: Valencian Variation: Tactics in Junior Openings, p.44	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd8 4. d4 Nc6 5. Nf3 Bg4 6. d5 Ne5
+B01	Scandinavian Defense: 2...Qxd5, 5.Bc4: Tactics in Junior Openings, p.45	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Bc4 Bf5 6. Bd2 e6 7. Nd5 Qa4
+B01	Scandinavian Defense: 2...Qxd5, 5.Nf3 Bg4: Tactics in Junior Openings, p.45	1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Nf3 Bg4 6. Be2 Nc6 7. Be3 O-O-O 8. Nd2 Bxe2 9. Qxe2 Nxd4
+B22	Sicilian Defense: Alapin, 2...d5 3.exd5 Qxd5 4.d4 e6: Tactics in Junior Openings, p.46	1. e4 c5 2. c3 d5 3. exd5 Qxd5 4. d4 e6 5. Na3 Nf6 6. Nb5 Na6 7. Be3 cxd4 8. Qxd4 Bc5
+B22	Sicilian Defense: Alapin, 2...Nf6 3.e5 Nd5 4.Nf3 Nc6: Tactics in Junior Openings, p.46	1. e4 c5 2. c3 Nf6 3. e5 Nd5 4. Nf3 Nc6 5. d4 cxd4 6. cxd4 d6 7. Bd3 Bg4 8. O-O dxe5 9. dxe5 Nxe5
+B22	Sicilian Defense: Alapin Variation, Barmen Defense: Tactics in Junior Openings, p.47	1. e4 c5 2. c3 d5 3. exd5 Qxd5 4. d4 Nc6 5. Nf3 Nf6 6. Be3 e6 7. a3 Be7 8. Bd3 O-O 9. O-O Rd8 10. Qe2 Qb3 11. dxc5 Nd5
+B22	Sicilian Defense: Alapin Variation, Barmen Defense: Tactics in Junior Openings, p.47	1. e4 c5 2. c3 d5 3. exd5 Qxd5 4. Nf3 Nf6 5. d4 Bg4 6. Be2 e6 7. Bg5 Be7 8. Bxf6 Bxf6 9. dxc5 Qxc5
+B22	Sicilian Defense: Alapin Variation, Barmen Defense, Modern Line: Tactics in Junior Openings, p.48	1. e4 c5 2. c3 d5 3. exd5 Qxd5 4. d4 Nf6 5. Nf3 Bg4 6. Nbd2 e6 7. Bc4 Bxf3
+B22	Sicilian Defense: Alapin, 2...d6: Tactics in Junior Openings, p.48	1. e4 c5 2. c3 d6 3. d4 Nf6 4. Bd3 Nc6 5. Ne2 cxd4 6. cxd4 Qb6 7. Nbc3 e6 8. O-O Be7 9. a3 Nxd4
+B22	Sicilian Defense: Alapin, 2...Nc6 3.d4: Tactics in Junior Openings, p.49	1. e4 c5 2. c3 Nc6 3. d4 cxd4 4. cxd4 d5 5. Nc3 dxe4 6. d5 Ne5 7. Qa4+ Bd7 8. Qxe4 Ng6 9. Nb5 Nf6
+B22	Sicilian Defense: Alapin, 2...d6: Tactics in Junior Openings, p.49	1. e4 c5 2. c3 d6 3. d4 e5 4. Nf3 cxd4 5. cxd4 Qc7 6. Nc3 Nf6 7. Bg5 Nbd7 8. Rc1 a6 9. Qd2 exd4
+B13	Caro-Kann Defense: Panov-Botvinnik, 5...Nc6 6.Nf3 Bg4: 8.Qb3: Tactics in Junior Openings, p.50	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 Nxd4
+A11	English Opening: Caro-Kann Defensive System: Tactics in Junior Openings, p.50	1. c4 c6 2. e4 d5 3. exd5 cxd5 4. d4 dxc4 5. Bxc4 e5 6. Nf3 Bb4+ 7. Nc3 exd4 8. O-O dxc3
+B13	Caro-Kann Defense: Panov Attack, Modern Defense, Czerniak Line: Tactics in Junior Openings, p.51	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Bg5 Qa5 7. Bd2 dxc4 8. Bxc4 Nxd4
+B13	Caro-Kann Defense: Panov Attack: Tactics in Junior Openings, p.51	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nc6 5. Nf3 Bg4 6. cxd5 Qxd5 7. Be2
+B10	Caro-Kann Defense: English Variation: Tactics in Junior Openings, p.52	1. e4 c6 2. c4 d5 3. exd5 cxd5 4. d4 Nf6 5. Nc3 Nc6 6. Bg5 Qb6 7. cxd5 Qxb2
+B13	Caro-Kann Defense: Panov Attack: Tactics in Junior Openings, p.52	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 dxc4 5. Bxc4 Nc6 6. Nf3 Bg4 7. Bxf7+ Kxf7 8. Ng5+ Ke8 9. Qxg4 Qxd4 10. Qe6
+B13	Caro-Kann Defense: Panov Attack, Modern Defense, Mieses Line: Tactics in Junior Openings, p.53	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. Be2 e6 8. O-O Be7 9. Be3 Qb6 10. a3
+B13	Caro-Kann Defense: Panov Attack: Tactics in Junior Openings, p.53	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 dxc4 5. Bxc4 Nf6 6. Nf3 Bg4
+B13	Caro-Kann Defense: Panov-Botvinnik, 4...e6: Tactics in Junior Openings, p.54	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 e6 5. Nc3 Nf6 6. Bf4 Bb4
+B14	Caro-Kann Defense: Panov-Botvinnik, 5...e6 6.Nf3 Nc6: Tactics in Junior Openings, p.54	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Nc6 7. cxd5 Nxd5 8. Bd3 Be7 9. O-O O-O 10. Re1 b6
+B14	Caro-Kann Defense: Panov-Botvinnik, 5...e6 6.Nf3 Be7 7.cxd5 Nxd5 8.Bd3: Tactics in Junior Openings, p.55	1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 8. Bd3 Nc6 9. O-O O-O 10. a3
+B03	Alekhine Defense: Exchange, 5...exd6 6.Nc3 Be7: Tactics in Junior Openings, p.56	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 exd6 6. Nc3 Be7 7. Bd3 Nc6 8. Nge2 Bf6 9. Be3 Bg4 10. f3 Bh4+ 11. Ng3 Bh5 12. O-O Bg6 13. Be2 O-O 14. d5 Ne5
+B03	Alekhine Defense: Exchange, 5...cxd6 6.Nc3: Tactics in Junior Openings, p.56	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 cxd6 6. Nc3 Bf5 7. Be3 Nc6 8. Nf3 d5
+B03	Alekhine Defense: Exchange, 5...cxd6 6.Nc3: Tactics in Junior Openings, p.57	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 cxd6 6. Nc3 Bf5 7. Qf3 Qd7
+B03	Alekhine Defense: Exchange Variation, Voronezh Variation: Tactics in Junior Openings, p.57	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 cxd6 6. Nc3 g6 7. Be3 Bg7 8. Rc1 O-O 9. b3 Bf5 10. d5 N8d7
+B02	Alekhine Defense: Chase Variation: Tactics in Junior Openings, p.58	1. e4 Nf6 2. e5 Nd5 3. c4 Nb6 4. d4 d6 5. exd6 cxd6 6. Be3 g6 7. Nc3 Bg7 8. Qd2 N8d7 9. h4 Nf6 10. f3 Qc7 11. Rc1
+B03	Alekhine Defense: Exchange, 5...exd6 6.Nc3 Be7: Tactics in Junior Openings, p.58	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 exd6 6. Nc3 Be7 7. Bd3 Nc6 8. Nge2 O-O 9. O-O Nb4 10. Bb1
+B03	Alekhine Defense: Exchange, 5...cxd6: Tactics in Junior Openings, p.59	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 cxd6 6. Be3 Nc6 7. Nc3 g6 8. d5 Ne5 9. Bd4 Rg8 10. c5 Nbd7
+B03	Alekhine Defense: Exchange Variation, Voronezh Variation: Tactics in Junior Openings, p.59	1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 5. exd6 cxd6 6. Nc3 g6 7. Be3 Bg7 8. Rc1 O-O 9. b3 e5 10. dxe5 dxe5 11. Qxd8 Rxd8 12. c5
+B06	Modern Defense: 3.Nf3 d6 4.Bc4: Tactics in Junior Openings, p.60	1. e4 g6 2. d4 Bg7 3. Nf3 d6 4. Bc4 Nd7
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.60	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Be2 O-O 6. h4 Nc6 7. h5 e5 8. hxg6 fxg6 9. Nf3 Ng4 10. Bc4+ Kh8 11. Ng5 Bh6
+B07	Pirc Defense: 150 Attack: Tactics in Junior Openings, p.61	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. g3 Nbd7 7. g4 h5 8. g5 Nh7 9. d5 cxd5 10. Nxd5 e6
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.61	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Nf3 Nc6 6. h3 O-O 7. Qd2 Qd7 8. Bh6 Ne8 9. Bxg7 Nxg7 10. O-O-O e6 11. Qh6
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.62	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Nf3 O-O 6. Bc4 Nbd7 7. h3 c6 8. e5 dxe5 9. dxe5 Ne8 10. e6
+A41	Queen's Pawn Game: Tactics in Junior Openings, p.62	1. d4 d6 2. e4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 O-O 6. Bh6 c6 7. h4 Bxh6 8. Qxh6 Qa5 9. h5 Nxh5 10. Nf3 f6 11. Bc4+ e6
+B07	Pirc Defense: 4.Be3: Tactics in Junior Openings, p.63	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Nbd7 5. Nf3 e5 6. Qd2 c6 7. O-O-O Qc7 8. h3 b5 9. dxe5 Nxe5 10. Nxe5 dxe5
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.63	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. f3 O-O 6. Qd2 Re8 7. O-O-O c6 8. Bh6 Bxh6 9. Qxh6 e6 10. e5 Nd5 11. Ne4 dxe5 12. dxe5 Qe7
+B07	Pirc Defense: 4.Be3 c6: Tactics in Junior Openings, p.64	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Nf3 b5 6. a3 Nbd7 7. h3 e5 8. d5 cxd5 9. Nxd5 Nxd5 10. Qxd5 Rb8 11. Ng5 Qe7 12. Bxb5 a6
+B07	Pirc Defense: 4.Be3 c6: Tactics in Junior Openings, p.64	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Nf3 Bg4 6. h3 Bxf3 7. Qxf3 b5 8. e5 b4 9. Nb5 Nd5 10. Bc4 a6 11. Bxd5 cxd5 12. Qxd5 Nd7
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.65	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. f3 Nbd7 6. Qd2 O-O 7. Bh6 Re8 8. O-O-O Bh8 9. e5 dxe5 10. dxe5 Nh5 11. e6 fxe6 12. Bc4 Kf7
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.65	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Nf3 Nc6 6. h3 O-O 7. Qd2 e5 8. d5 Ne7 9. Rd1 Kh8 10. Be2 Nxe4 11. Nxe4 f5 12. Neg5 f4 13. Bxf4 Rxf4
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.66	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Nf3 O-O 6. Qd2 Ng4 7. Bg5 f6 8. Bh4 Nc6 9. h3 Nh6 10. O-O-O Nf7 11. Kb1 Bh6 12. Qe1 Bd7 13. Bc4 e5
+B07	Pirc Defense: 4.Be3, 150 Attack: Tactics in Junior Openings, p.66	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. Qd2 c6 6. Bh6 O-O 7. h4 Qa5 8. h5 Bxh6 9. Qxh6 g5 10. e5 Ne4 11. Bd3 f5 12. Bxe4 fxe4 13. Qxg5+ Kf7
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.67	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. f3 c6 6. Qd2 Nbd7 7. g4 Qa5 8. h4 h5 9. g5 Ng8 10. f4 e6 11. O-O-O Ne7 12. Kb1 b5
+B07	Pirc Defense: 4.Be3 Bg7: Tactics in Junior Openings, p.67	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 5. f3 c6 6. Qd2 b5 7. O-O-O Qa5 8. Kb1 b4 9. Nce2 Nbd7 10. Rc1 O-O 11. h4 Rb8 12. h5 Nxh5 13. Bh6 e5
+A45	Indian Defense: 2.Nc3: Tactics in Junior Openings, p.68	1. d4 Nf6 2. Nc3 g6 3. e4 d6 4. Be3 Bg7 5. f3 c6 6. Qd2 Nbd7 7. g4 e5 8. O-O-O O-O 9. dxe5 dxe5 10. h4 h5 11. g5 Nh7 12. Bc4 Qa5 13. Qd6 Re8
+B07	Pirc Defense: 4.Be3: Tactics in Junior Openings, p.68	1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Nbd7 5. Qd2 c5 6. f3 cxd4 7. Bxd4 Bg7 8. O-O-O O-O 9. h4 Qc7 10. g4 Nb6 11. h5 Rd8 12. hxg6 fxg6
+C01	French Defense: Exchange, 4.c4 Nf6 5.Nc3 Bb4: Tactics in Junior Openings, p.69	1. e4 e6 2. d4 d5 3. exd5 exd5 4. c4 Nf6 5. Nc3 Bb4 6. Bd3 O-O 7. Nf3 Re8+ 8. Be3 Ng4 9. O-O Bxc3 10. bxc3 Nxe3 11. fxe3 Rxe3
+C01	French Defense: Exchange Variation, Monte Carlo Variation: Tactics in Junior Openings, p.69	1. e4 e6 2. d4 d5 3. exd5 exd5 4. c4 b6 5. cxd5 Ba6 6. Bxa6 Nxa6
+D08	Queen's Gambit Declined: Albin, 3.e3: Tactics in Junior Openings, p.70	1. d4 d5 2. c4 e5 3. e3 exd4 4. exd4
+C01	French Defense: Exchange Variation, Monte Carlo Variation: Tactics in Junior Openings, p.70	1. e4 e6 2. d4 d5 3. exd5 exd5 4. c4 Bb4+ 5. Nc3 Ne7 6. Nf3 Bg4 7. Be2 dxc4 8. O-O Bxf3 9. Bxf3 c6 10. Qe2 Qxd4 11. Rd1 Qf6 12. Ne4 Qe6 13. a3 Ba5 14. Bg4 Qg6 15. Bf5 Nxf5
+C05	French Defense: Tarrasch, Closed, 7.Ndf3 Qa5: Tactics in Junior Openings, p.71	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. Bd3 c5 6. c3 Nc6 7. Ndf3 Qa5 8. Qd2
+C05	French Defense: Tarrasch, Closed, 7.Ne2: Tactics in Junior Openings, p.71	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. Bd3 c5 6. c3 Nc6 7. Ne2 Nb6 8. b3 Bd7 9. Nf3 Rc8 10. Bd2 cxd4 11. cxd4 Nb4 12. Bb1 Bb5 13. Bg5 Qc7 14. O-O
+C06	French Defense: Tarrasch, Closed, 8...f6: Tactics in Junior Openings, p.72	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. Bd3 c5 6. c3 Nc6 7. Ne2 cxd4 8. cxd4 f6 9. f4 fxe5 10. fxe5
+C01	French Defense: Exchange: Tactics in Junior Openings, p.72	1. e4 e6 2. d4 d5 3. exd5 exd5 4. c3 Bd6 5. Bd3 Qf6 6. Qh5 Ne7 7. Bg5 Qe6+ 8. Ne2 Qg4 9. Qxg4 Bxg4 10. Nf4
+C01	French Defense: Exchange, 4.Bd3: Tactics in Junior Openings, p.73	1. e4 e6 2. d4 d5 3. exd5 exd5 4. Bd3 c5 5. dxc5 Bxc5 6. Nc3 Nf6 7. Bg5 O-O 8. Nge2
+C01	French Defense: Exchange, 4.Bd3: Tactics in Junior Openings, p.73	1. e4 e6 2. d4 d5 3. exd5 exd5 4. Bd3 c5 5. Nf3 Nc6 6. Qe2+ Be7 7. dxc5 Nf6 8. h3 O-O 9. O-O Bxc5 10. c3 Re8 11. Qc2 Qd6 12. Nbd2
+C01	French Defense: Exchange, 4.Bd3: Tactics in Junior Openings, p.74	1. e4 e6 2. d4 d5 3. exd5 exd5 4. Bd3 Nf6 5. c3 Be7 6. h3 O-O 7. Nf3 c5 8. dxc5 Bxc5 9. O-O Qd6 10. Nbd2
+C02	French Defense: Advance Variation, Milner-Barry Gambit: Tactics in Junior Openings, p.74	1. e4 e6 2. d4 d5 3. e5 c5 4. c3 Nc6 5. Nf3 Qb6 6. Bd3 Bd7 7. O-O cxd4 8. cxd4 Nxd4 9. Nxd4 Qxd4 10. Nc3 Qxe5 11. Re1 Qd6 12. Qf3 Be7 13. Bf4 Qb6 14. Qg4 Nf6
+C02	French Defense: Advance, Euwe, 6.a3: Tactics in Junior Openings, p.75	1. e4 e6 2. d4 d5 3. e5 c5 4. c3 Nc6 5. Nf3 Bd7 6. a3 c4 7. g3 f6 8. Nh4 Qb6 9. Qh5+ Kd8
+C02	French Defense: Advance Variation, Euwe Variation: Tactics in Junior Openings, p.75	1. e4 e6 2. d4 d5 3. e5 c5 4. c3 Nc6 5. Nf3 Bd7 6. Bd3 Rc8 7. Qe2 cxd4 8. Nxd4
+C00	French Defense: Tactics in Junior Openings, p.76	1. e4 e6 2. d4 d5 3. f3 dxe4 4. fxe4
+C00	French Defense: Tactics in Junior Openings, p.76	1. e4 e6 2. Bc4 d5 3. exd5 exd5 4. Bb5+ c6 5. Ba4 a5 6. Nf3
+C01	French Defense: Exchange, 4.c4 Nf6 5.Nc3 Be7: Tactics in Junior Openings, p.77	1. e4 e6 2. d4 d5 3. exd5 exd5 4. c4 Nf6 5. Nc3 Be7 6. Nf3 O-O 7. a3 Re8
+C00	French Defense: Wing Gambit: Tactics in Junior Openings, p.77	1. e4 e6 2. Nf3 d5 3. e5 c5 4. b4 cxb4 5. d4 Nc6 6. a3 Qa5 7. Bd3 Nge7 8. Nbd2 b3 9. cxb3
+C11	French Defense: Steinitz, 5.f4 c5: Tactics in Junior Openings, p.78	1. e4 e6 2. d4 d5 3. Nc3 Nf6 4. e5 Nfd7 5. f4 c5 6. Nce2 Nc6 7. c3 Qb6 8. Nf3 f6
+C05	French Defense: Tarrasch, Closed, 5.f4 c5 6.c3 Nc6 7.Ndf3 Qb6 8.Ne2: Tactics in Junior Openings, p.78	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. f4 c5 6. c3 Nc6 7. Ndf3 Qb6 8. Ne2 f6 9. g3 cxd4 10. cxd4 Bb4+ 11. Bd2 fxe5 12. fxe5 O-O 13. Bg2
+C05	French Defense: Tarrasch, Closed, 5.f4 c5 6.c3 Nc6 7.Ndf3 Qb6 8.Ne2: Tactics in Junior Openings, p.79	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. f4 c5 6. c3 Nc6 7. Ndf3 Qb6 8. Ne2 f6 9. g3 cxd4 10. cxd4 Bb4+ 11. Bd2 fxe5 12. fxe5 O-O 13. Qb3
+C05	French Defense: Tarrasch, Closed, 5.f4 c5 6.c3 Nc6 7.Ndf3 Qb6 8.Ne2: Tactics in Junior Openings, p.79	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. f4 c5 6. c3 Nc6 7. Ndf3 Qb6 8. Ne2 f6 9. g3 cxd4 10. cxd4 Bb4+ 11. Bd2 fxe5 12. dxe5 O-O 13. Qc2
+C05	French Defense: Tarrasch, Closed, 5.c3: Tactics in Junior Openings, p.80	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. c3 c5 6. f4 Nc6 7. Ndf3 Qb6 8. Ne2 f6 9. g3 cxd4 10. cxd4 Bb4+ 11. Bd2 fxe5 12. fxe5 O-O 13. Bg2 Ndxe5 14. dxe5 Nxe5 15. Bxb4 Qxb4+ 16. Kf2 Qe4 17. Nf4
+C05	French Defense: Tarrasch, Closed, 5.f4 c5 6.c3 Nc6 7.Ndf3 Qb6 8.Ne2: Tactics in Junior Openings, p.80	1. e4 e6 2. d4 d5 3. Nd2 Nf6 4. e5 Nfd7 5. f4 c5 6. c3 Nc6 7. Ndf3 Qb6 8. Ne2 f6 9. g3 cxd4 10. cxd4 Bb4+ 11. Bd2 fxe5 12. fxe5 O-O 13. Bg2 Ndxe5 14. dxe5 Nxe5 15. Nc1
+D32	Tarrasch Defense: von Hennig-Schara Gambit, 7.Qxd5 Nc6: Tactics in Junior Openings, p.81	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 cxd4 5. Qa4+ Bd7 6. Qxd4 exd5 7. Qxd5 Nc6 8. e4
+D32	Tarrasch Defense: von Hennig-Schara Gambit, 7.Qxd5 Nc6 8.Nf3: Tactics in Junior Openings, p.81	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 cxd4 5. Qa4+ Bd7 6. Qxd4 exd5 7. Qxd5 Nc6 8. Nf3 Nf6 9. Qd1 Bc5 10. Bg5
+D34	Tarrasch Defense: Classical Variation, Endgame Variation: Tactics in Junior Openings, p.82	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 Be7 8. O-O O-O 9. Bg5 Be6 10. Rc1 c4 11. Ne5 Rc8
+D33	Tarrasch Defense: Dubov Tarrasch: Tactics in Junior Openings, p.82	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 cxd4 8. Nxd4 Bc5 9. Be3 Qb6 10. Nxc6 Bxe3 11. Nxd5 Nxd5 12. Qxd5 Bxf2+ 13. Kf1 Be6 14. Qf3 Be3 15. Nb4 O-O 16. Nc2 Qxb2 17. Qxe3 Qxc2 18. Bxb7 Rae8 19. Qf2
+D30	Queen's Gambit Declined: 3.cxd5: Tactics in Junior Openings, p.83	1. d4 d5 2. c4 e6 3. cxd5 exd5 4. Nc3 c5 5. Qb3 Nf6 6. Bg5 c4 7. Qb5+ Bd7
+D32	Tarrasch Defense: 5.g3: Tactics in Junior Openings, p.83	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. g3 Nc6 6. Nf3 Bf5 7. Bg2 Nf6 8. O-O Rc8 9. Re1 cxd4 10. Nxd4 Nxd4 11. Qxd4 Bc5 12. Qe5+ Be6 13. Nxd5
+D34	Tarrasch Defense: 9.Be3: Tactics in Junior Openings, p.84	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 Be7 8. O-O O-O 9. Be3 Bg4 10. h3 Bxf3 11. Bxf3 Qd7 12. Bg2 Rad8 13. Bg5 Ne4 14. Bxe7 Qxe7 15. dxc5 Qxc5 16. Rc1
+D34	Tarrasch Defense: 9.dxc5 Bxc5: Tactics in Junior Openings, p.84	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 Be7 8. O-O O-O 9. dxc5 Bxc5 10. a3 Re8 11. b4 Bb6 12. Bb2 Bg4 13. Nb5 Qe7 14. Nbd4 Rac8 15. Re1 Ne4 16. Rc1 Qf6
+A13	English Opening: Agincourt Defense: Tactics in Junior Openings, p.85	1. c4 e6 2. d4 d5 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 Be7 8. O-O O-O 9. dxc5 d4 10. Na4 Bf5 11. Bd2 Be4 12. Nh4 Bxg2 13. Nxg2 Ne4 14. Qc2
+D34	Tarrasch Defense: Classical Variation, Petursson Variation: Tactics in Junior Openings, p.85	1. d4 d5 2. c4 e6 3. Nc3 c5 4. cxd5 exd5 5. Nf3 Nc6 6. g3 Nf6 7. Bg2 Be7 8. O-O O-O 9. Bg5 cxd4 10. Nxd4 Re8 11. h3 h6 12. Be3 Bd6 13. a3
+D53	Queen's Gambit Declined: 4.Bg5 Be7 5.Nf3 O-O: Tactics in Junior Openings, p.86	1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. Nf3 O-O 6. e3 h6 7. Bh4 b6 8. Rc1 Bb7 9. cxd5 Nxd5 10. Bxe7 Qxe7 11. Bd3 Rc8 12. O-O Nd7 13. e4 Nf4 14. Bb1 c5 15. d5 exd5 16. exd5 Nf6 17. d6 Qd7 18. Ne5
+D31	Queen's Gambit Declined: Alatortsev, 4.Nf3: Tactics in Junior Openings, p.86	1. d4 d5 2. c4 e6 3. Nc3 Be7 4. Nf3 Nf6 5. Bg5 h6 6. Bh4 O-O 7. e3 b6 8. Bd3 Bb7 9. Rc1 Nbd7 10. cxd5 exd5 11. O-O c5 12. Bf5 c4 13. b3 g6 14. Bb1 Ne4 15. Bxe7 Qxe7 16. bxc4 Nxc3 17. Rxc3 dxc4 18. Qa4 a5 19. Rxc4
+D53	Queen's Gambit Declined: 4.Bg5 Be7 5.Nf3 O-O: Tactics in Junior Openings, p.87	1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. Nf3 O-O 6. e3 h6 7. Bh4 b6 8. cxd5 exd5 9. Bxf6 Bxf6 10. b4 c5 11. bxc5 bxc5 12. Bd3 Nc6 13. O-O cxd4 14. exd4 Nxd4 15. Nxd4 Bxd4 16. Bh7+ Kxh7 17. Qxd4 Be6 18. Rfd1 Qa5
+E00	Queen's Pawn Game: Neo-Indian: Tactics in Junior Openings, p.87	1. d4 Nf6 2. c4 e6 3. Nc3 d5 4. Bg5 Be7 5. e3 O-O 6. Nf3 h6 7. Bh4 b6 8. Rc1 Bb7 9. cxd5 exd5 10. Bd3 Nbd7 11. O-O c5 12. Bb1 Ne4 13. Bxe7 Qxe7 14. dxc5 Nxc3 15. Rxc3 bxc5 16. b4 Ba6 17. Qc2 g6 18. Rd1 cxb4 19. Rc7 Rac8
+D31	Queen's Gambit Declined: Alatortsev, 4.Nf3: Tactics in Junior Openings, p.88	1. d4 d5 2. c4 e6 3. Nc3 Be7 4. Nf3 Nf6 5. Bg5 h6 6. Bh4 O-O 7. e3 b6 8. Rc1 Bb7 9. cxd5 Nxd5 10. Bxe7 Qxe7 11. Bd3 Nd7 12. Nxd5 Bxd5 13. Rxc7 Bxf3 14. gxf3 Qd6 15. Qc2
+D58	Queen's Gambit Declined: Tartakower, 8.Bxf6: Tactics in Junior Openings, p.88	1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 5. e3 O-O 6. Nf3 h6 7. Bh4 b6 8. Bxf6 Bxf6 9. cxd5 exd5 10. Be2 Be6 11. O-O Nd7 12. Bb5 Nb8 13. Qa4 Qd6 14. Rfd1 c6 15. Be2 Bf5 16. Rac1 Nd7 17. b4 b5 18. Qa6 Nb6 19. a4
+E00	Queen's Pawn Game: Neo-Indian: Tactics in Junior Openings, p.89	1. d4 Nf6 2. c4 e6 3. Nc3 d5 4. Bg5 Be7 5. Nf3 O-O 6. e3 h6 7. Bh4 b6 8. Be2 Bb7 9. O-O Nbd7 10. Rc1 c5 11. h3 Rc8 12. b3 cxd4 13. Nxd4 Nc5 14. cxd5 Nxd5 15. Bxe7 Qxe7 16. Nxd5 Bxd5 17. Bf3 Ne4 18. Rc2 Rc5 19. Qd3 Qb7 20. Rfc1 Rfc8 21. Kh1
+D31	Queen's Gambit Declined: Alatortsev, 4.Nf3: Tactics in Junior Openings, p.89	1. d4 d5 2. c4 e6 3. Nc3 Be7 4. Nf3 Nf6 5. Bg5 h6 6. Bh4 O-O 7. e3 b6 8. Bd3 Bb7 9. Qc2 dxc4 10. Bxc4 c5 11. O-O-O cxd4 12. Nxd4 Qc8 13. Qb3 Nc6 14. Nxc6 Bxc6 15. Kb1 Qb7 16. f3 Rad8 17. e4 Nxe4 18. Bxe7 Nxc3+ 19. Qxc3 Qxe7 20. Rc1 Rc8 21. Ba6
+A40	Queen's Pawn Game: 1...e6 2.Nf3: Tactics in Junior Openings, p.90	1. d4 e6 2. Nf3 f5 3. g3 Nf6 4. Bg2 d5 5. O-O Bd6 6. c4 c6 7. Qc2 O-O 8. b3 Ne4 9. Bb2 Nd7 10. Ne5 Qf6 11. f3
+A40	Queen's Pawn Game: 1...e6 2.c4: Tactics in Junior Openings, p.90	1. d4 e6 2. c4 f5 3. g3 Nf6 4. Bg2 d5 5. b3 c6
+D02	Queen's Pawn Game: 2.Nf3 e6 3.g3: Tactics in Junior Openings, p.91	1. d4 d5 2. Nf3 e6 3. g3 f5 4. Bg2 Nf6 5. O-O Be7 6. c4 O-O 7. Nc3 c6 8. Qb3 Qe8 9. e3 Qh5 10. Ne2 g5 11. Bd2 Nbd7 12. Rfe1 Ne4 13. Nc3
+A04	Zukertort Opening: Dutch Variation: Tactics in Junior Openings, p.91	1. Nf3 f5 2. c4 Nf6 3. Nc3 e6 4. g3 d5 5. d4 c6 6. Bg2 Bd6 7. Ne5 Nbd7 8. Bf4 Qe7 9. e3 O-O 10. f3 dxc4 11. Qe2 Nd5 12. Qxc4 N7b6 13. Qe2
+A04	Zukertort Opening: Dutch Variation: Tactics in Junior Openings, p.92	1. Nf3 f5 2. d4 Nf6 3. g3 e6 4. Bg2 d5 5. c4 c6 6. b3 Be7 7. O-O O-O 8. Bb2 Qe8 9. Nbd2 Nbd7 10. Qc2 Ne4 11. Ne5 Nxe5 12. dxe5 Qh5 13. f3
+A40	Queen's Pawn Game: 1...e6 2.c4: Tactics in Junior Openings, p.92	1. d4 e6 2. c4 f5 3. Nf3 Nf6 4. g3 d5 5. Bg2 c6 6. O-O Bd6 7. b3 O-O 8. Bb2 Qe8 9. Nbd2 Qh5 10. Ne5 Nbd7 11. Rc1 Bxe5 12. dxe5 Ng4 13. Nf3 f4 14. cxd5 fxg3 15. hxg3

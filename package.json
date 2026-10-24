@@ -1,0 +1,19 @@
+{
+  "name": "rookery",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Free, open chess opening trainer: 11,000+ named lines, spaced repetition, position explorer, PGN and database import",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build:data": "node scripts/build-openings.mjs",
+    "build:db": "node scripts/build-gamedb.mjs",
+    "import:pdf": "node scripts/pdf-to-lines.mjs",
+    "import:eco": "node scripts/import-eco-json.mjs"
+  },
+  "dependencies": {
+    "chess.js": "^1.4.0"
+  }
+}

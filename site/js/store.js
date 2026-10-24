@@ -2,8 +2,8 @@
 const KEY = 'rookery:v1';
 const DAY = 86400000;
 export const INTERVALS = [0, 1, 3, 7, 16, 35]; // days per box
-export const LEARNED_BOX = 2;
-export const MASTERED_BOX = 4;
+export const LEARNED_BOX = 1; // one perfect run earns the check mark; practice brings it back on a schedule
+export const MASTERED_BOX = 3;
 
 let state = { lines: {}, streak: { count: 0, last: '' }, xp: 0, settings: { theme: 'auto', sound: true, flip: false }, daily: {} };
 const listeners = new Set();
@@ -85,6 +85,7 @@ export function streak() {
 }
 
 export const xp = () => state.xp;
+export const stars = () => Object.values(state.lines).reduce((n, l) => n + (l.ok || 0), 0);
 export const doneToday = () => state.daily[today()] || 0;
 
 export function counts(ids) {

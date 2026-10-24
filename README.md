@@ -3,9 +3,10 @@
 A free, open chess opening trainer that runs entirely in your browser. No account, no paywall, no server.
 
 - **11,700+ named lines across 136 openings** (Sicilian alone has 1,600+), with ECO codes and transposition-aware naming
-- **Trainer**: the opponent plays the book, you find your moves. Mistakes and hints are tracked, and every line goes through spaced repetition (1, 3, 7, 16, 35 day intervals)
-- **Review queue** of due lines across every opening, a daily streak and XP
-- **Position explorer**: play any moves, see what each continuation is called and how many lines follow it
+- **Built to be easy for kids and beginners**: pick an opening, a friendly Coach Knight plays the other side and tells you in plain words if you are right. A perfect lesson earns a star
+- **Lessons in three levels** per opening (Essentials, Advanced, Expert), like a course
+- **Practice** brings lessons back on a schedule (1, 3, 7, 16, 35 days) so you remember them, with a daily streak
+- **Try any moves** (More menu): play any moves, see what each continuation is called and how many lines follow it
 - **Import your own material**: Lichess study PGNs and any repertoire PGN (with variations) become trainable openings; big master-game PGNs become win/draw/loss statistics in the explorer
 - Light and dark themes, keyboard friendly, works on phones
 

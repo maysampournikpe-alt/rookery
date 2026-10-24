@@ -1,13 +1,12 @@
 import { loadData, D } from './data.js';
-import { counts, streak, onChange, settings, setSetting } from './store.js';
+import { counts, streak, stars, onChange, settings, setSetting } from './store.js';
 import { h } from './ui.js';
 
 const app = document.getElementById('app');
 let destroy = null;
 
 const routes = [
-  [/^$|^\/$/, 'landing', () => import('./views/home.js')],
-  [/^\/openings$/, 'home', () => import('./views/home.js'), 'renderOpenings'],
+  [/^$|^\/$|^\/openings$/, 'home', () => import('./views/home.js')],
   [/^\/opening\/([^/]+)$/, 'home', () => import('./views/opening.js')],
   [/^\/train\/([^/]+)$/, 'home', () => import('./views/train.js')],
   [/^\/review$/, 'review', () => import('./views/train.js'), 'renderReview'],
@@ -22,9 +21,11 @@ function chrome() {
   b.hidden = !due;
   b.textContent = due;
   document.querySelector('#streak b').textContent = streak();
+  document.querySelector('#stars b').textContent = stars();
 }
 
 async function route() {
+  document.getElementById('moreMenu').open = false;
   const [path, qs = ''] = location.hash.replace(/^#/, '').split('?');
   const query = new URLSearchParams(qs);
   destroy?.();

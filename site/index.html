@@ -3,36 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rookery — Free Chess Opening Trainer</title>
-  <meta name="description" content="Learn every chess opening for free. 11,000+ named lines, spaced-repetition training, a position explorer, and PGN import for your own repertoires and databases.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d4a94a'/%3E%3Cpath d='M18 50h28v-6l-4-3V26l4-4v-8h-6v4h-4v-4h-8v4h-4v-4h-6v8l4 4v15l-4 3z' fill='%231a1408'/%3E%3C/svg%3E">
+  <title>Rookery — Learn Chess Openings for Free</title>
+  <meta name="description" content="Learn chess openings the easy way. Pick an opening, play the moves with your coach, and practice until you know them. Free, no sign-up.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ffc93c'/%3E%3Cpath d='M18 50h28v-6l-4-3V26l4-4v-8h-6v4h-4v-4h-8v4h-4v-4h-6v8l4 4v15l-4 3z' fill='%232a1f00'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
   <header class="top">
     <a class="brand" href="#/" aria-label="Rookery home">
-      <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><path d="M18 52h28v-6l-4-3V27l4-4V13h-6v4h-4v-4h-8v4h-4v-4h-6v10l4 4v16l-4 3z" fill="currentColor"/></svg>
+      <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><path d="M18 52h28v-6l-4-3V27l4-4V13h-6v4h-4v-4h-8v4h-4v-4h-6v10l4 4v16l-4 3z" fill="currentColor"/></svg>
       <span>Rookery</span>
     </a>
     <nav id="nav" aria-label="Main">
-      <a href="#/openings" data-nav="home">Openings</a>
-      <a href="#/explorer" data-nav="explorer">Explorer</a>
-      <a href="#/review" data-nav="review">Review <i id="dueBadge" hidden></i></a>
-      <a href="#/import" data-nav="import">Import</a>
-      <a href="#/stats" data-nav="stats">Progress</a>
+      <a href="#/" data-nav="home">Openings</a>
+      <a href="#/review" data-nav="review">Practice <i id="dueBadge" hidden></i></a>
     </nav>
     <div class="top-r">
-      <span class="pill" id="streak" title="Daily streak">🔥 <b>0</b></span>
-      <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></button>
+      <span class="pill stars-pill" id="stars" title="Perfect lessons">⭐ <b>0</b></span>
+      <span class="pill" id="streak" title="Days in a row">🔥 <b>0</b></span>
+      <details class="more" id="moreMenu">
+        <summary aria-label="More"><span aria-hidden="true">⋯</span></summary>
+        <div class="menu">
+          <a href="#/explorer">Try any moves<small>See which opening your moves make</small></a>
+          <a href="#/import">Add your own games<small>Import PGN files</small></a>
+          <a href="#/stats">My progress</a>
+          <button id="themeBtn" type="button">Switch light or dark</button>
+        </div>
+      </details>
     </div>
   </header>
   <main id="app" tabindex="-1"></main>
   <footer class="foot">
-    Opening names &amp; lines: <a href="https://github.com/lichess-org/chess-openings">lichess-org/chess-openings</a> (CC0).
-    Pieces: cburnett (GPL/BSD). Free forever, runs entirely in your browser.
+    Opening names and lines from <a href="https://github.com/lichess-org/chess-openings">lichess-org/chess-openings</a> (CC0). Pieces by cburnett. Free forever. Everything stays in your browser.
   </footer>
   <div id="toast" role="status" aria-live="polite"></div>
   <script type="module" src="js/app.js"></script>

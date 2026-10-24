@@ -1,190 +1,122 @@
-import { Chess } from '../../vendor/chess.js';
-import { D, fenAfter, START_FEN } from '../data.js';
-import { Board, drawMini } from '../board.js';
-import { counts, streak, xp } from '../store.js';
-import { h, plural, progressBar, debounce, moveText } from '../ui.js';
+import { D, fenAfter } from '../data.js';
+import { drawMini } from '../board.js';
+import { counts } from '../store.js';
+import { h, debounce } from '../ui.js';
 
-const F = { q: '', side: '', first: '', vol: '', sort: 'lines', shown: 36 };
-const FIRSTS = [['e4', '1.e4'], ['d4', '1.d4'], ['c4', '1.c4'], ['Nf3', '1.Nf3'], ['other', 'Other']];
+const F = { q: '', side: '', all: false };
+const HOW_KEY = 'rookery:how-hidden';
 
 function matches(fam, q) {
-  if (!q) return { ok: true };
+  if (!q) return true;
   const ql = q.toLowerCase();
-  if (fam.name.toLowerCase().includes(ql)) return { ok: true, hits: fam.lines.length };
-  const moveQ = ql.replace(/\d+\.(\.\.)?/g, ' ').trim().split(/\s+/).join(' ');
-  const looksMoves = /^[a-hnbrqko][a-h1-8x=+#\-o]*( |$)/i.test(moveQ) && /\d|^[nbrqk]/i.test(moveQ);
-  let hits = 0;
-  for (const l of fam.lines) {
-    if (l.name.toLowerCase().includes(ql) || l.eco.toLowerCase() === ql || (looksMoves && l.san.join(' ').toLowerCase().startsWith(moveQ))) hits++;
-  }
-  return { ok: hits > 0, hits };
+  return fam.name.toLowerCase().includes(ql) || fam.lines.some((l) => l.name.toLowerCase().includes(ql));
 }
 
-function visible() {
-  const out = [];
-  for (const fam of D.families) {
-    if (F.side && fam.side !== F.side) continue;
-    if (F.first) {
-      const known = ['e4', 'd4', 'c4', 'Nf3'];
-      if (F.first === 'other' ? known.includes(fam.first) : fam.first !== F.first) continue;
-    }
-    if (F.vol && !fam.volumes.has(F.vol)) continue;
-    const m = matches(fam, F.q.trim());
-    if (!m.ok) continue;
-    out.push({ fam, hits: m.hits });
-  }
-  const prog = (f) => counts(f.lines.map((l) => l.id));
-  if (F.sort === 'az') out.sort((a, b) => a.fam.name.localeCompare(b.fam.name));
-  else if (F.sort === 'progress') out.sort((a, b) => prog(b.fam).learned / b.fam.lines.length - prog(a.fam).learned / a.fam.lines.length);
-  else if (F.sort === 'due') out.sort((a, b) => prog(b.fam).due - prog(a.fam).due);
-  return out.sort((a, b) => Number(b.fam.mine) - Number(a.fam.mine));
+function sideBadge(side) {
+  return h('img', { class: 'side', src: `pieces/${side === 'white' ? 'w' : 'b'}K.svg`, alt: '', title: `You play ${side === 'white' ? 'White' : 'Black'}` });
 }
 
-function famCard(fam, hits) {
-  const c = counts(fam.lines.map((l) => l.id));
+export function card(fam) {
+  const ids = fam.tiers.essentials.map((l) => l.id);
+  const c = counts(ids);
   const canvas = h('canvas', { 'aria-hidden': 'true' });
   const fen = fenAfter(fam.root.san);
   requestAnimationFrame(() => drawMini(canvas, fen, fam.side));
-  const blurb = fam.blurb || `${plural(fam.lines.length, 'named line')}, starting ${moveText(fam.root.san)}.`;
+  const verb = c.learned === 0 ? 'Start' : c.learned >= c.total ? 'Practice' : 'Continue';
   return h(
     'a',
-    { class: 'card', href: `#/opening/${fam.slug}` },
+    { class: 'ocard', href: `#/opening/${fam.slug}`, 'aria-label': `${fam.name}, ${c.learned} of ${c.total} lessons learned` },
     canvas,
     h(
       'div',
-      {},
+      { class: 'body' },
       h('h3', {}, fam.name),
-      h('p', {}, blurb),
-      h(
-        'div',
-        { class: 'meta' },
-        h('span', { class: 'tag ' + (fam.side === 'white' ? 'w' : 'b') }, fam.side === 'white' ? 'White' : 'Black'),
-        fam.mine ? h('span', { class: 'tag mine' }, 'Mine') : fam.eco && h('span', { class: 'tag' }, fam.eco),
-        h('span', {}, plural(fam.lines.length, 'line')),
-        hits != null && F.q && h('span', {}, `· ${hits} match`),
-        c.due > 0 && h('span', { style: 'color:var(--ox)' }, `· ${c.due} due`),
-      ),
-      progressBar(c.learned, fam.lines.length),
-      h('div', { class: 'bar-label' }, h('span', {}, `${c.learned}/${fam.lines.length} learned`), h('span', {}, 'Open →')),
+      h('p', {}, fam.blurb || `${fam.tiers.essentials.length} lessons to get you started.`),
+      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${c.learned} of ${c.total} lessons learned`),
+      h('div', { class: 'go' }, (() => { const b = h('div', { class: 'bar' }, h('i')); requestAnimationFrame(() => (b.firstChild.style.width = c.total ? (c.learned / c.total) * 100 + '%' : '0')); return b; })(), h('span', { class: 'play' }, verb)),
     ),
+    sideBadge(fam.side),
   );
 }
 
-function heroBoard(wrap) {
-  const board = new Board(wrap.querySelector('.hb'), { orientation: 'white' });
-  const cap = wrap.querySelector('.hero-cap');
-  const pool = D.lines.filter((l) => !l.mine && l.san.length >= 10 && l.san.length <= 22 && /Sicilian|Ruy|Italian|Queen's Gambit|King's Indian|French|Caro|Scotch|Nimzo|English|Grünfeld|Catalan/.test(l.fam));
-  let dead = false;
-  const loop = async () => {
-    while (!dead) {
-      const line = pool[Math.floor(Math.random() * pool.length)];
-      const c = new Chess();
-      board.setFen(START_FEN);
-      cap.innerHTML = '';
-      cap.append(h('b', {}, line.name), h('span', {}, line.eco));
-      for (const m of line.san) {
-        await new Promise((r) => setTimeout(r, 850));
-        if (dead) return;
-        const mv = c.move(m);
-        board.setFen(c.fen(), { last: [mv.from, mv.to], animate: true });
-      }
-      await new Promise((r) => setTimeout(r, 2600));
+function howItWorks() {
+  let hidden = false;
+  try {
+    hidden = localStorage.getItem(HOW_KEY) === '1';
+  } catch {
+    /* ignore */
+  }
+  if (hidden) return null;
+  const step = (n, t, d) => h('div', {}, h('b', {}, n), h('strong', {}, t), h('span', {}, d));
+  const box = h(
+    'div',
+    {},
+    h('div', { class: 'how' }, step('1', 'Pick an opening', 'Choose one below. Every opening is a set of short lessons.'), step('2', 'Play the moves', 'Your coach plays the other side. Find the right move to win a star.'), step('3', 'Practice', 'Come back each day. Practice brings back what you might forget.')),
+    h('button', { class: 'btn sm ghost how-close', style: 'align-self:flex-end', onclick: () => { try { localStorage.setItem(HOW_KEY, '1'); } catch { /* ignore */ } box.remove(); } }, 'Got it, hide this'),
+  );
+  box.style.cssText = 'display:flex;flex-direction:column;gap:6px';
+  return box;
+}
+
+export function render(root) {
+  const due = counts(D.lines.map((l) => l.id)).due;
+  const search = h('input', { type: 'search', placeholder: 'Search openings, like Italian or Sicilian', value: F.q, 'aria-label': 'Search openings' });
+  const results = h('div', {});
+  const filters = h('div', { class: 'filters' });
+
+  const segBtn = (label, side, img) => h('button', { type: 'button', 'aria-pressed': String(F.side === side), onclick: () => ((F.side = side), drawFilters(), draw()) }, img ? h('img', { src: img, alt: '' }) : null, label);
+  function drawFilters() {
+    filters.replaceChildren(h('div', { class: 'seg', role: 'group', 'aria-label': 'Which side do you play?' }, segBtn('All', ''), segBtn('White', 'white', 'pieces/wK.svg'), segBtn('Black', 'black', 'pieces/bK.svg')));
+  }
+
+  function section(title, list, note) {
+    return h('section', {}, h('div', { class: 'section-h' }, h('h2', {}, title), note ? h('span', {}, note) : null), h('div', { class: 'cards' }, list.map(card)));
+  }
+
+  function draw() {
+    const filtered = D.families.filter((f) => (!F.side || f.side === F.side) && matches(f, F.q.trim()));
+    const mine = filtered.filter((f) => f.mine);
+    const rest = filtered.filter((f) => !f.mine);
+    const searching = F.q.trim() || F.side;
+    const kids = [];
+    if (due && !searching) {
+      kids.push(
+        h('div', { class: 'panel', style: 'display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px' }, h('div', {}, h('h3', {}, `${due} lesson${due > 1 ? 's' : ''} ready to practice`), h('div', { style: 'color:var(--muted)' }, 'A quick practice keeps your openings fresh.')), h('a', { class: 'btn primary', href: '#/review' }, 'Practice now')),
+      );
     }
-  };
-  loop();
-  return () => (dead = true);
-}
+    if (mine.length) kids.push(section('Your lessons', mine));
+    if (searching) {
+      kids.push(rest.length ? section(`${rest.length} opening${rest.length > 1 ? 's' : ''} found`, rest) : h('div', { class: 'empty' }, 'No openings found. Try a shorter name, like "sicilian".'));
+    } else {
+      const popular = rest.filter((f) => f.blurb);
+      const others = rest.filter((f) => !f.blurb);
+      kids.push(section('Popular openings', popular));
+      if (F.all) kids.push(section('More openings', others));
+      else if (others.length) kids.push(h('div', { class: 'more-row' }, h('button', { class: 'btn', onclick: () => ((F.all = true), draw()) }, `Show ${others.length} more openings`)));
+    }
+    results.replaceChildren(...kids);
+  }
 
-function build(root, landing) {
-  const total = D.lines.length;
-  const all = counts(D.lines.map((l) => l.id));
-  const stop = [];
-  const hero = h(
-    'section',
-    { class: 'hero' },
-    h(
-      'div',
-      {},
-      h('h1', { html: 'Every opening.<br>Every line. <em>Free.</em>' }),
-      h('p', { class: 'lead' }, `Train ${total.toLocaleString()} named lines across ${D.families.length} openings with spaced repetition, explore any position, and drop in your own PGN repertoires and master databases. No account, no paywall, no limits.`),
-      h(
-        'div',
-        { class: 'cta' },
-        h('a', { class: 'btn primary', href: all.due ? '#/review' : '#/openings' }, all.due ? `Review ${all.due} due line${all.due > 1 ? 's' : ''}` : 'Browse openings'),
-        h('a', { class: 'btn', href: '#/explorer' }, 'Open the explorer'),
-        h('a', { class: 'btn ghost', href: '#/import' }, 'Import PGN'),
-      ),
-      h(
-        'div',
-        { class: 'stats-row' },
-        h('div', {}, h('b', {}, total.toLocaleString()), h('span', {}, 'lines')),
-        h('div', {}, h('b', {}, String(D.families.length)), h('span', {}, 'openings')),
-        h('div', {}, h('b', {}, `${all.learned}`), h('span', {}, 'learned')),
-        h('div', {}, h('b', {}, '$0'), h('span', {}, 'forever')),
-      ),
-    ),
-    h('div', { class: 'hero-board' }, h('div', { class: 'hb' }), h('div', { class: 'hero-cap' })),
-  );
-
-  const grid = h('div', { class: 'grid' });
-  const more = h('div', { class: 'more' });
-  const note = h('span', { class: 'count-note' });
-
-  const chip = (label, key, val) => {
-    const b = h('button', { class: 'chip', 'aria-pressed': String(F[key] === val), onclick: () => ((F[key] = F[key] === val ? '' : val), (F.shown = 36), sync()) }, label);
-    return b;
-  };
-
-  const toolbar = h('div', { class: 'toolbar' });
-  const search = h('input', { type: 'search', placeholder: 'Search openings, variations, ECO codes or moves (e.g. 1.e4 c5 Nf3)…', value: F.q, 'aria-label': 'Search openings' });
   search.addEventListener(
     'input',
     debounce(() => {
       F.q = search.value;
-      F.shown = 36;
       draw();
     }, 140),
   );
 
-  function buildToolbar() {
-    toolbar.replaceChildren(
-      h('label', { class: 'search' }, h('span', { 'aria-hidden': 'true' }, '⌕'), search),
-      h('div', { class: 'chips', role: 'group', 'aria-label': 'Side' }, chip('White', 'side', 'white'), chip('Black', 'side', 'black')),
-      h('div', { class: 'chips', role: 'group', 'aria-label': 'First move' }, FIRSTS.map(([v, l]) => chip(l, 'first', v))),
-      h('div', { class: 'chips', role: 'group', 'aria-label': 'ECO volume' }, ['A', 'B', 'C', 'D', 'E'].map((v) => chip(v, 'vol', v))),
-      h(
-        'select',
-        { class: 'sel', 'aria-label': 'Sort', onchange: (e) => ((F.sort = e.target.value), draw()) },
-        [['lines', 'Most lines'], ['az', 'A → Z'], ['progress', 'Most learned'], ['due', 'Most due']].map(([v, l]) => h('option', { value: v, selected: F.sort === v }, l)),
-      ),
-      note,
-    );
-  }
-
-  function sync() {
-    buildToolbar();
-    draw();
-  }
-
-  function draw() {
-    const list = visible();
-    note.textContent = `${list.length} opening${list.length === 1 ? '' : 's'}`;
-    grid.replaceChildren(...list.slice(0, F.shown).map(({ fam, hits }) => famCard(fam, hits)));
-    more.replaceChildren();
-    if (list.length > F.shown) more.append(h('button', { class: 'btn', onclick: () => ((F.shown += 48), draw()) }, `Show more (${list.length - F.shown} left)`));
-    if (!list.length) grid.append(h('div', { class: 'empty' }, 'No openings match. Try fewer filters or a different spelling.'));
-  }
-
-  if (landing) {
-    root.replaceChildren(hero);
-    stop.push(heroBoard(hero));
-  } else {
-    root.replaceChildren(h('div', { style: 'padding-top:28px' }, h('p', { class: 'crumb', style: 'margin:0' }, 'Openings'), h('h1', { class: 'title' }, 'All openings')), toolbar, grid, more);
-    buildToolbar();
-    draw();
-  }
-  return () => stop.forEach((f) => f());
+  drawFilters();
+  root.replaceChildren(
+    h(
+      'section',
+      { class: 'welcome' },
+      h('h1', {}, 'Learn chess openings'),
+      h('p', {}, 'Pick an opening, play the moves with your coach, and practice until you know them. It is free.'),
+      h('label', { class: 'search-big' }, h('span', { 'aria-hidden': 'true', style: 'display:flex', html: '<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>' }), search),
+      filters,
+    ),
+    howItWorks(),
+    results,
+  );
+  draw();
 }
-
-export const render = (root) => build(root, true);
-export const renderOpenings = (root) => build(root, false);

@@ -1,5 +1,5 @@
 import { loadData, D } from './data.js';
-import { counts, streak, stars, onChange, settings, setSetting } from './store.js';
+import { counts, streak, onChange, settings, setSetting } from './store.js';
 import { h } from './ui.js';
 
 const app = document.getElementById('app');
@@ -22,7 +22,6 @@ function chrome() {
   b.hidden = !due;
   b.textContent = due;
   document.querySelector('#streak b').textContent = streak();
-  document.querySelector('#stars b').textContent = stars();
 }
 
 async function route() {
@@ -46,6 +45,18 @@ async function route() {
   app.replaceChildren(h('div', { class: 'empty' }, 'Page not found. ', h('a', { href: '#/' }, 'Go home')));
 }
 
+function applyBoard() {
+  const b = settings().board || 'blue';
+  document.documentElement.dataset.board = b;
+  document.querySelectorAll('#boards button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.board === b)));
+}
+document.getElementById('boards').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-board]');
+  if (!b) return;
+  setSetting('board', b.dataset.board);
+  applyBoard();
+});
+
 function applyTheme() {
   const t = settings().theme;
   document.documentElement.dataset.theme = t;
@@ -60,6 +71,7 @@ document.getElementById('themeBtn').addEventListener('click', () => {
 document.addEventListener('rookery:progress', chrome);
 onChange(chrome);
 applyTheme();
+applyBoard();
 
 app.replaceChildren(h('div', { class: 'empty' }, 'Loading opening lines…'));
 try {

@@ -32,9 +32,10 @@ function attacks(board, sq, piece, color) {
   return out;
 }
 
+// Chess.com-style voice: "You develop your knight...", "They exchange pawns..."
 function who(color, mine) {
   const side = color === 'w' ? 'White' : 'Black';
-  return mine ? { S: 'We', poss: 'our', s: '', side } : { S: side, poss: 'their', s: 's', side };
+  return mine ? { S: 'You', poss: 'your', s: '', side } : { S: 'They', poss: 'their', s: '', side };
 }
 
 // returns { instr: "Play bishop to e3.", text: (mine) => "We develop our bishop ...", piece, from, to }

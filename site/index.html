@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ffc93c'/%3E%3Cpath d='M18 50h28v-6l-4-3V26l4-4v-8h-6v4h-4v-4h-8v4h-4v-4h-6v8l4 4v15l-4 3z' fill='%232a1f00'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -22,7 +22,6 @@
       <a href="#/review" data-nav="review">Practice <i id="dueBadge" hidden></i></a>
     </nav>
     <div class="top-r">
-      <span class="pill stars-pill" id="stars" title="Perfect lessons">⭐ <b>0</b></span>
       <span class="pill" id="streak" title="Days in a row">🔥 <b>0</b></span>
       <details class="more" id="moreMenu">
         <summary aria-label="More"><span aria-hidden="true">⋯</span></summary>
@@ -30,6 +29,12 @@
           <a href="#/explorer">Try any moves<small>See which opening your moves make</small></a>
           <a href="#/import">Add your own games<small>Import PGN files</small></a>
           <a href="#/stats">My progress</a>
+          <div class="boards" id="boards" role="group" aria-label="Board colors">
+            <span>Board</span>
+            <button type="button" data-board="blue" aria-label="Blue board" style="--l:#e6edf3;--d:#7d9db8"></button>
+            <button type="button" data-board="green" aria-label="Green board" style="--l:#eeeed2;--d:#769656"></button>
+            <button type="button" data-board="brown" aria-label="Brown board" style="--l:#f0d9b5;--d:#b58863"></button>
+          </div>
           <button id="themeBtn" type="button">Switch light or dark</button>
         </div>
       </details>

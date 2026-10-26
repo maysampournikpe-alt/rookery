@@ -37,6 +37,12 @@ export class Board {
     this.grid = document.createElement('div');
     this.grid.className = 'board-grid';
     el.append(this.grid);
+    this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this.svg.setAttribute('class', 'board-arrows');
+    this.svg.setAttribute('viewBox', '0 0 8 8');
+    this.svg.setAttribute('aria-hidden', 'true');
+    el.append(this.svg);
+    this.arrows = [];
     this.grid.addEventListener('pointerdown', (e) => this.#down(e));
     this.render();
   }
@@ -48,17 +54,48 @@ export class Board {
     this.selected = null;
     this.hint = null;
     this.mark = null;
+    this.arrows = [];
     this.render();
+    this.#drawArrows();
     if (animate && last) this.#slide(last[0], last[1], prev);
   }
 
   setOrientation(o) {
     this.orientation = o;
     this.render();
+    this.#drawArrows();
   }
 
   flip() {
     this.setOrientation(this.orientation === 'white' ? 'black' : 'white');
+  }
+
+  // arrows: [[from, to], ...] drawn over the board, e.g. the move to play
+  setArrows(list) {
+    this.arrows = list || [];
+    this.#drawArrows();
+  }
+
+  #drawArrows() {
+    const white = this.orientation === 'white';
+    const pt = (sq) => {
+      const f = FILES.indexOf(sq[0]);
+      const r = +sq[1];
+      return [(white ? f : 7 - f) + 0.5, (white ? 8 - r : r - 1) + 0.5];
+    };
+    const parts = this.arrows.map(([a, b]) => {
+      const [x1, y1] = pt(a);
+      const [x2, y2] = pt(b);
+      const len = Math.hypot(x2 - x1, y2 - y1) || 1;
+      const ux = (x2 - x1) / len;
+      const uy = (y2 - y1) / len;
+      const bx = x2 - ux * 0.5;
+      const by = y2 - uy * 0.5;
+      const px = -uy * 0.24;
+      const py = ux * 0.24;
+      return `<line x1="${x1 + ux * 0.2}" y1="${y1 + uy * 0.2}" x2="${bx}" y2="${by}" stroke-width="0.2" stroke-linecap="round"/><polygon points="${x2 - ux * 0.08},${y2 - uy * 0.08} ${bx + px},${by + py} ${bx - px},${by - py}"/>`;
+    });
+    this.svg.innerHTML = parts.join('');
   }
 
   setHint(sq) {

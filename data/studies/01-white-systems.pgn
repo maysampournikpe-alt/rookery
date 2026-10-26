@@ -1,0 +1,31 @@
+[Event "London System: Classical Setup, vs ...e6 and ...Bd6"]
+
+1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 Bd6 5. Bg3 O-O (5... Bxg3 6. hxg3 O-O 7. Nbd2 c5 8. c3 Nc6 9. Bd3 Qe7 10. Qe2) 6. Nbd2 c5 (6... b6 7. c3 Bb7 8. Bd3 Nbd7 9. O-O c5 10. Ne5) (6... Nbd7 7. c3 c5 8. Bd3 b6 9. Qe2 Bb7 10. O-O) 7. c3 Nc6 (7... Qe7 8. Bd3 b6 9. O-O Bb7 10. Ne5) 8. Bd3 b6 (8... Qe7 9. Ne5 Bxe5 10. Bxe5) 9. O-O Bb7 10. Ne5 *
+
+[Event "London System: vs ...c5 and ...Nc6"]
+
+1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Nf6 (4... Qb6 5. Qb3 c4 6. Qxb6 axb6 7. Nd2 Nf6 8. Ngf3 Bf5 9. Be2 e6 10. O-O) (4... e6 5. Nd2 Nf6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3) 5. Nd2 e6 (5... Bf5 6. Ngf3 e6 7. Nh4 Bg6 8. Nxg6 hxg6 9. Bd3) 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 b6 (8... Qe7 9. Qe2 b6 10. e4) 9. Ne5 Bb7 10. f4 *
+
+[Event "London System: vs ...Bf5"]
+
+1. d4 d5 2. Bf4 Nf6 3. e3 Bf5 (3... c5 4. c3 Nc6 5. Nd2 Bf5 6. Ngf3 e6 7. Nh4 Bg6 8. Nxg6 hxg6 9. Bd3) 4. Nd2 e6 (4... c6 5. Ngf3 e6 6. c3 Nbd7 7. Be2 Bd6 8. Bg3 Bxg3 9. hxg3 O-O 10. O-O) 5. Ngf3 c6 (5... Nbd7 6. c3 c6 7. Be2 Bd6 8. Bg3 O-O 9. O-O) 6. c3 Nbd7 7. Be2 Bd6 8. Bg3 Bxg3 (8... O-O 9. O-O Bxg3 10. hxg3) 9. hxg3 O-O 10. O-O *
+
+[Event "London System: vs the King's Indian set-up"]
+
+1. d4 Nf6 2. Bf4 g6 3. Nf3 Bg7 4. e3 O-O 5. Be2 d6 6. h3 Nbd7 7. O-O c5 (7... e5 8. Bg3 Re8 9. c3 Qe7 10. Nbd2) 8. c3 Qb6 (8... b6 9. Nbd2 Bb7 10. Qb3) 9. Qb3 *
+
+[Event "Colle System: Colle-Zukertort, vs ...c5"]
+
+1. d4 d5 2. Nf3 Nf6 3. e3 e6 4. Bd3 c5 5. b3 Nc6 6. O-O Bd6 7. Bb2 O-O 8. Nbd2 b6 (8... Qe7 9. dxc5 Bxc5 10. c4) 9. Ne5 Bb7 *
+
+[Event "Colle System: Classic Colle, vs ...Nbd7 and ...Bd6"]
+
+1. d4 d5 2. Nf3 Nf6 3. e3 e6 4. Bd3 Nbd7 (4... Bd6 5. O-O O-O 6. Nbd2 Nbd7 (6... c5 7. c3 Nc6 8. e4 dxe4 9. Nxe4 Nxe4 10. Bxe4) 7. e4 dxe4 8. Nxe4 Nxe4 9. Bxe4) 5. Nbd2 Bd6 (5... c5 6. c3 Bd6 7. O-O O-O 8. e4 dxe4 9. Nxe4 Nxe4 10. Bxe4) 6. O-O O-O 7. e4 dxe4 8. Nxe4 Nxe4 9. Bxe4 *
+
+[Event "Torre Attack: vs ...d5 and ...Be7"]
+
+1. d4 Nf6 2. Nf3 e6 3. Bg5 d5 (3... c5 4. e3 Be7 5. Nbd2 cxd4 6. exd4 d5 7. Bd3 O-O 8. c3 Nc6 9. O-O) (3... h6 4. Bh4 d5 5. e3 Be7 6. Nbd2 O-O 7. Bd3 b6 8. O-O Bb7 9. c3) (3... Be7 4. e3 O-O 5. Nbd2 d5 6. Bd3 c5 7. c3 Nbd7 8. O-O) 4. e3 Be7 5. Nbd2 O-O 6. Bd3 Nbd7 (6... c5 7. c3 Nc6 8. O-O b6 9. Qe2 Bb7 10. Rfe1) 7. c3 c5 8. O-O b6 9. Qe2 Bb7 10. Rfe1 *
+
+[Event "Torre Attack: vs the King's Indian set-up"]
+
+1. d4 Nf6 2. Nf3 g6 3. Bg5 Bg7 4. Nbd2 d6 5. e4 O-O 6. c3 Nbd7 7. Bd3 e5 8. O-O *

@@ -1,7 +1,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
-import { coursesOf, allLessons } from '../repertoire.js';
+import { coursesOf, allLessons, deepestCount } from '../repertoire.js';
 import { h, debounce } from '../ui.js';
 
 const F = { q: '', side: '', all: false };
@@ -34,7 +34,7 @@ export function card(fam) {
       { class: 'body' },
       h('h3', {}, fam.name),
       h('p', {}, fam.blurb || `${nCourses} ways to play the ${fam.name}.`),
-      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${nCourses} variation${nCourses > 1 ? 's' : ''} · ${c.learned} of ${c.total} lessons learned`),
+      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${nCourses} variation${nCourses > 1 ? 's' : ''} · ${deepestCount(fam, fam.side)} lines · ${c.learned} learned`),
       h('div', { class: 'go' }, (() => { const b = h('div', { class: 'bar' }, h('i')); requestAnimationFrame(() => (b.firstChild.style.width = c.total ? (c.learned / c.total) * 100 + '%' : '0')); return b; })(), h('span', { class: 'play' }, verb)),
     ),
     sideBadge(fam.side),

@@ -2,7 +2,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
-import { coursesOf, buildCourse, tiersOf } from '../repertoire.js';
+import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
 export function render(root, { slug, query }) {
@@ -17,8 +17,9 @@ export function render(root, { slug, query }) {
   const sideSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'You play' });
 
   function card(course) {
-    const essentials = buildCourse(fam, course, side, 'essentials');
     const tiers = tiersOf(fam, course, side);
+    const dt = defaultTier(tiers);
+    const essentials = buildCourse(fam, course, side, dt.key);
     const biggest = tiers.at(-1).count;
     const c = counts(essentials.leaves.map((l) => l.id));
     const canvas = h('canvas', { 'aria-hidden': 'true' });
@@ -28,14 +29,14 @@ export function render(root, { slug, query }) {
     requestAnimationFrame(() => (bar.firstChild.style.width = (c.total ? (c.learned / c.total) * 100 : 0) + '%'));
     return h(
       'a',
-      { class: 'ocard', href: `#/course/${fam.slug}/${course.key}?side=${side}`, 'aria-label': `${course.name}, ${c.learned} of ${c.total} lines learned` },
+      { class: 'ocard', href: `#/course/${fam.slug}/${course.key}?side=${side}&tier=${dt.key}`, 'aria-label': `${course.name}, ${c.learned} of ${c.total} lines learned` },
       canvas,
       h(
         'div',
         { class: 'body' },
         h('h3', {}, course.name),
         h('p', {}, course.idea),
-        h('div', { class: 'count' }, `${c.total} ${c.total === 1 ? 'line' : 'lines'}${biggest > c.total ? ` · up to ${biggest}` : ''} · ${c.learned} learned`),
+        h('div', { class: 'count' }, `${biggest} ${biggest === 1 ? 'line' : 'lines'} · ${c.learned} learned`),
         h('div', { class: 'go' }, bar, h('span', { class: 'play' }, c.discovered === 0 ? 'Start' : c.learned >= c.total ? 'Practice' : 'Continue')),
       ),
     );

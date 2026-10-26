@@ -2,7 +2,7 @@ import { Chess } from '../../vendor/chess.js';
 import { D, START_FEN } from '../data.js';
 import { Board } from '../board.js';
 import { recordRun, discover, isDiscovered, isLearned, INTERVALS, dueEntries } from '../store.js';
-import { coursesOf, buildCourse, tiersOf } from '../repertoire.js';
+import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { describeMove } from '../explain.js';
 import { h, sleep } from '../ui.js';
 
@@ -373,7 +373,7 @@ export function render(root, { slug, query }) {
   const courses = coursesOf(fam);
   const course = courses.find((c) => c.key === query.get('course')) || courses[0];
   const tiers = tiersOf(fam, course, side);
-  const tier = tiers.some((t) => t.key === query.get('tier')) ? query.get('tier') : tiers[0].key;
+  const tier = tiers.some((t) => t.key === query.get('tier')) ? query.get('tier') : defaultTier(tiers).key;
   const built = buildCourse(fam, course, side, tier);
   const q = built.leaves;
   const first = q.find((l) => l.id === query.get('line')) || q.find((l) => !isDiscovered(l.id)) || q.find((l) => !isLearned(l.id)) || q[0];

@@ -1,0 +1,144 @@
+[Event "Réti Opening: Réti Gambit Accepted, 3.e3 Nf6"]
+
+1. Nf3 d5 2. c4 dxc4 3. e3 Nf6 (3... e6 4. Bxc4 c5 5. O-O Nf6 6. d4 a6) 4. Bxc4 e6 (4... Nbd7 5. Nc3 e6 6. O-O Be7 7. d4) 5. O-O c5 (5... a6 6. d4 c5 7. Qe2 b5 8. Bb3 Bb7) 6. d4 a6 7. Qe2 b5 8. Bb3 Bb7 9. Rd1 Nbd7 10. Nc3 Qb6 *
+
+[Event "Réti Opening: Anglo-Slav, 2...c6"]
+
+1. Nf3 d5 2. c4 c6 3. b3 Bg4 (3... Nf6 4. g3 Bf5 5. Bg2 e6 6. O-O Nbd7 7. Bb2) 4. Bb2 Nd7 (4... Nf6 5. e3 e6 6. h3 Bh5 7. Be2 Nbd7) 5. e3 e6 (5... Ngf6 6. h3 Bh5 7. Be2 e6 8. O-O) 6. h3 Bh5 7. Be2 Ngf6 8. O-O Bd6 9. d3 *
+
+[Event "Réti Opening: Réti System, 2.c4 e6 3.g3"]
+
+1. Nf3 d5 2. c4 e6 (2... d4 3. e3 Nc6 4. exd4 Nxd4 5. Nxd4 Qxd4 6. Nc3 e5 7. d3 Nf6) 3. g3 Nf6 (3... c6 4. Bg2 Nf6 5. b3 Be7 6. O-O O-O) 4. Bg2 Be7 (4... dxc4 5. Qa4+ Nbd7 6. Qxc4 a6 7. Qc2 c5) 5. O-O O-O 6. b3 c5 (6... b6 7. Bb2 Bb7 8. e3 Nbd7 9. Nc3) 7. Bb2 Nc6 8. e3 b6 9. cxd5 exd5 10. d4 Bb7 11. Nc3 Rc8 *
+
+[Event "Réti Opening: King's Indian Attack Set-up, 1.Nf3 d5 2.g3"]
+
+1. Nf3 d5 2. g3 Nf6 (2... c5 3. Bg2 Nc6 4. O-O e5 5. d3 Nf6 6. Nbd2 Be7 7. e4 O-O) 3. Bg2 c5 (3... Bg4 4. O-O Nbd7 5. d3 e6 6. Nbd2 Bc5 7. e4) 4. O-O Nc6 5. d3 e5 6. Nbd2 Be7 (6... Bd6 7. e4 O-O 8. exd5 Nxd5 9. Nc4) 7. e4 O-O 8. Re1 dxe4 9. dxe4 Qc7 *
+
+[Event "English Opening: Symmetrical Variation, 3.Nc3 Nc6 4.g3"]
+
+1. c4 c5 2. Nf3 Nf6 3. Nc3 Nc6 4. g3 d5 (4... g6 5. Bg2 Bg7 6. O-O O-O 7. d4 cxd4 8. Nxd4 Nxd4 9. Qxd4 d6 10. Bg5) 5. cxd5 Nxd5 6. Bg2 Nb6 7. O-O e5 (7... e6 8. d3 Be7 9. Be3 O-O) 8. a3 Be7 9. b4 O-O 10. Rb1 Be6 *
+
+[Event "English Opening: Symmetrical Variation, Hedgehog 2.Nf3 Nf6 3.g3 b6"]
+
+1. c4 c5 2. Nf3 Nf6 3. g3 b6 (3... d5 4. cxd5 Nxd5 5. Bg2 Nc7 6. O-O Nc6 7. Nc3 e5) 4. Bg2 Bb7 5. O-O e6 (5... g6 6. Nc3 Bg7 7. d4 cxd4 8. Qxd4 d6) 6. Nc3 Be7 7. d4 cxd4 8. Qxd4 d6 9. Rd1 a6 10. b3 Nbd7 11. Bb2 *
+
+[Event "English Opening: King's English, Four Knights Variation, 4.g3"]
+
+1. c4 e5 2. Nc3 Nf6 3. Nf3 Nc6 4. g3 d5 (4... Bb4 5. Nd5 Nxd5 6. cxd5 Nd4 7. Nxd4 exd4 8. Qb3 Bc5) 5. cxd5 Nxd5 (5... Nxd5 6. Bg2 Nb6 7. O-O Be7 8. d3 O-O 9. Be3) 6. Bg2 Nb6 7. O-O Be7 8. a3 O-O 9. b4 Be6 10. d3 *
+
+[Event "English Opening: King's English, Four Knights Variation, 4.e4 Bb4"]
+
+1. c4 e5 2. Nc3 Nf6 3. Nf3 Nc6 4. e4 Bb4 (4... Bc5 5. Nxe5 Nxe5 6. d4 Bxd4 7. Qxd4 Nc6) 5. Nd5 Nxe4 (5... Bc5 6. Nxe5 Nxe5 7. d4 Bxd4 8. Nxf6+ Qxf6) 6. Qe2 f5 7. Nxb4 Nxb4 8. d3 Nf6 *
+
+
+[Event "English Opening: Closed System, 3.g3 d5"]
+
+1. c4 e5 2. Nc3 Nf6 3. g3 d5 (3... c6 4. Nf3 e4 5. Nd4 d5 6. cxd5 cxd5 7. d3 Nc6) 4. cxd5 Nxd5 5. Bg2 Nb6 (5... Nb6 6. Nf3 Nc6 7. O-O Be7 8. d3 O-O 9. Be3) 6. Nf3 Nc6 7. O-O Be7 8. d3 O-O 9. Be3 Nd4 10. Nxd4 exd4 *
+
+[Event "English Opening: King's English, Botvinnik System, 5.e4"]
+
+1. c4 e5 2. Nc3 Nc6 3. g3 g6 (3... Nf6 4. Bg2 d5 5. cxd5 Nxd5 6. Nf3 Nb6 7. O-O) 4. Bg2 Bg7 5. e4 d6 (5... Nge7 6. Nge2 O-O 7. O-O d6 8. d3) 6. Nge2 Nge7 7. O-O O-O 8. d3 Be6 9. Nd5 Qd7 *
+
+[Event "Bird Opening: Dutch Variation, 1.f4 d5 2.Nf3 Nf6"]
+
+1. f4 d5 2. Nf3 Nf6 (2... g6 3. g3 Bg7 4. Bg2 Nf6 5. O-O O-O 6. d3 c5) 3. e3 g6 (3... e6 4. b3 Be7 5. Bb2 O-O 6. Be2 c5) 4. Be2 Bg7 5. O-O O-O 6. d3 c5 7. Qe1 Nc6 8. Nc3 d4 9. Ne4 Nxe4 10. dxe4 e5 *
+
+[Event "Bird Opening: From's Gambit, 1.f4 e5 2.fxe5 d6"]
+
+1. f4 e5 (1... d5 2. Nf3 Nf6 3. g3 g6 4. Bg2 Bg7 5. O-O O-O 6. d3 c5) 2. fxe5 d6 3. exd6 Bxd6 (3... Qxd6 4. Nf3 Nc6 5. c3 Bg4 6. Qa4) 4. Nf3 g5 (4... Nf6 5. g3 O-O 6. Bg2 Nc6 7. O-O) 5. g3 g4 (5... Nf6 6. d4 g4 7. Nfd2 Bxg3 8. hxg3 Nd5) 6. Nh4 Ne7 7. d4 Ng6 8. Nxg6 hxg6 9. e4 Bxg3+ *
+
+[Event "Nimzo-Larsen Attack: Classical Variation, 1.b3 e5 2.Bb2 Nc6"]
+
+1. b3 e5 2. Bb2 Nc6 3. e3 d5 (3... Nf6 4. Bb5 Bd6 5. f4 Qe7 6. Nf3 O-O) 4. Bb5 Bd6 (4... Bd6 5. f4 Qh4+ 6. g3 Qe7 7. Nf3 f6) 5. f4 Qh4+ 6. g3 Qe7 7. Nf3 f6 8. fxe5 fxe5 9. O-O Nf6 10. Bxc6+ bxc6 *
+
+[Event "Nimzo-Larsen Attack: Modern Variation, 1.b3 d5 2.Bb2"]
+
+1. b3 d5 2. Bb2 Nf6 (2... c5 3. e3 Nc6 4. Nf3 Nf6 5. Bb5 Bd7 6. O-O) 3. e3 e6 (3... Bf5 4. Nf3 e6 5. Be2 h6 6. O-O Be7) 4. Nf3 Bd6 (4... Be7 5. Be2 O-O 6. O-O c5 7. c4 Nc6) 5. Be2 O-O 6. O-O Nbd7 (6... c5 7. c4 Nc6 8. cxd5 exd5 9. d4) 7. c4 c6 8. Nc3 Qe7 *
+
+[Event "Polish Opening: 1.b4 e5 2.Bb2 Bxb4"]
+
+1. b4 e5 2. Bb2 Bxb4 (2... d6 3. e3 Nf6 4. Bxe5 dxe5 5. Qh5) 3. Bxe5 Nf6 (3... Nf6 4. Bxf6 Qxf6 5. c3 Bd6 6. Nf3) 4. Nf3 O-O (4... Nc6 5. Bb2 Qe7 6. c3 Bd6) 5. e3 d6 6. Bb2 Nc6 7. c3 Ba5 *
+
+[Event "Zukertort Opening: Queen's Gambit Reversed, 1.Nf3 Nf6 2.c4 g6"]
+
+1. Nf3 Nf6 2. c4 g6 (2... e6 3. g3 d5 4. Bg2 Be7 5. O-O O-O 6. b3 c5) (2... c5 3. g3 g6 4. Bg2 Bg7 5. Nc3 Nc6 6. O-O O-O) 3. Nc3 Bg7 (3... d5 4. cxd5 Nxd5 5. e4 Nb6 6. d4 Bg7 7. Be2) 4. e4 d6 5. d4 O-O 6. Be2 e5 7. O-O Nc6 8. d5 Ne7 *
+
+[Event "Torre Attack: 3.Bg5 Be7 4.Nbd2"]
+
+1. d4 Nf6 2. Nf3 e6 3. Bg5 d5 (3... c5 4. e3 cxd4 5. exd4 Be7 6. Nbd2 b6 7. c3) 4. e3 Be7 (4... Nbd7 5. Nbd2 Be7 6. c3 c6 7. Bd3) 5. Nbd2 O-O 6. c3 c5 (6... Nbd7 7. Bd3 c6 8. Qe2 Re8 9. O-O) 7. Bd3 b6 8. O-O Bb7 9. Ne5 Nbd7 *
+
+[Event "Colle System: Colle-Zukertort Variation, 4.Bd3 Nbd7 5.b3"]
+
+1. d4 d5 2. Nf3 Nf6 3. e3 e6 4. Bd3 Nbd7 (4... c5 5. b3 Nc6 6. O-O Bd6 7. Bb2 O-O) 5. b3 Bd6 (5... c5 6. Bb2 Bd6 7. O-O O-O 8. Nbd2) 6. Bb2 O-O 7. O-O b6 (7... c5 8. Nbd2 Qe7 9. Ne5) 8. Nbd2 Bb7 9. Ne5 Nxe5 10. dxe5 Bxe5 *
+
+[Event "London System: Jobava London, 1.d4 d5 2.Nc3 Nf6 3.Bf4"]
+
+1. d4 d5 2. Nc3 Nf6 3. Bf4 e6 (3... c5 4. e3 Nc6 5. Nb5 Qa5+ 6. c3 Ne4 7. Qf3) 4. Nb5 Bb4+ (4... Na6 5. e3 c6 6. Nc3 Bd6 7. Bxd6 Qxd6) 5. c3 Be7 6. e3 Na6 (6... O-O 7. Bd3 c5 8. Nf3 Nc6 9. O-O) 7. Bd3 O-O 8. Nf3 *
+
+[Event "London System: vs the King's Indian Set-up, 1.d4 Nf6 2.Nf3 g6 3.Bf4"]
+
+1. d4 Nf6 2. Nf3 g6 3. Bf4 Bg7 (3... d6 4. e3 Bg7 5. Be2 O-O 6. h3 Nbd7 7. O-O) 4. e3 d6 5. h3 O-O (5... Nc6 6. c3 O-O 7. Nbd2 e5 8. dxe5) 6. Be2 Nbd7 7. O-O c5 8. c3 b6 9. Nbd2 Bb7 *
+
+[Event "Dutch Defense: Leningrad Variation, 2.g3 Nf6 3.Bg2 g6"]
+
+1. d4 f5 2. g3 Nf6 3. Bg2 g6 (3... e6 4. Nf3 d5 5. O-O Bd6 6. c4 c6) 4. Nf3 Bg7 (4... d6 5. O-O Bg7 6. c4 O-O 7. Nc3 Qe8) 5. O-O O-O 6. c4 d6 (6... d6 7. Nc3 Qe8 8. d5 Na6 9. Rb1) 7. Nc3 Qe8 8. d5 Na6 9. Rb1 c5 10. dxc6 bxc6 11. b4 Nc7 *
+
+[Event "Dutch Defense: Stonewall Variation, 2.g3 Nf6 3.Bg2 e6"]
+
+1. d4 f5 2. g3 Nf6 3. Bg2 e6 4. Nf3 d5 (4... Be7 5. O-O O-O 6. c4 d5 7. b3 c6 8. Ba3) 5. O-O Bd6 (5... c6 6. c4 Bd6 7. Nc3 O-O 8. Bf4) 6. c4 c6 7. Qc2 O-O (7... Qe7 8. Nbd2 O-O 9. Nb3) 8. Nbd2 Qe8 9. Nb3 Ne4 10. Bf4 *
+
+[Event "Dutch Defense: Classical Variation, 2.c4 Nf6 3.Nc3 e6 4.g3"]
+
+1. d4 f5 2. c4 Nf6 3. Nc3 e6 (3... g6 4. g3 Bg7 5. Bg2 O-O 6. Nf3 d6) 4. g3 Be7 (4... d5 5. Nf3 c6 6. Bg2 Bd6 7. O-O O-O) 5. Bg2 O-O 6. Nf3 d6 (6... d5 7. O-O c6 8. b3 Qe8 9. Ba3) 7. O-O Qe8 8. Re1 Qh5 9. e4 fxe4 10. Nxe4 Nxe4 11. Rxe4 *
+
+[Event "Dutch Defense: Staunton Gambit, 2.e4 fxe4 3.Nc3 Nf6"]
+
+1. d4 f5 2. e4 fxe4 3. Nc3 Nf6 (3... d5 4. f3 exf3 5. Nxf3 Nf6 6. Bd3 e6) 4. Bg5 Nc6 (4... e6 5. Nxe4 Be7 6. Bxf6 Bxf6 7. Nf3 O-O) 5. d5 Ne5 (5... Ne5 6. Qd4 Nf7 7. Bxf6 exf6 8. Nxe4) 6. Qd4 Nf7 7. Bxf6 exf6 8. Nxe4 *
+
+[Event "Modern Defense: Standard Line, 3.Nc3 d6 4.Be3"]
+
+1. e4 g6 2. d4 Bg7 3. Nc3 d6 (3... c6 4. Nf3 d5 5. e5 Nh6 6. h3 O-O 7. Bd3) 4. Be3 a6 (4... Nf6 5. Qd2 O-O 6. O-O-O Nc6 7. f3) 5. Qd2 b5 6. f3 Nd7 (6... Nf6 7. Bh6 O-O 8. Bxg7 Kxg7) 7. Nge2 Ngf6 8. Ng3 c5 9. dxc5 Nxc5 *
+
+[Event "Pirc Defense: 150 Attack, 4.Be3 Bg7 5.Qd2"]
+
+1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 Bg7 (4... c6 5. Qd2 b5 6. f3 Nbd7 7. Bh6 Bxh6) 5. Qd2 O-O (5... c6 6. f3 b5 7. Bh6 Bxh6 8. Qxh6 Nbd7) 6. f3 c6 (6... Nc6 7. Nge2 a6 8. Bh6 Bxh6 9. Qxh6) 7. Bh6 Nbd7 8. Bxg7 Kxg7 9. O-O-O b5 10. Kb1 Qa5 *
+
+[Event "Nimzowitsch Defense: 1.e4 Nc6 2.Nf3 d6 3.d4 Nf6"]
+
+1. e4 Nc6 2. Nf3 d6 (2... e5 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5) 3. d4 Nf6 (3... Bg4 4. d5 Nd4 5. Nxd4 Qd7 6. Bb5) 4. Nc3 Bg4 (4... Bg4 5. Be3 e6 6. Be2 Be7 7. h3 Bh5) 5. Be3 e6 6. Be2 Be7 7. h3 Bh5 8. O-O O-O *
+
+[Event "Nimzowitsch Defense: Scandinavian Variation, 1.e4 Nc6 2.d4 d5"]
+
+1. e4 Nc6 2. d4 d5 (2... e5 3. dxe5 Nxe5 4. Nf3 Nxf3+ 5. Qxf3 Qf6 6. Qxf6) 3. e5 Bf5 (3... Nf6 4. Nc3 Bg4 5. Nf3 e6 6. Be2) 4. Nf3 e6 (4... Qd7 5. Be2 O-O-O 6. O-O e6) 5. Be2 Nge7 6. O-O Ng6 7. c3 Be7 8. Na3 O-O *
+
+[Event "Scandinavian Defense: Gubinsky-Melts, 3.Nc3 Qd6"]
+
+1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd6 (3... Qd8 4. d4 c6 5. Nf3 Bg4 6. h3 Bxf3 7. Qxf3 e6) 4. d4 Nf6 (4... a6 5. Nf3 Nf6 6. Bf4 Qb4 7. Qd2) 5. Nf3 a6 6. Ne5 Nbd7 (6... c6 7. g3 Be6 8. Bg2 Nbd7 9. O-O) 7. Nxd7 Bxd7 8. Bd3 e6 9. O-O *
+
+[Event "Alekhine Defense: Exchange Variation, 4.c4 Nb6 5.exd6"]
+
+1. e4 Nf6 2. e5 Nd5 3. d4 d6 4. c4 Nb6 (4... Nb6 5. exd6 exd6 6. Nc3 Be7 7. Be2 O-O) 5. exd6 exd6 (5... cxd6 6. Nc3 g6 7. Be3 Bg7 8. Rc1) 6. Nc3 Be7 7. Be2 O-O 8. Bf3 Bf5 9. Nge2 Nc6 10. Be3 d5 *
+
+[Event "French Defense: King's Indian Attack, 2.d3"]
+
+1. e4 e6 2. d3 d5 (2... c5 3. g3 Nc6 4. Bg2 Nf6 5. Nf3 d5 6. exd5) 3. Nd2 Nf6 (3... c5 4. Ngf3 Nc6 5. g3 Nf6 6. Bg2 Be7 7. O-O) 4. Ngf3 c5 5. g3 Nc6 6. Bg2 Be7 7. O-O O-O 8. Re1 b5 9. e5 Nd7 10. Nf1 b4 *
+
+[Event "Caro-Kann Defense: Fantasy Variation, 3.f3"]
+
+1. e4 c6 2. d4 d5 3. f3 dxe4 (3... e6 4. Nc3 Bb4 5. Bd3 Ne7 6. Nge2 O-O) 4. fxe4 e5 5. Nf3 exd4 6. Bc4 Bb4+ 7. c3 dxc3 8. O-O cxb2 9. Bxb2 *
+
+[Event "Queen's Gambit Accepted: Central Variation, 3.e4 e5"]
+
+1. d4 d5 2. c4 dxc4 3. e4 e5 (3... Nf6 4. e5 Nd5 5. Bxc4 Nb6 6. Bb3 Nc6 7. Ne2) 4. Nf3 exd4 (4... Bb4+ 5. Bd2 Qe7 6. Bxb4 Qxb4+ 7. Nc3) 5. Bxc4 Nc6 6. O-O Be6 (6... Bb4 7. Nbd2 Nf6 8. e5) 7. Bxe6 fxe6 8. Qb3 Qd7 *
+
+[Event "Neo-Grünfeld Defense: 1.d4 Nf6 2.c4 g6 3.f3"]
+
+1. d4 Nf6 2. c4 g6 3. f3 d5 (3... Bg7 4. e4 d6 5. Nc3 O-O 6. Be3 e5) 4. cxd5 Nxd5 5. e4 Nb6 (5... Nb6 6. Nc3 Bg7 7. Be3 O-O 8. Qd2 Nc6) 6. Nc3 Bg7 7. Be3 O-O 8. Qd2 Nc6 9. O-O-O f5 *
+
+[Event "Blumenfeld Countergambit: Accepted, 4.dxc5 exd5"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 c5 4. d5 b5 (4... exd5 5. cxd5 d6 6. Nc3 g6 7. e4 Bg7) 5. Bg5 exd5 (5... Bb7 6. Nc3 exd5 7. cxd5 h6 8. Bxf6) 6. cxd5 h6 7. Bxf6 Qxf6 8. e4 d6 9. Nc3 Bg4 *
+
+[Event "Barnes Opening: Traps, Fool's Mate [b]"]
+
+1. f3 e5 (1... d5 2. e4 dxe4 3. fxe4 e5 4. Nf3 Bd6 5. Bc4) 2. g4 (2. e4 Nc6 3. Nc3 Nf6 4. Bc4 Bc5 5. d3) 2... Qh4# *

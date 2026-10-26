@@ -180,6 +180,8 @@ function trunk(lines) {
   return { path, node };
 }
 
+const bookN = (ls) => Math.min(ls.filter((l) => l.src === 'book').length, 6); // hand-written lines first
+
 export function coursesOf(fam) {
   if (fam._courses) return fam._courses;
   let out = [];
@@ -198,7 +200,7 @@ export function coursesOf(fam) {
       const ls = keys.flatMap((k) => groups.get(k) || []);
       if (ls.length < 2) return;
       const t = trunk(ls);
-      out.push({ key: keys[0].replace(/[^a-z0-9]+/g, '-'), name, idea, path: t.path, node: t.node, lines: ls });
+      out.push({ key: keys[0].replace(/[^a-z0-9]+/g, '-'), name, idea, path: t.path, node: t.node, lines: ls, side: ls.every((l) => l.tside && l.tside === ls[0].tside) ? ls[0].tside : undefined });
       keys.forEach((k) => used.add(k));
     };
     for (const [name, keys, idea] of CURATED[fam.name] || []) {
@@ -206,12 +208,12 @@ export function coursesOf(fam) {
       if (out.length >= 6) break;
     }
     if (out.length < MAX_VARIATIONS) {
-      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && ls.length >= 4 && !/^\d|^main line|^normal|^with |^\(|^vs /.test(k)).sort((a, b) => b[1].length - a[1].length);
+      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && (ls.length >= 4 || (k === 'traps' && ls.length >= 2)) && !/^\d|^main line|^normal|^with |^\(|^vs /.test(k)).sort((a, b) => (b[0] === 'traps') - (a[0] === 'traps') || bookN(b[1]) - bookN(a[1]) || b[1].length - a[1].length);
       for (const [k, ls] of ranked) {
         if (out.length >= MAX_VARIATIONS) break;
         let display = ls[0].sub.replace(/^(Declined|Accepted): /, '').split(/[:,]/)[0].trim();
         if (/^(open|closed|classical|modern|exchange|advance|main|normal|symmetrical|old|quiet|fianchetto)$/i.test(display)) display += ' Variation';
-        make(display, [k], `${ls.length} known lines in the ${display}.`);
+        make(display, [k], k === 'traps' ? 'Sneaky tricks. Learn how to set the trap, and what to do if your opponent sees it.' : `${ls.length} known lines in the ${display}.`);
       }
     }
     if (!out.length) {
@@ -243,7 +245,7 @@ const SCHEDULES = {
   expert: [[12, 9, 7, 5], [10, 8, 6, 4], [8, 6, 5, 4], [7, 5, 4, 3], [6, 5, 4, 3], [5, 4, 3, 3], [4, 4, 3, 2], ...BASE],
 };
 
-const MAX_VARIATIONS = 14;
+const MAX_VARIATIONS = 18;
 const cache = new Map();
 
 function labelFor(san, course, side) {

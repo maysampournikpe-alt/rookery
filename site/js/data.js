@@ -162,7 +162,10 @@ export async function loadData() {
   D.epd.clear();
   for (const [eco, name, san, epd, srcCode] of j.lines) {
     const moves = san.split(' ');
-    addLine({ id: hashId(san), eco, name, fam: familyOf(name), sub: '', san: moves, epd, src: ['lichess', 'book', 'scid'][srcCode] || 'lichess' });
+    // a trailing [w] or [b] says which colour sets the trap
+    const tag = /\s\[([wb])\]$/.exec(name);
+    const clean = tag ? name.slice(0, tag.index) : name;
+    addLine({ id: hashId(san), eco, name: clean, tside: tag ? (tag[1] === 'w' ? 'white' : 'black') : undefined, fam: familyOf(clean), sub: '', san: moves, epd, src: ['lichess', 'book', 'scid'][srcCode] || 'lichess' });
   }
   for (const l of D.lines) {
     l.sub = subOf(l.name, l.fam);

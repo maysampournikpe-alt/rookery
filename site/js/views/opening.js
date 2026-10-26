@@ -11,12 +11,13 @@ export function render(root, { slug, query }) {
     root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that opening.', h('div', {}, h('a', { class: 'btn primary', href: '#/' }, 'See all openings'))));
     return;
   }
-  let side = query.get('side') || fam.side;
+  let sideAll = query.get('side') || fam.side;
   const courses = coursesOf(fam);
   const grid = h('div', { class: 'cards' });
   const sideSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'You play' });
 
   function card(course) {
+    const side = course.side || sideAll; // traps are set by one colour
     const tiers = tiersOf(fam, course, side);
     const dt = defaultTier(tiers);
     const essentials = buildCourse(fam, course, side, dt.key);
@@ -45,7 +46,7 @@ export function render(root, { slug, query }) {
   function draw() {
     grid.replaceChildren(...courses.map(card));
     sideSeg.replaceChildren(
-      ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(side === s), onclick: () => ((side = s), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), s === 'white' ? 'White' : 'Black')),
+      ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(sideAll === s), onclick: () => ((sideAll = s), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), s === 'white' ? 'White' : 'Black')),
     );
   }
 

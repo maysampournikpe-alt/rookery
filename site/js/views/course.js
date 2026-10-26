@@ -14,8 +14,8 @@ export function render(root, { slug, key, query }) {
     root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that variation.', h('div', {}, h('a', { class: 'btn primary', href: fam ? `#/opening/${fam.slug}` : '#/' }, 'Back'))));
     return;
   }
-  let side = query.get('side') || fam.side;
-  let tier = query.get('tier') || defaultTier(tiersOf(fam, course, query.get('side') || fam.side)).key;
+  let side = query.get('side') || course.side || fam.side;
+  let tier = query.get('tier') || defaultTier(tiersOf(fam, course, side)).key;
   let tab = query.get('tab') === 'practice' ? 'practice' : 'learn';
   const game = new Chess();
   const board = new Board(h('div'), {});

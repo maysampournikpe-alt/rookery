@@ -3,7 +3,7 @@ import { Chess } from '../../vendor/chess.js';
 import { D, nameFor, fenAfter } from '../data.js';
 import { Board, drawMini } from '../board.js';
 import { counts, isLearned, isDiscovered } from '../store.js';
-import { coursesOf, buildCourse, tiersOf } from '../repertoire.js';
+import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
 export function render(root, { slug, key, query }) {
@@ -15,7 +15,7 @@ export function render(root, { slug, key, query }) {
     return;
   }
   let side = query.get('side') || fam.side;
-  let tier = query.get('tier') || 'essentials';
+  let tier = query.get('tier') || defaultTier(tiersOf(fam, course, query.get('side') || fam.side)).key;
   let tab = query.get('tab') === 'practice' ? 'practice' : 'learn';
   const game = new Chess();
   const board = new Board(h('div'), {});
@@ -71,7 +71,8 @@ export function render(root, { slug, key, query }) {
           { class: 'branches' },
           [...n.kids].map(([m, k]) => {
             const pp = [...p, m];
-            return h('div', { class: 'branch' }, h('div', { class: 'if' }, h('span', { class: 'lead' }, `If ${theirs()} plays`), chip(pp, pp.length - 1, true)), renderNode(k, pp, true));
+            const lead = mineAt(p.length) ? 'Or you can play' : `If ${theirs()} plays`;
+            return h('div', { class: 'branch' }, h('div', { class: 'if' }, h('span', { class: 'lead' }, lead), chip(pp, pp.length - 1, true)), renderNode(k, pp, true));
           }),
         ),
       );
@@ -125,7 +126,8 @@ export function render(root, { slug, key, query }) {
         h('div', { class: 'ocard-mini' }, mini, h('div', {}, h('h3', {}, fam.name + ': ' + course.name), h('p', {}, course.idea))),
         h('div', { class: 'prog-row' }, h('div', { class: 'progress' }, h('i', { style: `width:${pct}%` })), h('b', {}, `${pct}%`), h('span', {}, side === 'white' ? 'White' : 'Black')),
         h('div', { class: 'seg', role: 'group', 'aria-label': 'You play', style: 'align-self:flex-start' }, ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(side === s), onclick: () => ((side = s), (selected = null), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), `Play as ${s === 'white' ? 'White' : 'Black'}`))),
-        tiers.length > 1 ? h('div', { class: 'depth', role: 'group', 'aria-label': 'How deep?' }, tiers.map((t) => h('button', { type: 'button', title: t.hint, 'aria-pressed': String(t.key === tier), onclick: () => ((tier = t.key), (selected = null), draw()) }, `${t.label} · ${t.count} lines`))) : null,
+        tier === 'expert' ? h('p', { class: 'meta', style: 'margin:0' }, 'Expert has every line we know, so some positions have more than one good move for you.') : null,
+        tiers.length > 1 ? h('div', { class: 'depth', role: 'group', 'aria-label': 'How deep?' }, tiers.map((t) => h('button', { type: 'button', title: t.hint, 'aria-pressed': String(t.key === tier), onclick: () => ((tier = t.key), (selected = null), draw()) }, `${t.label} · ${t.count} ${t.count === 1 ? 'line' : 'lines'}`))) : null,
         h('ul', { class: 'line-list' }, ...rows),
         h(
           'details',

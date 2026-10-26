@@ -8,7 +8,7 @@ import { D, nodeAt, hashId } from './data.js';
 export const TIERS = {
   essentials: { label: 'Essentials', hint: 'The main lines. Most players start here.', max: 10, depth: 16 },
   advanced: { label: 'Advanced', hint: 'More replies from your opponent, and deeper.', max: 30, depth: 24 },
-  expert: { label: 'Expert', hint: 'Every reply we have, as deep as the data goes.', max: 90, depth: 34 },
+  expert: { label: 'Expert', hint: 'Every line we have, including sidelines where you could choose a different move.', max: 150, depth: 40 },
 };
 
 // [display name, [normalized head names that belong to it], one-sentence idea]
@@ -218,7 +218,7 @@ export function coursesOf(fam) {
   }
   // a variation with a single lesson is not worth a tab
   if (!fam.mine) {
-    const deep = out.filter((c) => buildCourse(fam, c, fam.side).leaves.length >= 2);
+    const deep = out.filter((c) => tiersOf(fam, c, fam.side).at(-1).count >= 2);
     if (deep.length) out = deep;
   }
   fam._courses = out;
@@ -271,6 +271,12 @@ export function buildCourse(fam, course, side, tier = 'essentials') {
   let paths = [];
   if (course.custom) {
     paths = course.lines.map((l) => l.san);
+  } else if (tier === 'expert') {
+    // every named line of the variation (both sides' alternatives), most-played first
+    const under = course.lines.filter((l) => l.san.length > course.path.length && course.path.every((m, i) => l.san[i] === m));
+    const pop = (l) => nodeAt(l.san.slice(0, Math.min(l.san.length, course.path.length + 3)))?.n || 0;
+    paths = dedupe([...under].sort((a, b) => pop(b) - pop(a) || a.san.length - b.san.length).slice(0, T.max * 2).map((l) => l.san)).slice(0, T.max);
+    if (!paths.length) paths = course.path.length ? [course.path] : [];
   } else {
     const start = course.node;
     const mine = (ply) => (ply % 2 === 0) === (side === 'white'); // is the move at index `ply` yours?
@@ -308,17 +314,17 @@ export function buildCourse(fam, course, side, tier = 'essentials') {
     }
     n.leaf = l;
   }
-  // name each line by every choice the opponent made on the way ("when White plays 6.Be2, then 8.O-O")
+  // name each line by the choices made on the way ("when White plays 6.Be2, then you play 8.Qd2")
   const theirs = side === 'white' ? 'Black' : 'White';
   for (const l of leaves) {
     let n = tree;
     const picks = [];
     l.san.forEach((m, i) => {
       const mineHere = (i % 2 === 0) === (side === 'white');
-      if (n.kids.size > 1 && !mineHere) picks.push(`${i % 2 === 0 ? i / 2 + 1 + '.' : (i + 1) / 2 + '...'}${m}`);
+      if (n.kids.size > 1) picks.push(`${mineHere ? 'you play' : theirs + ' plays'} ${i % 2 === 0 ? i / 2 + 1 + '.' : (i + 1) / 2 + '...'}${m}`);
       n = n.kids.get(m);
     });
-    if (picks.length) l.sub = l.name = `${course.name}: when ${theirs} plays ${picks.join(', then ')}`;
+    if (picks.length) l.sub = l.name = `${course.name}: ${picks.map((x, i) => (i ? 'then ' : 'when ') + x).join(', ')}`;
   }
   const res = { course, side, tier, leaves, tree };
   cache.set(ck, res);
@@ -345,7 +351,17 @@ export function tiersOf(fam, course, side) {
   return out;
 }
 
+// where to open a variation: Essentials, unless it is tiny, then the first level with a decent number of lines
+export function defaultTier(tiers) {
+  return tiers.find((t) => t.count >= 4) || tiers.at(-1);
+}
+
 // All lessons of an opening for one side (used for progress on the home page).
 export function allLessons(fam, side) {
-  return coursesOf(fam).flatMap((c) => buildCourse(fam, c, side).leaves);
+  return coursesOf(fam).flatMap((c) => buildCourse(fam, c, side, defaultTier(tiersOf(fam, c, side)).key).leaves);
+}
+
+// how many lines an opening has at the deepest level, summed over its variations
+export function deepestCount(fam, side) {
+  return coursesOf(fam).reduce((n, c) => n + tiersOf(fam, c, side).at(-1).count, 0);
 }

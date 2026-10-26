@@ -140,7 +140,13 @@ export const norm = (h) =>
     .replace(/ defen[cs]e$/, '')
     .trim();
 
-const headOf = (l) => norm((l.sub || '').replace(/^(Declined|Accepted)(: )?/, '').split(/[:,]/)[0]);
+const strip = (sub) => (sub || '').replace(/^(Declined|Accepted)(: |, )(?=.)/, ''); // "Accepted, Chicago Defense" is the Chicago Defense
+const trapName = (sub) => /^traps?, (.+)$/i.exec(strip(sub))?.[1].split(/[:,]/)[0].trim();
+const headOf = (l) => {
+  const t = trapName(l.sub);
+  if (t) return 'trap: ' + norm(t); // every named trap is its own variation
+  return norm(strip(l.sub).split(/[:,]/)[0]);
+};
 const byLen = (a, b) => a.san.length - b.san.length;
 
 function cmpPath(a, b) {
@@ -182,7 +188,11 @@ function trunk(lines) {
 
 const bookN = (ls) => Math.min(ls.filter((l) => l.src === 'book').length, 6); // hand-written lines first
 
-export function coursesOf(fam) {
+// the ordinary variations of an opening (traps are listed on their own page)
+export const coursesOf = (fam) => allCoursesOf(fam).filter((c) => !c.trap);
+export const trapsOf = (fam) => allCoursesOf(fam).filter((c) => c.trap);
+
+export function allCoursesOf(fam) {
   if (fam._courses) return fam._courses;
   let out = [];
   if (fam.mine) {
@@ -208,22 +218,30 @@ export function coursesOf(fam) {
       if (out.length >= 6) break;
     }
     if (out.length < MAX_VARIATIONS) {
-      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && (ls.length >= 4 || (k === 'traps' && ls.length >= 2)) && !/^\d|^main line|^normal|^with |^\(|^vs /.test(k)).sort((a, b) => (b[0] === 'traps') - (a[0] === 'traps') || bookN(b[1]) - bookN(a[1]) || b[1].length - a[1].length);
+      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && !k.startsWith('trap: ') && ls.length >= 4 && !/^\d|^main line|^normal|^with |^\(|^vs /.test(k)).sort((a, b) => bookN(b[1]) - bookN(a[1]) || b[1].length - a[1].length);
       for (const [k, ls] of ranked) {
         if (out.length >= MAX_VARIATIONS) break;
-        let display = ls[0].sub.replace(/^(Declined|Accepted): /, '').split(/[:,]/)[0].trim();
+        let display = strip(ls[0].sub).split(/[:,]/)[0].trim();
         if (/^(open|closed|classical|modern|exchange|advance|main|normal|symmetrical|old|quiet|fianchetto)$/i.test(display)) display += ' Variation';
-        make(display, [k], k === 'traps' ? 'Sneaky tricks. Learn how to set the trap, and what to do if your opponent sees it.' : `${ls.length} known lines in the ${display}.`);
+        if (/^(accepted|declined)$/i.test(display)) display = `Gambit ${display}`;
+        make(display, [k], `${ls.length} known lines in the ${display}.`);
       }
     }
-    if (!out.length) {
-      const t = trunk(fam.lines);
-      out = [{ key: 'main', name: 'Main ideas', idea: `The main ideas of the ${fam.name}.`, path: t.path, node: t.node, lines: fam.lines }];
+    for (const [k, ls] of groups) {
+      if (!k.startsWith('trap: ')) continue;
+      const t = trunk(ls);
+      const name = trapName(ls[0].sub);
+      out.push({ key: 'trap-' + k.slice(6).replace(/[^a-z0-9]+/g, '-'), name, idea: `A trap against the ${fam.name}. Learn how to set it, and what to do if your opponent sees it coming.`, path: t.path, node: t.node, lines: ls, trap: true, side: ls[0].tside });
+    }
+    if (!out.some((c) => !c.trap)) {
+      const rest = fam.lines.filter((l) => !trapName(l.sub));
+      const t = trunk(rest.length ? rest : fam.lines);
+      out = [{ key: 'main', name: 'Main ideas', idea: `The main ideas of the ${fam.name}.`, path: t.path, node: t.node, lines: rest.length ? rest : fam.lines }, ...out.filter((c) => c.trap)];
     }
   }
   // a variation with a single lesson is not worth a tab
   if (!fam.mine) {
-    const deep = out.filter((c) => tiersOf(fam, c, fam.side).at(-1).count >= 2);
+    const deep = out.filter((c) => c.trap || tiersOf(fam, c, fam.side).at(-1).count >= 2);
     if (deep.length) out = deep;
   }
   fam._courses = out;

@@ -15,8 +15,12 @@ const PROMOTE = {
   'Veresov Attack': 'Richter-Veresov Attack',
   'Budapest Gambit': 'Budapest Gambit',
   'Budapest Gambit Accepted': 'Budapest Gambit',
+  'Smith-Morra Gambit': 'Smith-Morra Gambit',
+  'Smith-Morra Accepted': 'Smith-Morra Gambit',
+  'Smith-Morra Gambit Accepted': 'Smith-Morra Gambit',
+  'Smith-Morra Gambit Declined': 'Smith-Morra Gambit',
 };
-const CATCHALL = new Set(["Queen's Pawn Game", 'Indian Defense']);
+const CATCHALL = new Set(["Queen's Pawn Game", 'Indian Defense', 'Sicilian Defense']);
 
 const FIX = {
   Trompowsky: 'Trompowsky Attack',

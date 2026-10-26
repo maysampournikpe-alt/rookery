@@ -61,6 +61,17 @@ Either way the result is `site/data/db/<name>.json`, registered in `site/data/db
 
 **Your own TSV lines**: put `eco<TAB>name<TAB>pgn` files in `data/lines/` and run `npm run build:data`.
 
+## Hand-written lines and traps
+
+Study files live in `data/studies/*.pgn`: one game per chapter, named `Opening: Variation, note`, with `( )` branches only on the opponent's moves. A chapter named `Opening: Traps, Trap Name [w]` (or `[b]`) is a trap set by White (or Black) and shows up on the Traps page.
+
+```bash
+node scripts/import-studies.mjs   # checks every move is legal, writes data/lines/studies.tsv
+node scripts/build-openings.mjs   # rebuilds site/data/openings.json
+```
+
+`scripts/trap-miner/` holds optional dev tools that use Stockfish (`npm i stockfish` somewhere on `NODE_PATH`): `mine.cjs` searches book positions for natural-looking moves that lose material, `gen.cjs` turns the results into trap chapters, `qa.cjs` and `trim.cjs` check and trim study lines, and `extend.cjs` checks a single trap.
+
 ## Layout
 
 ```

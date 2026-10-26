@@ -7,7 +7,7 @@ import { D, nodeAt, hashId } from './data.js';
 // three depths per variation: how many lines to teach and how far past the start of the variation to go
 export const TIERS = {
   essentials: { label: 'Essentials', hint: 'The main lines. Most players start here.', max: 10, depth: 16 },
-  advanced: { label: 'Advanced', hint: 'More replies from your opponent, and deeper.', max: 30, depth: 24 },
+  advanced: { label: 'Advanced', hint: 'A reply for every move your opponent can make, as deep as the data goes.', max: 120, depth: 34 },
   expert: { label: 'Expert', hint: 'Every line we have, including sidelines where you could choose a different move.', max: 150, depth: 40 },
 };
 
@@ -149,15 +149,17 @@ function cmpPath(a, b) {
 }
 
 // a trie of just the given lines: n = how many of THEM pass through each position
+const BOOK_WEIGHT = 25;
 function groupTrie(lines) {
   const root = { kids: new Map(), n: 0 };
   for (const l of lines) {
+    const w = l.src === 'book' ? BOOK_WEIGHT : 1; // hand-written repertoire lines decide which move you play
     let n = root;
-    n.n++;
+    n.n += w;
     for (const m of l.san) {
       if (!n.kids.has(m)) n.kids.set(m, { kids: new Map(), n: 0 });
       n = n.kids.get(m);
-      n.n++;
+      n.n += w;
     }
   }
   return root;
@@ -171,7 +173,7 @@ function trunk(lines) {
   for (;;) {
     let best = null;
     for (const [m, k] of node.kids) if (!best || k.n > best[1].n) best = [m, k];
-    if (!best || best[1].n < lines.length * 0.8) break;
+    if (!best || best[1].n < root.n * 0.8) break;
     path.push(best[0]);
     node = best[1];
   }
@@ -203,12 +205,13 @@ export function coursesOf(fam) {
       make(name, keys, idea);
       if (out.length >= 6) break;
     }
-    if (out.length < 8) {
-      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && ls.length >= 3 && !/^\d|^main line|^normal|^with |^\(/.test(k)).sort((a, b) => b[1].length - a[1].length);
+    if (out.length < MAX_VARIATIONS) {
+      const ranked = [...groups].filter(([k, ls]) => !used.has(k) && ls.length >= 4 && !/^\d|^main line|^normal|^with |^\(|^vs /.test(k)).sort((a, b) => b[1].length - a[1].length);
       for (const [k, ls] of ranked) {
-        if (out.length >= 8) break;
-        const display = ls[0].sub.replace(/^(Declined|Accepted): /, '').split(/[:,]/)[0].trim();
-        make(display, [k], `A popular way to play the ${fam.name}.`);
+        if (out.length >= MAX_VARIATIONS) break;
+        let display = ls[0].sub.replace(/^(Declined|Accepted): /, '').split(/[:,]/)[0].trim();
+        if (/^(open|closed|classical|modern|exchange|advance|main|normal|symmetrical|old|quiet|fianchetto)$/i.test(display)) display += ' Variation';
+        make(display, [k], `${ls.length} known lines in the ${display}.`);
       }
     }
     if (!out.length) {
@@ -236,10 +239,11 @@ const BASE = [
 ];
 const SCHEDULES = {
   essentials: BASE,
-  advanced: [[6, 5, 4, 3], [5, 4, 3, 2], [4, 4, 3, 2], [4, 3, 3, 2], ...BASE],
+  advanced: [[40, 30, 20, 12], [30, 20, 12, 8], [20, 14, 9, 6], [12, 9, 6, 4], [9, 6, 5, 4], [6, 5, 4, 3], [5, 4, 3, 2], [4, 4, 3, 2], [4, 3, 3, 2], ...BASE],
   expert: [[12, 9, 7, 5], [10, 8, 6, 4], [8, 6, 5, 4], [7, 5, 4, 3], [6, 5, 4, 3], [5, 4, 3, 3], [4, 4, 3, 2], ...BASE],
 };
 
+const MAX_VARIATIONS = 14;
 const cache = new Map();
 
 function labelFor(san, course, side) {
@@ -274,7 +278,7 @@ export function buildCourse(fam, course, side, tier = 'essentials') {
   } else if (tier === 'expert') {
     // every named line of the variation (both sides' alternatives), most-played first
     const under = course.lines.filter((l) => l.san.length > course.path.length && course.path.every((m, i) => l.san[i] === m));
-    const pop = (l) => nodeAt(l.san.slice(0, Math.min(l.san.length, course.path.length + 3)))?.n || 0;
+    const pop = (l) => (l.src === 'book' ? 1e6 : 0) + (nodeAt(l.san.slice(0, Math.min(l.san.length, course.path.length + 3)))?.n || 0);
     paths = dedupe([...under].sort((a, b) => pop(b) - pop(a) || a.san.length - b.san.length).slice(0, T.max * 2).map((l) => l.san)).slice(0, T.max);
     if (!paths.length) paths = course.path.length ? [course.path] : [];
   } else {
@@ -288,7 +292,7 @@ export function buildCourse(fam, course, side, tier = 'essentials') {
         const kids = [...node.kids].sort((a, b) => b[1].n - a[1].n || (a[0] < b[0] ? -1 : 1));
         if (mine(path.length)) return walk(kids[0][1], [...path, kids[0][0]], decisions);
         let pick = kids;
-        if (tier !== 'expert' && kids.length > 1 && kids[0][1].n >= 2) pick = kids.filter((k) => k[1].n >= 2);
+        if (tier === 'essentials' && kids.length > 1 && kids[0][1].n >= 2) pick = kids.filter((k) => k[1].n >= 2);
         pick = pick.slice(0, sched[Math.min(decisions, sched.length - 1)]);
         for (const [m, k] of pick) walk(k, [...path, m], decisions + (pick.length > 1 ? 1 : 0));
       };

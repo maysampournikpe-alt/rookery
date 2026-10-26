@@ -1,0 +1,15 @@
+[Event "Italian Game: Quiet Italian, vs ...Nf6 and ...d6"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 (4... d6 5. c3 Nf6 6. O-O O-O 7. Re1 a6 8. Bb3 Ba7 9. h3 h6 10. Nbd2) 5. O-O d6 (5... O-O 6. c3 d6 7. Re1 a6 8. Bb3 Ba7 9. h3 h6 10. Nbd2) 6. c3 a6 (6... O-O 7. Re1 a6 8. Bb3 Ba7 9. h3 h6 10. Nbd2) 7. a4 Ba7 8. Re1 O-O 9. h3 h6 10. Nbd2 *
+
+[Event "Italian Game: Giuoco Piano, 4.c3 Nf6 5.d4"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Bd2 (7. Nc3 Nxe4 8. O-O Bxc3 9. d5 Bf6 10. Re1 Ne7 11. Rxe4 d6 12. Bg5 Bxg5 13. Nxg5 h6) 7... Bxd2+ 8. Nbxd2 d5 9. exd5 Nxd5 10. Qb3 Nce7 11. O-O O-O 12. Rfe1 c6 13. Ne4 *
+
+[Event "Scotch Game: Mieses Variation, 4...Nf6 5.Nxc6"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Nf6 5. Nxc6 bxc6 6. e5 Qe7 7. Qe2 Nd5 8. c4 Ba6 9. b3 g5 10. Bb2 Bg7 *
+
+[Event "Scotch Game: Classical Variation, 4...Bc5"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Bc5 5. Be3 Qf6 (5... Nf6 6. Nxc6 bxc6 7. Bd3 d5 8. exd5 cxd5 9. O-O O-O 10. Nd2) 6. c3 Nge7 7. Bc4 Ne5 8. Be2 *

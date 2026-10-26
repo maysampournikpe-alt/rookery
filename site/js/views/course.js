@@ -3,12 +3,12 @@ import { Chess } from '../../vendor/chess.js';
 import { D, nameFor, fenAfter } from '../data.js';
 import { Board, drawMini } from '../board.js';
 import { counts, isLearned, isDiscovered } from '../store.js';
-import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
+import { allCoursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
 export function render(root, { slug, key, query }) {
   const fam = D.famBySlug.get(slug);
-  const courses = fam ? coursesOf(fam) : [];
+  const courses = fam ? allCoursesOf(fam) : [];
   const course = courses.find((c) => c.key === key);
   if (!fam || !course) {
     root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that variation.', h('div', {}, h('a', { class: 'btn primary', href: fam ? `#/opening/${fam.slug}` : '#/' }, 'Back'))));
@@ -112,7 +112,7 @@ export function render(root, { slug, key, query }) {
     for (const m of course.path) node = node.kids.get(m) || node;
 
     panel.replaceChildren(
-      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: `#/opening/${fam.slug}?side=${side}`, 'aria-label': `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
+      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: course.trap ? '#/traps' : `#/opening/${fam.slug}?side=${side}`, 'aria-label': course.trap ? 'Back to traps' : `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
       h(
         'div',
         { class: 'pc-body' },
@@ -123,7 +123,7 @@ export function render(root, { slug, key, query }) {
           h('button', { type: 'button', role: 'tab', 'aria-selected': String(tab === 'learn'), onclick: () => ((tab = 'learn'), draw()) }, 'Learn'),
           h('button', { type: 'button', role: 'tab', 'aria-selected': String(tab === 'practice'), onclick: () => ((tab = 'practice'), draw()) }, 'Practice', seenN ? h('span', { class: 'n' }, String(seenN)) : null),
         ),
-        h('div', { class: 'ocard-mini' }, mini, h('div', {}, h('h3', {}, fam.name + ': ' + course.name), h('p', {}, course.idea))),
+        h('div', { class: 'ocard-mini' }, mini, h('div', {}, h('h3', {}, course.trap ? course.name : fam.name + ': ' + course.name), h('p', {}, course.idea))),
         h('div', { class: 'prog-row' }, h('div', { class: 'progress' }, h('i', { style: `width:${pct}%` })), h('b', {}, `${pct}%`), h('span', {}, side === 'white' ? 'White' : 'Black')),
         h('div', { class: 'seg', role: 'group', 'aria-label': 'You play', style: 'align-self:flex-start' }, ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(side === s), onclick: () => ((side = s), (selected = null), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), `Play as ${s === 'white' ? 'White' : 'Black'}`))),
         tier === 'expert' ? h('p', { class: 'meta', style: 'margin:0' }, 'Expert has every line we know, so some positions have more than one good move for you.') : null,

@@ -2,7 +2,7 @@ import { Chess } from '../../vendor/chess.js';
 import { D, START_FEN } from '../data.js';
 import { Board } from '../board.js';
 import { recordRun, discover, isDiscovered, isLearned, INTERVALS, dueEntries } from '../store.js';
-import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
+import { allCoursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { describeMove } from '../explain.js';
 import { h, sleep } from '../ui.js';
 
@@ -370,7 +370,7 @@ export function render(root, { slug, query }) {
   const fam = D.famBySlug.get(slug);
   if (!fam) return root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that opening.', h('div', {}, h('a', { class: 'btn primary', href: '#/' }, 'See all openings'))));
   const side = query.get('side') || fam.side;
-  const courses = coursesOf(fam);
+  const courses = allCoursesOf(fam);
   const course = courses.find((c) => c.key === query.get('course')) || courses[0];
   const tiers = tiersOf(fam, course, side);
   const tier = tiers.some((t) => t.key === query.get('tier')) ? query.get('tier') : defaultTier(tiers).key;

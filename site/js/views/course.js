@@ -1,8 +1,8 @@
-// One variation: pick a depth (Essentials / Advanced / Expert), start learning, and see the whole tree.
+// One variation, Chess.com style: a side panel with Learn / Practice tabs, a progress bar and a list of lines.
 import { Chess } from '../../vendor/chess.js';
-import { D, nameFor } from '../data.js';
-import { Board } from '../board.js';
-import { counts, isDue, isLearned, isDiscovered } from '../store.js';
+import { D, nameFor, fenAfter } from '../data.js';
+import { Board, drawMini } from '../board.js';
+import { counts, isLearned, isDiscovered } from '../store.js';
 import { coursesOf, buildCourse, tiersOf } from '../repertoire.js';
 import { h } from '../ui.js';
 
@@ -16,18 +16,19 @@ export function render(root, { slug, key, query }) {
   }
   let side = query.get('side') || fam.side;
   let tier = query.get('tier') || 'essentials';
+  let tab = query.get('tab') === 'practice' ? 'practice' : 'learn';
   const game = new Chess();
   const board = new Board(h('div'), {});
-  const now = h('div', { class: 'now', 'aria-live': 'polite' });
-  const depths = h('div', { class: 'course-tabs', role: 'group', 'aria-label': 'How deep?' });
-  const panel = h('div', { class: 'course-panel' });
-  const sideSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'You play' });
+  const panel = h('div', { class: 'panel-card' });
   let shown = [];
+  let selected = null;
 
   const current = () => buildCourse(fam, course, side, tier);
-  const trainHref = (l, mode) => `#/train/${fam.slug}?course=${course.key}&side=${side}&tier=${tier}&line=${l.id}${mode ? '&mode=' + mode : ''}`;
+  const trainHref = (l, mode) => `#/train/${fam.slug}?course=${course.key}&side=${side}&tier=${tier}&line=${l.id}&mode=${mode}`;
   const mineAt = (i) => (i % 2 === 0) === (side === 'white');
   const theirs = () => (side === 'white' ? 'Black' : 'White');
+  const shortName = (l) => l.sub.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ':?\\s*'), '') || 'Main line';
+  const moveCount = (l) => `${Math.ceil(l.san.length / 2)} moves`;
 
   function preview(path, animate = true) {
     shown = path;
@@ -39,8 +40,6 @@ export function render(root, { slug, key, query }) {
     }
     board.setOrientation(side);
     board.setFen(game.fen(), { last, animate });
-    const nm = path.length ? nameFor(path, game.fen()) : null;
-    now.replaceChildren(h('b', {}, nm ? nm.line.sub || nm.line.fam : 'Starting position'), h('span', {}, path.length ? `${Math.ceil(path.length / 2)} move${path.length > 2 ? 's' : ''} in` : 'Tap a move to see it on the board'));
     for (const c of panel.querySelectorAll('.mv')) c.classList.toggle('cur', c.dataset.path === path.join(' '));
   }
 
@@ -51,19 +50,7 @@ export function render(root, { slug, key, query }) {
     return h('button', { type: 'button', class: 'mv ' + (mineAt(i) ? 'mine' : 'theirs'), dataset: { path: path.slice(0, i + 1).join(' ') }, title: mineAt(i) ? 'Your move' : 'Their move', onclick: () => preview(path.slice(0, i + 1)) }, label);
   }
 
-  function leafRow(l) {
-    const done = isLearned(l.id);
-    const seen = isDiscovered(l.id);
-    return h(
-      'div',
-      { class: 'leaf' },
-      h('span', { class: 'st ' + (done ? 'done' : seen ? 'seen' : isDue(l.id) ? 'due' : ''), title: done ? 'Learned' : seen ? 'Seen. Practice it to learn it.' : 'Not seen yet' }, '✓'),
-      h('span', { class: 'nm' }, l.sub),
-      h('a', { class: 'btn sm primary', href: trainHref(l, seen ? 'practice' : 'learn') }, seen ? 'Practice' : 'Learn this line'),
-    );
-  }
-
-  // one stretch of forced moves, then "If they play ..." for every reply we cover
+  // the branches: one stretch of forced moves, then "If they play ..." for every reply we cover
   function renderNode(node, path, afterReply) {
     const chips = [];
     let n = node;
@@ -76,7 +63,7 @@ export function render(root, { slug, key, query }) {
     }
     const out = [];
     if (chips.length) out.push(h('div', { class: 'seq' }, afterReply || mineAt(path.length) ? h('span', { class: 'lead' }, 'you play') : null, ...chips));
-    if (n.leaf) out.push(leafRow(n.leaf));
+    if (n.leaf) out.push(h('div', { class: 'meta', style: 'margin:4px 0 8px' }, `→ ${shortName(n.leaf)}`));
     else if (n.kids.size > 1) {
       out.push(
         h(
@@ -92,62 +79,74 @@ export function render(root, { slug, key, query }) {
     return h('div', { class: 'node' }, ...out);
   }
 
-  function drawPanel() {
-    const built = current();
-    const k = counts(built.leaves.map((l) => l.id));
-    const toLearn = built.leaves.find((l) => !isDiscovered(l.id));
-    const toPractice = built.leaves.find((l) => isDiscovered(l.id) && !isLearned(l.id));
-    let node = built.tree;
-    for (const m of course.path) node = node.kids.get(m) || node;
-    panel.replaceChildren(
-      h(
-        'div',
-        { class: 'start-row' },
-        toLearn
-          ? h('a', { class: 'btn primary big', href: trainHref(toLearn, 'learn') }, k.discovered === 0 ? 'Start learning' : 'Continue learning')
-          : h('a', { class: 'btn primary big', href: trainHref(toPractice || built.leaves[0], 'practice') }, toPractice ? 'Practice your lines' : 'Play the lines again'),
-        toLearn && toPractice ? h('a', { class: 'btn big', href: trainHref(toPractice, 'practice') }, 'Practice') : null,
-        h('span', { class: 'meta' }, `${k.discovered} of ${k.total} lines seen · ${k.learned} learned`),
-      ),
-      course.path.length ? h('div', { class: 'tree-head' }, h('b', {}, 'Start with these moves'), h('div', { class: 'seq' }, ...course.path.map((_, i) => chip(course.path, i, i === 0)))) : null,
-      h('div', { class: 'tree-head' }, h('b', {}, 'What to play'), h('span', { class: 'legend' }, h('i', { class: 'mine' }, 'Your move'), h('i', { class: 'theirs' }, 'Their move'), 'Tap any move to see it.')),
-      renderNode(node, course.path, false),
-    );
-    preview(shown.length ? shown : course.path, false);
-  }
-
-  function drawControls() {
+  function draw() {
     const tiers = tiersOf(fam, course, side);
     if (!tiers.some((t) => t.key === tier)) tier = tiers[0].key;
-    depths.replaceChildren(
-      ...tiers.map((t) => h('button', { type: 'button', class: 'course-tab', 'aria-selected': String(t.key === tier), title: t.hint, onclick: () => ((tier = t.key), (shown = []), drawControls(), drawPanel()) }, h('b', {}, t.label), h('span', {}, `${t.count} ${t.count === 1 ? 'line' : 'lines'}`))),
+    const built = current();
+    const all = built.leaves;
+    const k = counts(all.map((l) => l.id));
+    const seenN = all.filter((l) => isDiscovered(l.id) && !isLearned(l.id)).length;
+    const list = tab === 'learn' ? all : all.filter((l) => isDiscovered(l.id));
+    const toLearn = all.find((l) => !isDiscovered(l.id));
+    const toPractice = all.find((l) => isDiscovered(l.id) && !isLearned(l.id)) || all.find((l) => isDiscovered(l.id));
+    const pct = k.total ? Math.round((k.learned / k.total) * 100) : 0;
+
+    const say = k.discovered === 0 ? 'Pick a line below to start learning.' : toLearn ? "Let's continue - pick a line below to keep learning." : seenN ? 'You have seen every line. Take the quiz on each one so they stick.' : 'You know every line here. Great job!';
+    const mini = h('canvas', { 'aria-hidden': 'true' });
+    requestAnimationFrame(() => drawMini(mini, fenAfter(course.path), side));
+
+    const rows = list.length
+      ? list.map((l) =>
+          h(
+            'li',
+            { class: l.id === selected ? 'cur' : '', tabindex: 0, onmouseenter: () => ((selected = l.id), preview(l.san, false)), onclick: () => (location.hash = trainHref(l, tab === 'learn' ? 'learn' : 'practice')), onkeydown: (e) => e.key === 'Enter' && (location.hash = trainHref(l, tab === 'learn' ? 'learn' : 'practice')) },
+            h('span', { class: 'st ' + (isLearned(l.id) ? 'done' : isDiscovered(l.id) ? 'seen' : ''), title: isLearned(l.id) ? 'Learned' : isDiscovered(l.id) ? 'Seen. Take the quiz to learn it.' : 'Not seen yet' }, '✓'),
+            h('span', { class: 'nm' }, shortName(l)),
+            h('span', { class: 'ct' }, moveCount(l)),
+          ),
+        )
+      : [h('li', { style: 'cursor:default' }, h('span'), h('span', { class: 'nm', style: 'color:var(--muted)' }, 'Learn a line first, then you can take its quiz here.'), h('span'))];
+
+    let node = built.tree;
+    for (const m of course.path) node = node.kids.get(m) || node;
+
+    panel.replaceChildren(
+      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: `#/opening/${fam.slug}?side=${side}`, 'aria-label': `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
+      h(
+        'div',
+        { class: 'pc-body' },
+        h('div', { class: 'coach' }, h('div', { class: 'coach-av', 'aria-hidden': 'true' }, h('img', { src: 'pieces/wN.svg', alt: '' })), h('div', { class: 'bubble' }, h('p', {}, say))),
+        h(
+          'div',
+          { class: 'tabs2', role: 'tablist' },
+          h('button', { type: 'button', role: 'tab', 'aria-selected': String(tab === 'learn'), onclick: () => ((tab = 'learn'), draw()) }, 'Learn'),
+          h('button', { type: 'button', role: 'tab', 'aria-selected': String(tab === 'practice'), onclick: () => ((tab = 'practice'), draw()) }, 'Practice', seenN ? h('span', { class: 'n' }, String(seenN)) : null),
+        ),
+        h('div', { class: 'ocard-mini' }, mini, h('div', {}, h('h3', {}, fam.name + ': ' + course.name), h('p', {}, course.idea))),
+        h('div', { class: 'prog-row' }, h('div', { class: 'progress' }, h('i', { style: `width:${pct}%` })), h('b', {}, `${pct}%`), h('span', {}, side === 'white' ? 'White' : 'Black')),
+        h('div', { class: 'seg', role: 'group', 'aria-label': 'You play', style: 'align-self:flex-start' }, ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(side === s), onclick: () => ((side = s), (selected = null), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), `Play as ${s === 'white' ? 'White' : 'Black'}`))),
+        tiers.length > 1 ? h('div', { class: 'depth', role: 'group', 'aria-label': 'How deep?' }, tiers.map((t) => h('button', { type: 'button', title: t.hint, 'aria-pressed': String(t.key === tier), onclick: () => ((tier = t.key), (selected = null), draw()) }, `${t.label} · ${t.count} lines`))) : null,
+        h('ul', { class: 'line-list' }, ...rows),
+        h(
+          'details',
+          { class: 'branches-box' },
+          h('summary', {}, 'See all the branches (if they play this, you play that)'),
+          h('div', { class: 'tree-head' }, course.path.length ? h('div', { class: 'seq' }, ...course.path.map((_, i) => chip(course.path, i, i === 0))) : null, h('span', { class: 'legend' }, h('i', { class: 'mine' }, 'Your move'), h('i', { class: 'theirs' }, 'Their move'), 'Tap a move to see it.'), renderNode(node, course.path, false)),
+        ),
+      ),
+      h('div', { class: 'pc-foot' }, tab === 'learn' || !toPractice ? h('a', { class: 'btn primary big block', href: trainHref(toLearn || all[0], 'learn') }, toLearn ? 'Learn' : 'Watch the lines again') : h('a', { class: 'btn primary big block', href: trainHref(toPractice, 'practice') }, 'Practice')),
     );
-    sideSeg.replaceChildren(
-      ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(side === s), onclick: () => ((side = s), (shown = []), drawControls(), drawPanel()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), s === 'white' ? 'White' : 'Black')),
-    );
+    preview(shown.length ? shown : selected ? all.find((l) => l.id === selected)?.san || course.path : course.path, false);
   }
 
-  const back = () => preview(shown.slice(0, Math.max(0, shown.length - 1)));
   const onKey = (e) => {
     if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName)) return;
-    if (e.key === 'ArrowLeft') back();
+    if (e.key === 'ArrowLeft') preview(shown.slice(0, Math.max(0, shown.length - 1)));
   };
   window.addEventListener('keydown', onKey);
 
-  const left = h('div', { class: 'left' }, board.el, now, h('div', { class: 'nav-row' }, h('button', { class: 'btn sm', onclick: back }, '◀ Back one move'), h('button', { class: 'btn sm', onclick: () => board.flip() }, 'Flip board')));
-  const right = h(
-    'div',
-    { class: 'right' },
-    h('p', { class: 'crumb' }, h('a', { href: `#/opening/${fam.slug}?side=${side}` }, `← ${fam.name}`)),
-    h('h1', { class: 'title' }, course.name),
-    h('p', { class: 'blurb' }, course.idea),
-    h('div', { class: 'who' }, h('span', {}, 'You play'), sideSeg),
-    courses.length ? h('h3', { class: 'pick' }, 'How deep do you want to go?') : null,
-    depths,
-    panel,
-  );
-  root.replaceChildren(h('div', { class: 'split' }, left, right));
-  drawControls();
-  drawPanel();
+  const left = h('div', { class: 'left' }, board.el, h('div', { class: 'nav-row' }, h('button', { class: 'btn sm', onclick: () => preview(shown.slice(0, Math.max(0, shown.length - 1))) }, '◀ Back one move'), h('button', { class: 'btn sm', onclick: () => board.flip() }, 'Flip board')));
+  root.replaceChildren(h('div', { class: 'split' }, left, panel));
+  draw();
   return () => window.removeEventListener('keydown', onKey);
 }

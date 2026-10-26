@@ -23,7 +23,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
       }
     }
   }
-  const list = [...nodes.values()].sort((a, b) => (a.fen < b.fen ? -1 : 1));
+  const list = [...nodes.values()].sort((a, b) => a.path.length - b.path.length || (a.fen < b.fen ? -1 : 1)); // shallow, mainstream positions first
   console.error('nodes', list.length);
   const mine = list.filter((_, i) => i % shards === shard);
   const eng = new Engine();

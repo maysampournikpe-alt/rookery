@@ -3,7 +3,7 @@
 const fs = require('fs');
 const dir = process.argv[2] || '.';
 const MAX_TOTAL = +process.argv[3] || 160;
-const MAX_PER_FAM = 9;
+const MAX_PER_FAM = 12;
 (async () => {
   const { Chess } = await import(require('url').pathToFileURL(require('path').join(__dirname, '../../site/vendor/chess.js')).href);
   const rows = fs.readdirSync(dir).filter((f) => /^out-\w+\.jsonl$/.test(f)).flatMap((f) => fs.readFileSync(`${dir}/${f}`, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)));

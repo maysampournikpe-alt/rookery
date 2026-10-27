@@ -70,7 +70,7 @@ node scripts/import-studies.mjs   # checks every move is legal, writes data/line
 node scripts/build-openings.mjs   # rebuilds site/data/openings.json
 ```
 
-`scripts/trap-miner/` holds optional dev tools that use Stockfish (`npm i stockfish` somewhere on `NODE_PATH`): `mine.cjs` searches book positions for natural-looking moves that lose material, `gen.cjs` turns the results into trap chapters, `qa.cjs` and `trim.cjs` check and trim study lines, and `extend.cjs` checks a single trap.
+`scripts/trap-miner/` holds optional dev tools that use Stockfish (`npm i stockfish` somewhere on `NODE_PATH`): `mine.cjs` searches book positions for natural-looking moves that lose material, `gen.cjs` turns the results into trap chapters, `qa.cjs` and `trim.cjs` check and trim study lines, and `extend.cjs` checks a single trap, and `grow.cjs` grows a branching repertoire for thin openings (book moves checked by the engine, every plausible opponent reply covered) into `data/lines/engine.tsv`.
 
 ## Layout
 

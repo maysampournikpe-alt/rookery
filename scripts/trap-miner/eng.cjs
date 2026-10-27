@@ -20,6 +20,10 @@ class Engine {
   }
   send(s) { this.p.stdin.write(s + '\n'); }
   onLine(line) {
+    if (this.multi && line.startsWith('info') && / multipv /.test(line) && / pv /.test(line)) {
+      const k = /multipv (\d+)/.exec(line)[1], cp = /score cp (-?\d+)/.exec(line), mt = /score mate (-?\d+)/.exec(line), pv = / pv (.+)$/.exec(line);
+      this.multi[k] = { move: pv[1].split(' ')[0], cp: cp ? +cp[1] : null, mate: mt ? +mt[1] : null };
+    }
     if (this.cur && line.startsWith('info') && / pv /.test(line) && / depth /.test(line)) {
       const cp = /score cp (-?\d+)/.exec(line), mt = /score mate (-?\d+)/.exec(line), pv = / pv (.+)$/.exec(line);
       this.cur.cp = cp ? +cp[1] : null;
@@ -34,7 +38,21 @@ class Engine {
   analyse(fen, depth = 12) {
     return new Promise((res) => {
       this.cur = {};
+      this.multi = null;
       this.wait = res;
+      this.send('setoption name MultiPV value 1');
+      this.send('ucinewgame');
+      this.send('position fen ' + fen);
+      this.send('go depth ' + depth);
+    });
+  }
+  // top-n moves: [{move (uci), cp (side to move), mate}]
+  analyseMulti(fen, depth = 11, n = 4) {
+    return new Promise((res) => {
+      this.multi = {};
+      this.cur = {};
+      this.wait = () => res(Object.keys(this.multi).sort((a, b) => a - b).map((k) => this.multi[k]));
+      this.send('setoption name MultiPV value ' + n);
       this.send('ucinewgame');
       this.send('position fen ' + fen);
       this.send('go depth ' + depth);

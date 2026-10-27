@@ -228,6 +228,42 @@ export function allCoursesOf(fam) {
         make(display, [k], `${ls.length} known lines in the ${display}.`);
       }
     }
+    // openings whose lines carry move-names ("3...Nf6 4.d4 exd4") or too few named variations: group by the opponent's first choice
+    {
+      const taken = new Set(out.flatMap((c) => c.lines));
+      const rest = fam.lines.filter((l) => !taken.has(l) && !trapName(l.sub));
+      if (rest.length >= 6) {
+        const base = trunk(rest).path;
+        const owner = fam.side === 'white';
+        const byMove = new Map();
+        for (const l of rest) {
+          let i = base.length;
+          while (i < l.san.length && (i % 2 === 0) === owner) i++; // skip the owner's own moves
+          if (i >= l.san.length) continue;
+          const key = l.san.slice(0, i + 1).join(' ');
+          if (!byMove.has(key)) byMove.set(key, { i, ls: [] });
+          byMove.get(key).ls.push(l);
+        }
+        const groupsBig = [...byMove].filter(([, g]) => g.ls.length >= 3).sort((a, b) => b[1].ls.length - a[1].ls.length);
+        for (const [key, g] of groupsBig) {
+          if (out.length >= MAX_VARIATIONS) break;
+          const mv = key.split(' ')[g.i];
+          const label = `${g.i % 2 === 0 ? `${g.i / 2 + 1}.` : `${(g.i + 1) / 2}...`}${mv}`;
+          const t = trunk(g.ls);
+          const c = { key: 'vs-' + label.replace(/[^A-Za-z0-9]+/g, '-').toLowerCase(), name: `vs ${label}`, idea: `${g.ls.length} known lines after ${label}.`, path: t.path, node: t.node, lines: g.ls };
+          if (tiersOf(fam, c, fam.side).at(-1).count >= 2) out.push(c);
+        }
+      }
+    }
+    {
+      const taken = new Set(out.flatMap((c) => c.lines));
+      const rest = fam.lines.filter((l) => !taken.has(l) && !trapName(l.sub));
+      if (rest.length >= 8 && out.length < MAX_VARIATIONS + 1) {
+        const t = trunk(rest);
+        const c = { key: 'more', name: 'More lines', idea: `${rest.length} more known lines in the ${fam.name}.`, path: t.path, node: t.node, lines: rest };
+        if (tiersOf(fam, c, fam.side).at(-1).count >= 2) out.push(c);
+      }
+    }
     for (const [k, ls] of groups) {
       if (!k.startsWith('trap: ')) continue;
       const t = trunk(ls);

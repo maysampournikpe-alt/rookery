@@ -3,7 +3,7 @@
 const fs = require('fs');
 const dir = process.argv[2] || '.';
 const MAX_TOTAL = +process.argv[3] || 160;
-const MAX_PER_FAM = 16;
+const MAX_PER_FAM = 14;
 (async () => {
   const { Chess } = await import(require('url').pathToFileURL(require('path').join(__dirname, '../../site/vendor/chess.js')).href);
   const rows = fs.readdirSync(dir).filter((f) => /^out-\w+\.jsonl$/.test(f)).flatMap((f) => fs.readFileSync(`${dir}/${f}`, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)));
@@ -59,10 +59,21 @@ const MAX_PER_FAM = 16;
     const sans = [bl.san];
     const t = new Chess(c.fen());
     const gains = [];
-    let mated = false;
+    let mated = false, fork = false;
     for (let i = 0; i < Math.min(r.pv.length, 14); i++) {
       let m; try { m = mv(t, r.pv[i]); } catch { break; }
       sans.push(m.san);
+      if (i % 2 === 0 && i < 6 && m.piece !== 'p') { // does the trapper's move attack two things at once?
+        const f = t.fen().split(' ');
+        const inCheck = t.inCheck();
+        f[1] = f[1] === 'w' ? 'b' : 'w';
+        f[3] = '-';
+        try {
+          const x = new Chess(f.join(' '));
+          const hits = x.moves({ square: m.to, verbose: true }).filter((q) => q.captured && V[q.captured] >= 300 && q.captured !== 'k').length;
+          if (hits + (inCheck ? 1 : 0) >= 2) fork = true;
+        } catch { /* odd position */ }
+      }
       gains.push(sign * (mat(t) - start));
       if (t.isCheckmate()) { mated = true; break; }
     }
@@ -79,7 +90,7 @@ const MAX_PER_FAM = 16;
     const n = r.path.length;
     const label = `${Math.floor(n / 2) + 1}${n % 2 === 0 ? '.' : '...'}${bl.san}`;
     const motif = mated ? 'Mating Trap' : best >= 800 ? 'Queen Trap' : best >= 450 ? 'Rook Trap' : 'Piece Trap';
-    cand.push({ r, fam: r.fam || famOf(r.name), trapper, label, motif, line, score: (r.seed ? 1000 : 0) + (r.inBook ? 300 : 0) + (/^[NBQ]/.test(r.blunder) || /x/.test(r.blunder) ? 60 : 0) + Math.min(r.base - r.conf, 600) / 10 - r.path.length + (mated ? 40 : 0) });
+    cand.push({ r, fam: r.fam || famOf(r.name), trapper, label, motif, fork, line, score: (r.seed ? 1000 : 0) + (r.inBook ? 300 : 0) + (/^[NBQ]/.test(r.blunder) || /x/.test(r.blunder) ? 60 : 0) + Math.min(r.base - r.conf, 600) / 10 - r.path.length + (mated ? 40 : 0) });
   }
   cand.sort((a, b) => b.score - a.score);
   const per = new Map(), names = new Map();
@@ -103,7 +114,8 @@ const MAX_PER_FAM = 16;
     if (/^(Accepted|Declined|Main Line|Normal Variation|Normal)$/i.test(variation)) variation = `${o.fam} ${variation}`;
     const famShort = o.fam.replace(/ (Defen[cs]e|Opening|Game|Attack)$/, '');
     if (variation && !variation.toLowerCase().includes(famShort.toLowerCase().split(' ')[0])) variation = `${famShort} ${variation}`;
-    const base = variation ? (/Trap$/i.test(variation) ? variation : `${variation} Trap`) : `${o.fam} Trap`;
+    const kind = o.motif === 'Mating Trap' ? 'Mating' : o.fork ? 'Fork' : '';
+    const base = variation ? (/Trap$/i.test(variation) ? variation : `${variation}${kind ? ' ' + kind : ''} Trap`) : `${o.fam}${kind ? ' ' + kind : ''} Trap`;
     let title = r.title || base;
     const k = `${o.fam}|${title}`;
     names.set(k, (names.get(k) || 0) + 1);

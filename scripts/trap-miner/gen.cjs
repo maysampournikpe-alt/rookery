@@ -3,7 +3,7 @@
 const fs = require('fs');
 const dir = process.argv[2] || '.';
 const MAX_TOTAL = +process.argv[3] || 160;
-const MAX_PER_FAM = 12;
+const MAX_PER_FAM = 16;
 (async () => {
   const { Chess } = await import(require('url').pathToFileURL(require('path').join(__dirname, '../../site/vendor/chess.js')).href);
   const rows = fs.readdirSync(dir).filter((f) => /^out-\w+\.jsonl$/.test(f)).flatMap((f) => fs.readFileSync(`${dir}/${f}`, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)));
@@ -45,6 +45,7 @@ const MAX_PER_FAM = 12;
     const key = r.path.join(' ') + '|' + r.blunder;
     if (seen.has(key)) continue;
     seen.add(key);
+    if (/Traps,/.test(r.name)) continue;
     if (!r.seed && /^[RK]/.test(r.blunder) || (/^Q/.test(r.blunder) && !/x/.test(r.blunder))) continue; // rook, king and quiet queen moves are rarely natural mistakes
     const c = new Chess();
     for (const m of r.path) c.move(m);
@@ -96,14 +97,21 @@ const MAX_PER_FAM = 12;
     text += num(p0, false) + g.move(o.line[0]).san + ' ';
     if (alt) text += `(${alt}) `;
     for (let i = 1; i < o.line.length; i++) text += num(g.history().length, i === 1 && !!alt) + g.move(o.line[i]).san + ' ';
-    const variation = (r.name.split(': ').slice(1).join(' ').split(',')[0] || '').replace(/[:,]/g, '').trim();
-    let title = r.title || `${o.motif} after ${o.label}${variation && !/^\d/.test(variation) && variation.length < 34 ? ' in the ' + variation : ''}`;
+    // a trap is named after the line it springs from ("Hunt Variation Trap"); two in the same line are told apart by the move
+    const segs = r.name.split(': ').slice(1).join(': ').split(',').map((x) => x.replace(/[:]/g, '').trim()).filter((x) => x && !/\d|Tactics in Junior|^Traps?$/i.test(x));
+    let variation = segs[0] || '';
+    if (/^(Accepted|Declined|Main Line|Normal Variation|Normal)$/i.test(variation)) variation = `${o.fam} ${variation}`;
+    const famShort = o.fam.replace(/ (Defen[cs]e|Opening|Game|Attack)$/, '');
+    if (variation && !variation.toLowerCase().includes(famShort.toLowerCase().split(' ')[0])) variation = `${famShort} ${variation}`;
+    const base = variation ? (/Trap$/i.test(variation) ? variation : `${variation} Trap`) : `${o.fam} Trap`;
+    let title = r.title || base;
     const k = `${o.fam}|${title}`;
     names.set(k, (names.get(k) || 0) + 1);
-    if (names.get(k) > 1) title += ` (${names.get(k)})`;
+    if (!r.title && names.get(k) > 1) title += ` (${o.label})`;
+    const note = o.motif === 'Mating Trap' ? 'leads to checkmate' : o.motif === 'Queen Trap' ? 'wins the queen' : o.motif === 'Rook Trap' ? 'wins a rook or more' : 'wins a piece';
     per.set(o.fam, (per.get(o.fam) || 0) + 1);
     total++;
-    console.log(`[Event "${o.fam}: Traps, ${title} [${o.trapper}]"]\n\n${text.trim()} *\n`);
+    console.log(`[Event "${o.fam}: Traps, ${title}${r.title ? '' : ', ' + note} [${o.trapper}]"]\n\n${text.trim()} *\n`);
   }
   console.error(`${total} traps from ${rows.length} candidates (${cand.length} passed the filters)`);
 })();

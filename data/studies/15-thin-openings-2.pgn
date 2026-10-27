@@ -1,0 +1,63 @@
+[Event "Queen's Indian Defense: Classical Variation, 4.g3 Bb7 5.Bg2 Be7"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 b6 4. g3 Bb7 5. Bg2 Be7 6. O-O O-O 7. Nc3 Ne4 (7... d5 8. cxd5 Nxd5 9. Qc2 Nxc3 10. Qxc3) 8. Qc2 Nxc3 (8... Nxc3 9. Qxc3 c5 10. Rd1 cxd4 11. Nxd4 Bf6 12. Qc2) 9. Qxc3 c5 10. Rd1 cxd4 11. Nxd4 Bf6 12. Qc2 Bxg2 13. Kxg2 Qc8 *
+
+[Event "Queen's Indian Defense: Nimzowitsch Variation, 4.g3 Bb7 5.Bg2 Bb4+"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 b6 4. g3 Bb7 5. Bg2 Bb4+ 6. Bd2 Be7 (6... a5 7. O-O O-O 8. Nc3 Bxc3 9. Bxc3 d6) 7. Nc3 Ne4 (7... O-O 8. O-O d6 9. Qc2 Nbd7 10. Rad1) 8. Qc2 Nxd2 9. Nxd2 d5 10. cxd5 exd5 11. O-O O-O *
+
+[Event "Queen's Indian Defense: Petrosian Variation, 4.a3 Ba6"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 b6 4. a3 Ba6 5. Qc2 Bb7 6. Nc3 c5 (6... Nc6 7. e4 Nxd4 8. Nxd4 Bxe4 9. Nxe4 Nxe4 10. Qxe4) 7. e4 cxd4 8. Nxd4 Bc5 9. Nb3 Be7 10. Bf4 d6 *
+
+[Event "Bogo-Indian Defense: Wade-Smyslov Variation, 4.Bd2 Bxd2+"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 Bb4+ 4. Bd2 Bxd2+ (4... Qe7 5. g3 Nc6 6. Nc3 Bxc3 7. Bxc3 Ne4 8. Rc1 O-O) 5. Qxd2 O-O (5... b6 6. Nc3 Bb7 7. e4 d6 8. Bd3) 6. g3 d5 (6... b6 7. Bg2 Bb7 8. O-O d6 9. Nc3) 7. Bg2 Nbd7 8. O-O b6 9. Nc3 Bb7 10. Rad1 *
+
+[Event "Bogo-Indian Defense: Nimzowitsch Variation, 4.Nbd2"]
+
+1. d4 Nf6 2. c4 e6 3. Nf3 Bb4+ 4. Nbd2 b6 (4... O-O 5. a3 Be7 6. e4 d5 7. e5 Ne4 8. Bd3) 5. a3 Bxd2+ 6. Qxd2 Bb7 (6... Bb7 7. e3 d6 8. Be2 Nbd7 9. O-O) 7. e3 d6 8. Be2 Nbd7 9. O-O O-O 10. b4 *
+
+[Event "Nimzo-Indian Defense: Hübner Variation, 4.e3 c5 5.Bd3 Nc6"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. e3 c5 5. Bd3 Nc6 (5... d5 6. Nf3 Nc6 7. O-O dxc4 8. Bxc4 Bxc3 9. bxc3) 6. Nf3 Bxc3+ (6... Bxc3+ 7. bxc3 d6 8. e4 e5 9. d5 Ne7 10. Nh4 h6) 7. bxc3 d6 8. e4 e5 9. d5 Ne7 10. Nh4 h6 11. f4 Ng6 *
+
+[Event "Nimzo-Indian Defense: Kmoch Variation, 4.f3 d5"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. f3 d5 (4... c5 5. d5 Bxc3+ 6. bxc3 exd5 7. cxd5 d6 8. e4 O-O) 5. a3 Bxc3+ 6. bxc3 c5 (6... O-O 7. e3 c5 8. cxd5 exd5 9. Bd3) 7. cxd5 Nxd5 8. dxc5 f5 (8... Qa5 9. e4 Nf6 10. Nh3) 9. e4 fxe4 10. fxe4 Nf6 11. Bd3 Qa5 *
+
+[Event "Nimzo-Indian Defense: Spielmann Variation, 4.Qb3"]
+
+1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Qb3 c5 (4... Nc6 5. Nf3 d6 6. g3 O-O 7. Bg2 e5) 5. dxc5 Nc6 (5... Na6 6. a3 Bxc5 7. Nf3 O-O 8. Bg5) 6. Nf3 Ne4 7. Bd2 Nxd2 (7... Nxc5 8. Qc2 f5 9. g3 O-O 10. Bg2 b6) 8. Nxd2 Bxc5 9. e3 O-O 10. Be2 *
+
+[Event "Slav Defense: Schlechter Variation, 3.Nf3 Nf6 4.e3 g6"]
+
+1. d4 d5 2. c4 c6 3. Nf3 Nf6 4. e3 g6 (4... Bf5 5. Nc3 e6 6. Nh4 Bg6 7. Nxg6 hxg6) 5. Nc3 Bg7 (5... Bg7 6. Bd3 O-O 7. O-O dxc4 8. Bxc4 Nbd7 9. Qe2 b5) 6. Bd3 O-O 7. O-O dxc4 8. Bxc4 Nbd7 9. Qe2 b5 10. Bd3 Bb7 11. e4 b4 12. Na4 c5 *
+
+[Event "Slav Defense: Modern Line, 3.Nf3 Nf6 4.Nc3 dxc4 5.a4 Bf5 6.Ne5"]
+
+1. d4 d5 2. c4 c6 3. Nf3 Nf6 4. Nc3 dxc4 5. a4 Bf5 6. Ne5 e6 (6... Nbd7 7. Nxc4 Qc7 8. g3 e5 9. dxe5 Nxe5 10. Bf4) 7. f3 Bb4 8. e4 Bxe4 9. fxe4 Nxe4 10. Bd2 Nxd2 11. Qxd2 Bxc3 *
+
+[Event "Semi-Slav Defense: Stoltz Variation, 5.e3 Nbd7 6.Qc2"]
+
+1. d4 d5 2. c4 c6 3. Nf3 Nf6 4. Nc3 e6 5. e3 Nbd7 6. Qc2 Bd6 (6... b6 7. Bd3 Bb7 8. O-O Be7 9. e4) 7. Bd3 O-O (7... dxc4 8. Bxc4 O-O 9. O-O b5 10. Be2) 8. O-O dxc4 9. Bxc4 b5 10. Be2 Bb7 11. Rd1 Qe7 12. e4 e5 *
+
+[Event "Semi-Slav Defense: Noteboom Variation, 4.Nc3 e6 5.e3 dxc4"]
+
+1. d4 d5 2. c4 c6 3. Nf3 Nf6 4. Nc3 e6 5. e3 Nbd7 (5... dxc4 6. Bxc4 b5 7. Bd3 Bb7 8. a3 a6 9. e4 c5) 6. Bd3 dxc4 7. Bxc4 b5 8. Bd3 a6 9. e4 c5 10. e5 cxd4 11. Nxb5 axb5 12. exf6 gxf6 13. O-O Bb7 *
+
+[Event "Petrov's Defense: Classical Attack, 3.Nxe5 d6 4.Nf3 Nxe4 5.Qe2 Qe7"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 d6 4. Nf3 Nxe4 5. Qe2 Qe7 6. d3 Nf6 7. Bg5 Qxe2+ (7... Nc6 8. Nc3 Qxe2+ 9. Bxe2) 8. Bxe2 Be7 9. Nc3 Nbd7 10. O-O-O c6 *
+
+[Event "Petrov's Defense: Nimzowitsch Attack, 5.Nc3 Nxc3 6.dxc3"]
+
+1. e4 e5 2. Nf3 Nf6 3. Nxe5 d6 4. Nf3 Nxe4 5. Nc3 Nxc3 6. dxc3 Be7 (6... Nc6 7. Bf4 Be6 8. Qd2 Qd7 9. O-O-O) 7. Bf4 Nc6 (7... Nc6 8. Qd2 Be6 9. O-O-O Qd7 10. Kb1) 8. Qd2 Be6 9. O-O-O Qd7 10. Kb1 O-O-O 11. h3 *
+
+[Event "Four Knights Game: Glek Variation, 4.g3"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. g3 Bb4 (4... d5 5. exd5 Nxd5 6. Bg2 Nxc3 7. bxc3 Bd6 8. O-O) 5. Nd5 Nxd5 6. exd5 e4 7. dxc6 exf3 8. Qxf3 dxc6 9. Bg2 Bg4 10. Qf4 Qd7 *
+
+[Event "Four Knights Game: Spanish, Rubinstein Variation, 4.Bb5 Nd4"]
+
+1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Bb5 Nd4 (4... Bb4 5. O-O O-O 6. d3 Bxc3 7. bxc3 d6) 5. Nxd4 exd4 6. e5 dxc3 7. exf6 Qxf6 8. dxc3 Qe7+ 9. Qe2 Qxe2+ 10. Kxe2 Be7 *

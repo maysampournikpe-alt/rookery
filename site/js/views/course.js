@@ -112,7 +112,7 @@ export function render(root, { slug, key, query }) {
     for (const m of course.path) node = node.kids.get(m) || node;
 
     panel.replaceChildren(
-      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: course.trap ? '#/traps' : `#/opening/${fam.slug}?side=${side}`, 'aria-label': course.trap ? 'Back to traps' : `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
+      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: course.trap ? `#/traps/${fam.slug}` : `#/opening/${fam.slug}?side=${side}`, 'aria-label': course.trap ? 'Back to traps' : `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
       h(
         'div',
         { class: 'pc-body' },

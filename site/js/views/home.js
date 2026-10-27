@@ -1,7 +1,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
-import { coursesOf, trapsOf, allLessons, deepestCount } from '../repertoire.js';
+import { coursesOf, trapsOf, popularRank, allLessons, deepestCount } from '../repertoire.js';
 import { h, debounce } from '../ui.js';
 
 const F = { q: '', side: '', all: false };
@@ -77,7 +77,7 @@ export function render(root) {
   }
 
   function draw() {
-    const filtered = D.families.filter((f) => !f.small && (!F.side || f.side === F.side) && matches(f, F.q.trim()));
+    const filtered = [...D.families].sort((a, b) => popularRank(a) - popularRank(b)).filter((f) => !f.small && (!F.side || f.side === F.side) && matches(f, F.q.trim()));
     const mine = filtered.filter((f) => f.mine);
     const rest = filtered.filter((f) => !f.mine);
     const searching = F.q.trim() || F.side;

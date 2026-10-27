@@ -27,7 +27,7 @@ export function render(root, { slug, key, query }) {
   const trainHref = (l, mode) => `#/train/${fam.slug}?course=${course.key}&side=${side}&tier=${tier}&line=${l.id}&mode=${mode}`;
   const mineAt = (i) => (i % 2 === 0) === (side === 'white');
   const theirs = () => (side === 'white' ? 'Black' : 'White');
-  const shortName = (l) => l.sub.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ':?\\s*'), '') || 'Main line';
+  const shortName = (l) => (l.sub.startsWith(course.name + ':') ? l.sub.slice(course.name.length + 1).trim() : l.sub) || 'Main line';
   const moveCount = (l) => `${Math.ceil(l.san.length / 2)} moves`;
 
   function preview(path, animate = true) {

@@ -8,7 +8,8 @@ const shard = +process.argv[2], shards = +process.argv[3];
   const nodes = new Map(); // epd -> {san:[...], name, book:Set(sans)}
   const epd = (c) => c.fen().split(' ').slice(0, 4).join(' ');
   const BOOK = process.env.SRC === 'book'; // mine the hand-written study lines instead of the open data
-  const MAXPLY = BOOK ? 20 : 12;
+  const MAXPLY = +process.env.MAXPLY || (BOOK ? 20 : 12);
+  const MINPLY = +process.env.MINPLY || 2; // only positions at least this deep (to extend an earlier run)
   for (const [, name, san, , src] of j.lines) {
     if ((src === 1) !== BOOK) continue;
     const ms = san.split(' ');
@@ -16,7 +17,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
     for (let i = 0; i < Math.min(ms.length, MAXPLY); i++) {
       const before = epd(c);
       c.move(ms[i]);
-      if (i >= 2) {
+      if (i >= MINPLY) {
         const n = nodes.get(before) || nodes.set(before, { path: ms.slice(0, i), name, book: new Set(), fen: null }).get(before);
         n.book.add(ms[i]);
         if (!n.fen) { const t = new Chess(); for (const m of ms.slice(0, i)) t.move(m); n.fen = t.fen(); }
@@ -27,7 +28,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
   console.error('nodes', list.length);
   const mine = list.filter((_, i) => i % shards === shard);
   const eng = new Engine();
-  const out = fs.createWriteStream(`out-${BOOK ? 'b' : ''}${shard}.jsonl`, { flags: 'a' });
+  const out = fs.createWriteStream(`out-${process.env.TAG || (BOOK ? 'b' : '')}${shard}.jsonl`, { flags: 'a' });
   const natural = (m) => !(m.piece === 'k' && !m.flags.includes('k') && !m.flags.includes('q')) && !(m.piece === 'p' && 'abgh'.includes(m.from[0]) && !m.captured) ;
   let k = 0;
   for (const n of mine) {

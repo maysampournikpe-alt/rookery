@@ -142,6 +142,7 @@ export const norm = (h) =>
 
 const strip = (sub) => (sub || '').replace(/^(Declined|Accepted)(: |, )(?=.)/, ''); // "Accepted, Chicago Defense" is the Chicago Defense
 const trapName = (sub) => /^traps?, (.+)$/i.exec(strip(sub))?.[1].split(/[:,]/)[0].trim();
+const trapNote = (sub) => (/^traps?, (.+)$/i.exec(strip(sub))?.[1].split(/,\s*/).slice(1).join(', ') || '').trim();
 const headOf = (l) => {
   const t = trapName(l.sub);
   if (t) return 'trap: ' + norm(t); // every named trap is its own variation
@@ -231,7 +232,7 @@ export function allCoursesOf(fam) {
       if (!k.startsWith('trap: ')) continue;
       const t = trunk(ls);
       const name = trapName(ls[0].sub);
-      out.push({ key: 'trap-' + k.slice(6).replace(/[^a-z0-9]+/g, '-'), name, idea: `A trap against the ${fam.name}. Learn how to set it, and what to do if your opponent sees it coming.`, path: t.path, node: t.node, lines: ls, trap: true, side: ls[0].tside });
+      out.push({ key: 'trap-' + k.slice(6).replace(/[^a-z0-9]+/g, '-'), name, idea: `A trap against the ${fam.name}${trapNote(ls[0].sub) ? ': ' + trapNote(ls[0].sub) : ''}. Learn how to set it, and what to do if your opponent sees it coming.`, path: t.path, node: t.node, lines: ls, trap: true, side: ls[0].tside });
     }
     if (!out.some((c) => !c.trap)) {
       const rest = fam.lines.filter((l) => !trapName(l.sub));
@@ -266,24 +267,28 @@ const SCHEDULES = {
 const MAX_VARIATIONS = 18;
 const cache = new Map();
 
+// "Najdorf Variation, English Attack 6.Be3" -> "Najdorf Variation, English Attack": a name should not carry raw moves
+const cleanName = (n) =>
+  (n || '')
+    .split(/,\s*/)
+    .map((seg) => seg.replace(/\s*\b\d{1,2}\.{1,3}\s?[A-Za-z0-9O][^:]*$/, '').trim())
+    .filter((seg) => seg && !/^\d|^vs\b|\.\.\.|^Traps?$/i.test(seg))
+    .join(', ');
+
+// the real opening name of a line: the deepest named position along it (open-data names first, then hand-written ones)
 function labelFor(san, course, side) {
   let named = '';
-  for (let i = san.length; i >= Math.max(1, course.path.length); i--) {
-    const l = nodeAt(san.slice(0, i))?.lines[0];
-    if (l && l.sub && i > course.path.length) {
-      named = l.sub;
+  for (let i = san.length; i > course.path.length; i--) {
+    const ls = nodeAt(san.slice(0, i))?.lines || [];
+    const ok = (x) => x.sub && !/Tactics in Junior/i.test(x.name) && cleanName(x.sub);
+    const l = ls.find((x) => x.src !== 'book' && ok(x)) || ls.find(ok);
+    if (l) {
+      named = cleanName(l.sub);
       break;
     }
   }
-  // raw move strings ("Najdorf, 6.Be2 e5 7.Nb3") make poor names: say what the opponent did instead
-  if (!named || /\d+\./.test(named) || /^\d/.test(named)) {
-    let i = course.path.length;
-    if ((i % 2 === 0) === (side === 'white')) i++; // skip my own move to reach theirs
-    const m = san[i];
-    if (m) return `${course.name}: when ${side === 'white' ? 'Black' : 'White'} plays ${i % 2 === 0 ? `${i / 2 + 1}.` : `${(i + 1) / 2}...`}${m}`;
-    return course.name;
-  }
-  const rest = named.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[,:]?\\s*', 'i'), '').trim();
+  named = named.replace(/^(Declined|Accepted)(: |, )(?=.)/, '');
+  const rest = named.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=[,:]|$)[,:]?\\s*', 'i'), '').trim();
   return rest ? `${course.name}: ${rest}` : course.name;
 }
 
@@ -338,17 +343,28 @@ export function buildCourse(fam, course, side, tier = 'essentials') {
     }
     n.leaf = l;
   }
-  // name each line by the choices made on the way ("when White plays 6.Be2, then you play 8.Qd2")
-  const theirs = side === 'white' ? 'Black' : 'White';
-  for (const l of leaves) {
-    let n = tree;
-    const picks = [];
-    l.san.forEach((m, i) => {
-      const mineHere = (i % 2 === 0) === (side === 'white');
-      if (n.kids.size > 1) picks.push(`${mineHere ? 'you play' : theirs + ' plays'} ${i % 2 === 0 ? i / 2 + 1 + '.' : (i + 1) / 2 + '...'}${m}`);
-      n = n.kids.get(m);
-    });
-    if (picks.length) l.sub = l.name = `${course.name}: ${picks.map((x, i) => (i ? 'then ' : 'when ') + x).join(', ')}`;
+  // two lines can carry the same opening name: tell them apart by the first move where they part ways
+  const byName = new Map();
+  for (const l of leaves) byName.set(l.name, [...(byName.get(l.name) || []), l]);
+  const label = (i, m) => `${i % 2 === 0 ? `${i / 2 + 1}.` : `${(i + 1) / 2}...`}${m}`;
+  for (const group of byName.values()) {
+    if (group.length < 2) continue;
+    for (const l of group) {
+      let n = tree;
+      l.picks = [];
+      l.san.forEach((m, i) => {
+        if (n.kids.size > 1) l.picks.push(label(i, m));
+        n = n.kids.get(m);
+      });
+    }
+    // use as many of the choices as it takes for the names to differ
+    for (let k = 1; k <= 6; k++) {
+      const seen = new Set(group.map((l) => l.picks.slice(0, k).join(' ')));
+      if (seen.size === group.length || k === 6) {
+        for (const l of group) if (l.picks.length) l.sub = l.name = `${l.name} (${l.picks.slice(0, k).join(' ')})`;
+        break;
+      }
+    }
   }
   const res = { course, side, tier, leaves, tree };
   cache.set(ck, res);

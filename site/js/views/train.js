@@ -387,7 +387,7 @@ export function render(root, { slug, query }) {
     lessons: () => q,
     side,
     first,
-    label: (l) => l.name.replace(new RegExp('^' + course.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ':?\\s*'), '') || course.name,
+    label: (l) => (l.name.startsWith(course.name + ':') ? l.name.slice(course.name.length + 1).trim() : l.name) || course.name,
     pick: (prev, mode) => pickFrom(q, prev, mode),
     backHref: back,
     backLabel: course.name,

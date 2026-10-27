@@ -2,6 +2,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
+import { trapPanels } from './trapgroups.js';
 import { coursesOf, trapsOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
@@ -14,7 +15,7 @@ export function render(root, { slug, query }) {
   let sideAll = query.get('side') || fam.side;
   const courses = coursesOf(fam);
   const traps = trapsOf(fam);
-  const trapGrid = h('div', { class: 'cards' });
+  const trapGrid = h('div', { class: 'tgroups' });
   const grid = h('div', { class: 'cards' });
   const sideSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'You play' });
 
@@ -47,7 +48,7 @@ export function render(root, { slug, query }) {
 
   function draw() {
     grid.replaceChildren(...courses.map(card));
-    trapGrid.replaceChildren(...traps.map(card));
+    trapGrid.replaceChildren(...trapPanels(fam));
     sideSeg.replaceChildren(
       ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(sideAll === s), onclick: () => ((sideAll = s), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), s === 'white' ? 'White' : 'Black')),
     );

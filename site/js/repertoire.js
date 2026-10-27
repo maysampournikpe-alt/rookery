@@ -441,3 +441,43 @@ export function allLessons(fam, side) {
 export function deepestCount(fam, side) {
   return coursesOf(fam).reduce((n, c) => n + tiersOf(fam, c, side).at(-1).count, 0);
 }
+
+// Traps of one opening, sorted into groups by the variation they spring from (the way a study has chapters):
+// [{ name: 'Austrian Attack', chapters: [{ course, title, tag }] }]
+export function trapGroups(fam) {
+  const short = fam.name.replace(/ (Defen[cs]e|Opening|Game|Attack)$/, '');
+  const groups = new Map();
+  for (const course of trapsOf(fam)) {
+    let base = course.name.replace(/\s*\([^)]*\)\s*$/, '');
+    const tag = /\b(Mating|Mate)\b/.test(base) ? 'Mate' : /\bFork\b/.test(base) ? 'Fork' : /queen/i.test(course.idea) ? 'Queen' : /rook/i.test(course.idea) ? 'Rook' : 'Piece';
+    const named = / Trap$/.test(base) && (base.startsWith(fam.name) || base.startsWith(short)); // "Pirc Classical Trap" is a variation; "Légal's Mate" has a name of its own
+    let name = base;
+    if (named) {
+      name = base.replace(/ (Fork|Mating) Trap$/, '').replace(/ Trap$/, '');
+      if (name !== fam.name && name !== short) for (const pre of [fam.name, short]) if (name.startsWith(pre + ' ')) { name = name.slice(pre.length + 1); break; }
+      name = name.replace(/ Variation$/, '');
+      if (name === fam.name || name === short || !name) name = 'Main line';
+    }
+    if (!named) name = 'Famous traps';
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push({ course, tag, own: !named });
+  }
+  return [...groups]
+    .map(([name, cs]) => ({ name, chapters: cs.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${name} ${i + 1}` : name })) }))
+    .map((g) => {
+      // a variation with more known games is more likely to be met; a trap that springs earlier is met more often
+      const key = g.name.toLowerCase();
+      g.weight = g.name === 'Main line' ? 1e6 : fam.lines.filter((l) => l.src !== 'book' && (l.sub || '').toLowerCase().includes(key)).length;
+      g.chapters.sort((x, y) => Math.min(...x.course.lines.map((l) => l.san.length)) - Math.min(...y.course.lines.map((l) => l.san.length)));
+      g.chapters = g.chapters.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${g.name} ${i + 1}` : g.name }));
+      return g;
+    })
+    .sort((a, b) => (b.name === 'Famous traps') - (a.name === 'Famous traps') || b.weight - a.weight || b.chapters.length - a.chapters.length);
+}
+
+// roughly how often each opening is played (club and online games), most played first; anything else follows by how much theory it has
+const MOST_PLAYED = ['Sicilian Defense', 'Italian Game', 'Ruy Lopez', 'French Defense', 'Caro-Kann Defense', "Queen's Gambit", 'London System', "King's Indian Defense", 'Scandinavian Defense', 'English Opening', 'Pirc Defense', 'Scotch Game', "Petrov's Defense", 'Vienna Game', "King's Gambit", 'Nimzo-Indian Defense', 'Slav Defense', 'Dutch Defense', 'Grünfeld Defense', 'Catalan Opening', 'Philidor Defense', 'Alekhine Defense', 'Réti Opening', 'Benoni Defense', 'Smith-Morra Gambit', 'Four Knights Game', "Queen's Indian Defense", "Bishop's Opening", 'Modern Defense', 'Trompowsky Attack', 'Colle System', 'Torre Attack', 'Danish Gambit', 'Blackmar-Diemer Gambit', 'Budapest Gambit', 'Benko Gambit', 'Englund Gambit', 'Elephant Gambit', 'Latvian Gambit', 'Ponziani Opening', 'Center Game', 'Bird Opening'];
+export function popularRank(fam) {
+  const i = MOST_PLAYED.indexOf(fam.name);
+  return i >= 0 ? i : MOST_PLAYED.length + 1 / (1 + fam.lines.length);
+}

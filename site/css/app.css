@@ -300,3 +300,18 @@ progress { width: 100%; accent-color: var(--green); }
   .line-list li { padding: 12px 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* traps, listed like the chapters of a study */
+.tgroups { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; align-items: start; }
+.tgroup { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.tgroup h3 { margin: 0; padding: 14px 18px; font-size: 18px; border-bottom: 1px solid var(--line); }
+.tlist { display: flex; flex-direction: column; max-height: 360px; overflow: auto; }
+.tchap { display: grid; grid-template-columns: 26px 1fr auto 18px; gap: 10px; align-items: center; padding: 11px 18px; text-decoration: none; color: var(--ink); border-top: 1px solid var(--line); }
+.tchap:first-child { border-top: 0; }
+.tchap:hover { background: var(--panel2); }
+.tchap b { color: var(--sky); font-weight: 600; }
+.tchap .nm { font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+.tchap .tag { font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--panel2); color: var(--muted); white-space: nowrap; }
+.tchap .ok { color: var(--green); font-style: normal; font-weight: 800; }
+@media (max-width: 560px) { .tgroups { grid-template-columns: 1fr; } .tchap { grid-template-columns: 22px 1fr auto 14px; padding: 11px 14px; } .tchap .tag { font-size: 11px; } }
+.tfam { margin-top: 26px; }

@@ -441,3 +441,27 @@ export function allLessons(fam, side) {
 export function deepestCount(fam, side) {
   return coursesOf(fam).reduce((n, c) => n + tiersOf(fam, c, side).at(-1).count, 0);
 }
+
+// Traps of one opening, sorted into groups by the variation they spring from (the way a study has chapters):
+// [{ name: 'Austrian Attack', chapters: [{ course, title, tag }] }]
+export function trapGroups(fam) {
+  const short = fam.name.replace(/ (Defen[cs]e|Opening|Game|Attack)$/, '');
+  const groups = new Map();
+  for (const course of trapsOf(fam)) {
+    let base = course.name.replace(/\s*\([^)]*\)\s*$/, '');
+    const tag = /\b(Mating|Mate)\b/.test(base) ? 'Mate' : /\bFork\b/.test(base) ? 'Fork' : /queen/i.test(course.idea) ? 'Queen' : /rook/i.test(course.idea) ? 'Rook' : 'Piece';
+    const named = / Trap$/.test(base) && (base.startsWith(fam.name) || base.startsWith(short)); // "Pirc Classical Trap" is a variation; "Légal's Mate" has a name of its own
+    let name = base;
+    if (named) {
+      name = base.replace(/ (Fork|Mating) Trap$/, '').replace(/ Trap$/, '');
+      if (name !== fam.name && name !== short) for (const pre of [fam.name, short]) if (name.startsWith(pre + ' ')) { name = name.slice(pre.length + 1); break; }
+      if (name === fam.name || name === short || !name) name = 'Main line';
+    }
+    if (!named) name = 'Famous traps';
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push({ course, tag, own: !named });
+  }
+  return [...groups]
+    .map(([name, cs]) => ({ name, chapters: cs.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${name} ${i + 1}` : name })) }))
+    .sort((a, b) => (a.name === 'Famous traps') - (b.name === 'Famous traps') || b.chapters.length - a.chapters.length || a.name.localeCompare(b.name));
+}

@@ -5,6 +5,18 @@ const shard = +process.argv[2], shards = +process.argv[3];
 (async () => {
   const { Chess } = await import(require('url').pathToFileURL(require('path').join(__dirname, '../../site/vendor/chess.js')).href);
   const j = JSON.parse(fs.readFileSync(require('path').join(__dirname, '../../site/data/openings.json'), 'utf8'));
+  // optional: only mine lines of these openings (file with one name per line)
+  const only = process.env.FAMFILE ? new Set(fs.readFileSync(process.env.FAMFILE, 'utf8').split('\n').filter(Boolean)) : null;
+  const PROMOTE = new Set(['Torre Attack', 'Colle System', 'London System', 'Barry Attack', 'Levitsky Attack', 'Stonewall Attack', 'Budapest Gambit']);
+  const FIXF = { 'Ponziani Countergambit': 'Ponziani Opening', Trompowsky: 'Trompowsky Attack', 'Neo-Benoni': 'Benoni Defense' };
+  const famOf = (name) => {
+    const parts = name.split(': ');
+    const f = FIXF[parts[0].split(',')[0]] || parts[0].replace(/, with .*$/, '');
+    if (/^Evans Gambit/.test(f)) return 'Italian Game';
+    if (/Smith-Morra/.test(name)) return 'Smith-Morra Gambit';
+    if ((f === "Queen's Pawn Game" || f === 'Indian Defense') && parts[1] && PROMOTE.has(parts[1].split(',')[0])) return parts[1].split(',')[0];
+    return f.replace(/^(.*(?:Gambit|Game|Defense|Countergambit)) (?:Accepted|Declined)$/, '$1');
+  };
   const nodes = new Map(); // epd -> {san:[...], name, book:Set(sans)}
   const epd = (c) => c.fen().split(' ').slice(0, 4).join(' ');
   const BOOK = process.env.SRC === 'book'; // mine the hand-written study lines instead of the open data
@@ -12,6 +24,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
   const MINPLY = +process.env.MINPLY || 2; // only positions at least this deep (to extend an earlier run)
   for (const [, name, san, , src] of j.lines) {
     if ((src === 1) !== BOOK) continue;
+    if (only && !only.has(famOf(name))) continue;
     const ms = san.split(' ');
     const c = new Chess();
     for (let i = 0; i < Math.min(ms.length, MAXPLY); i++) {

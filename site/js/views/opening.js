@@ -2,7 +2,7 @@
 import { D, fenAfter } from '../data.js';
 import { drawMini } from '../board.js';
 import { counts } from '../store.js';
-import { coursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
+import { coursesOf, trapsOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
 export function render(root, { slug, query }) {
@@ -13,6 +13,8 @@ export function render(root, { slug, query }) {
   }
   let sideAll = query.get('side') || fam.side;
   const courses = coursesOf(fam);
+  const traps = trapsOf(fam);
+  const trapGrid = h('div', { class: 'cards' });
   const grid = h('div', { class: 'cards' });
   const sideSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'You play' });
 
@@ -45,6 +47,7 @@ export function render(root, { slug, query }) {
 
   function draw() {
     grid.replaceChildren(...courses.map(card));
+    trapGrid.replaceChildren(...traps.map(card));
     sideSeg.replaceChildren(
       ...['white', 'black'].map((s) => h('button', { type: 'button', 'aria-pressed': String(sideAll === s), onclick: () => ((sideAll = s), draw()) }, h('img', { src: `pieces/${s === 'white' ? 'w' : 'b'}K.svg`, alt: '' }), s === 'white' ? 'White' : 'Black')),
     );
@@ -60,6 +63,8 @@ export function render(root, { slug, query }) {
       h('div', { class: 'who' }, h('span', {}, 'You play'), sideSeg),
       h('div', { class: 'section-h', style: 'margin-top:8px' }, h('h2', {}, courses.length > 1 ? 'Pick a variation' : 'Your lessons'), h('span', {}, `${courses.length} to choose from`)),
       grid,
+      traps.length ? h('div', { class: 'section-h', style: 'margin-top:28px' }, h('h2', {}, `Traps against the ${fam.name}`), h('span', {}, `${traps.length} to choose from`)) : null,
+      traps.length ? trapGrid : null,
     ),
   );
   draw();

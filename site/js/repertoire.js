@@ -469,7 +469,18 @@ export function trapGroups(fam) {
       const key = g.name.toLowerCase();
       g.weight = g.name === 'Main line' ? 1e6 : fam.lines.filter((l) => l.src !== 'book' && (l.sub || '').toLowerCase().includes(key)).length;
       g.chapters.sort((x, y) => Math.min(...x.course.lines.map((l) => l.san.length)) - Math.min(...y.course.lines.map((l) => l.san.length)));
-      g.chapters = g.chapters.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${g.name} ${i + 1}` : g.name }));
+      // each chapter is named after the mistake it waits for ("Taimanov: 7...Bd6"), so they can be told apart at a glance
+      const seen = new Map();
+      g.chapters = g.chapters.map((c) => {
+        if (c.own) return { ...c, title: c.course.name };
+        const long = [...c.course.lines].sort((x, y) => y.san.length - x.san.length)[0]?.san || [];
+        const i = c.course.path.length;
+        const mv = long[i];
+        let title = mv ? `${g.name}: ${Math.floor(i / 2) + 1}${i % 2 ? '...' : '.'}${mv}` : long.length ? `${g.name}: ${Math.ceil(long.length / 2)} moves` : g.name;
+        seen.set(title, (seen.get(title) || 0) + 1);
+        if (seen.get(title) > 1) title += ` (${seen.get(title)})`;
+        return { ...c, title };
+      });
       return g;
     })
     .sort((a, b) => (b.name === 'Famous traps') - (a.name === 'Famous traps') || b.weight - a.weight || b.chapters.length - a.chapters.length);

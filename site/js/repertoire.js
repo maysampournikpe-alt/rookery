@@ -455,6 +455,7 @@ export function trapGroups(fam) {
     if (named) {
       name = base.replace(/ (Fork|Mating) Trap$/, '').replace(/ Trap$/, '');
       if (name !== fam.name && name !== short) for (const pre of [fam.name, short]) if (name.startsWith(pre + ' ')) { name = name.slice(pre.length + 1); break; }
+      name = name.replace(/ Variation$/, '');
       if (name === fam.name || name === short || !name) name = 'Main line';
     }
     if (!named) name = 'Famous traps';
@@ -463,5 +464,20 @@ export function trapGroups(fam) {
   }
   return [...groups]
     .map(([name, cs]) => ({ name, chapters: cs.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${name} ${i + 1}` : name })) }))
-    .sort((a, b) => (a.name === 'Famous traps') - (b.name === 'Famous traps') || b.chapters.length - a.chapters.length || a.name.localeCompare(b.name));
+    .map((g) => {
+      // a variation with more known games is more likely to be met; a trap that springs earlier is met more often
+      const key = g.name.toLowerCase();
+      g.weight = g.name === 'Main line' ? 1e6 : fam.lines.filter((l) => l.src !== 'book' && (l.sub || '').toLowerCase().includes(key)).length;
+      g.chapters.sort((x, y) => Math.min(...x.course.lines.map((l) => l.san.length)) - Math.min(...y.course.lines.map((l) => l.san.length)));
+      g.chapters = g.chapters.map((c, i) => ({ ...c, title: c.own ? c.course.name : i ? `${g.name} ${i + 1}` : g.name }));
+      return g;
+    })
+    .sort((a, b) => (b.name === 'Famous traps') - (a.name === 'Famous traps') || b.weight - a.weight || b.chapters.length - a.chapters.length);
+}
+
+// roughly how often each opening is played (club and online games), most played first; anything else follows by how much theory it has
+const MOST_PLAYED = ['Sicilian Defense', 'Italian Game', 'Ruy Lopez', 'French Defense', 'Caro-Kann Defense', "Queen's Gambit", 'London System', "King's Indian Defense", 'Scandinavian Defense', 'English Opening', 'Pirc Defense', 'Scotch Game', "Petrov's Defense", 'Vienna Game', "King's Gambit", 'Nimzo-Indian Defense', 'Slav Defense', 'Dutch Defense', 'Grünfeld Defense', 'Catalan Opening', 'Philidor Defense', 'Alekhine Defense', 'Réti Opening', 'Benoni Defense', 'Smith-Morra Gambit', 'Four Knights Game', "Queen's Indian Defense", "Bishop's Opening", 'Modern Defense', 'Trompowsky Attack', 'Colle System', 'Torre Attack', 'Danish Gambit', 'Blackmar-Diemer Gambit', 'Budapest Gambit', 'Benko Gambit', 'Englund Gambit', 'Elephant Gambit', 'Latvian Gambit', 'Ponziani Opening', 'Center Game', 'Bird Opening'];
+export function popularRank(fam) {
+  const i = MOST_PLAYED.indexOf(fam.name);
+  return i >= 0 ? i : MOST_PLAYED.length + 1 / (1 + fam.lines.length);
 }

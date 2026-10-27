@@ -1,13 +1,13 @@
 // Every trap we teach, sorted by the opening it is a trap against, then by variation (like the chapters of a study).
 import { D } from '../data.js';
-import { trapsOf } from '../repertoire.js';
+import { trapsOf, popularRank } from '../repertoire.js';
 import { trapPanels } from './trapgroups.js';
 import { h, debounce } from '../ui.js';
 
 const F = { q: '', side: '' };
 
 export function render(root) {
-  const fams = D.families.filter((f) => trapsOf(f).length).sort((a, b) => a.name.localeCompare(b.name));
+  const fams = D.families.filter((f) => trapsOf(f).length).sort((a, b) => popularRank(a) - popularRank(b));
   const total = fams.reduce((n, f) => n + trapsOf(f).length, 0);
   const search = h('input', { type: 'search', placeholder: 'Search by opening, like Pirc or Smith-Morra', value: F.q, 'aria-label': 'Search traps' });
   const filters = h('div', { class: 'filters' });
@@ -36,7 +36,7 @@ export function render(root) {
   );
   drawFilters();
   root.replaceChildren(
-    h('section', { class: 'welcome' }, h('h1', {}, 'Opening traps'), h('p', {}, `${total} traps, sorted by the opening they are played against. Pick a variation, then a trap.`), h('label', { class: 'search-big' }, search), filters),
+    h('section', { class: 'welcome' }, h('h1', {}, 'Opening traps'), h('p', {}, `${total} traps, sorted by the opening they are played against. The most played openings come first. Pick a variation, then a trap.`), h('label', { class: 'search-big' }, search), filters),
     results,
   );
   draw();

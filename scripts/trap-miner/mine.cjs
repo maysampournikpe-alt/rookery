@@ -39,7 +39,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
   }
   const list = [...nodes.values()].sort((a, b) => a.path.length - b.path.length || (a.fen < b.fen ? -1 : 1)); // shallow, mainstream positions first
   console.error('nodes', list.length);
-  const mine = list.filter((_, i) => i % shards === shard);
+  const mine = list.filter((_, i) => i % shards === shard).slice(+process.env.SKIP || 0); // SKIP: resume a run that was stopped
   const eng = new Engine();
   const out = fs.createWriteStream(`out-${process.env.TAG || (BOOK ? 'b' : '')}${shard}.jsonl`, { flags: 'a' });
   const natural = (m) => !(m.piece === 'k' && !m.flags.includes('k') && !m.flags.includes('q')) && !(m.piece === 'p' && 'abgh'.includes(m.from[0]) && !m.captured) ;

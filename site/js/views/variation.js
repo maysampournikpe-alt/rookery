@@ -18,7 +18,7 @@ export function render(root, { slug, key, query }) {
     h(
       'div',
       { style: 'padding-top:6px' },
-      h('p', { class: 'crumb' }, h('a', { href: crush ? `#/crush/${fam.slug}` : `#/opening/${fam.slug}?side=${side}` }, `← ${crush ? 'Crush the ' : ''}${fam.name}`)),
+      h('p', { class: 'crumb' }, h('a', { href: crush ? `#/against/${fam.slug}` : `#/opening/${fam.slug}?side=${side}` }, `← ${crush ? 'Playing against the ' : ''}${fam.name}`)),
       h("h1", { class: "title" }, crush ? crushTitle(course.name) : course.name),
       h('p', { class: 'blurb' }, crush ? `${crushTitle(course.name)}: how to beat the ${fam.name} here. You play ${side === 'white' ? 'White' : 'Black'}.` : course.idea),
       h('div', { class: 'section-h', style: 'margin-top:8px' }, h('h2', {}, 'Pick a line'), h('span', {}, `${subs.length + 1} to choose from`)),

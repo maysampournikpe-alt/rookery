@@ -1,4 +1,4 @@
-// "Crush the Pirc": the moves to play against an opening, line by line, with the traps for when the opponent goes wrong.
+// "Playing against the Pirc": the moves to play against an opening, line by line, with the traps for when the opponent goes wrong.
 import { D } from '../data.js';
 import { drawMini } from '../board.js';
 import { fenAfter } from '../data.js';
@@ -25,16 +25,16 @@ function index(root) {
           requestAnimationFrame(() => drawMini(canvas, fenAfter(fam.root.san), you));
           return h(
             'a',
-            { class: 'ocard', href: `#/crush/${fam.slug}` },
+            { class: 'ocard', href: `#/against/${fam.slug}` },
             canvas,
-            h('div', { class: 'body' }, h('h3', {}, `Crush the ${fam.name}`), h('p', {}, `What to play as ${you === 'white' ? 'White' : 'Black'} against every line of the ${fam.name}, and the traps that punish mistakes.`), h('div', { class: 'count' }, `${plural(coursesOf(fam).length, 'variation')} · ${plural(traps, 'trap')}`), h('div', { class: 'go' }, h('div', { class: 'bar' }, h('i')), h('span', { class: 'play' }, 'Start'))),
+            h('div', { class: 'body' }, h('h3', {}, `Against the ${fam.name}`), h('p', {}, `What to play as ${you === 'white' ? 'White' : 'Black'} against every line of the ${fam.name}, and the traps that punish mistakes.`), h('div', { class: 'count' }, `${plural(coursesOf(fam).length, 'variation')} · ${plural(traps, 'trap')}`), h('div', { class: 'go' }, h('div', { class: 'bar' }, h('i')), h('span', { class: 'play' }, 'Start'))),
             h('img', { class: 'side', src: `pieces/${you === 'white' ? 'w' : 'b'}K.svg`, alt: '', title: `You play ${you === 'white' ? 'White' : 'Black'}` }),
           );
         }),
     );
   }
   search.addEventListener('input', debounce(() => ((F.q = search.value), draw()), 140));
-  root.replaceChildren(h('section', { class: 'welcome' }, h('h1', {}, 'Crush an opening'), h('p', {}, 'Pick the opening your opponents play. Learn the best answer to each of its lines, and the traps to set if they go wrong. Most played first.'), h('label', { class: 'search-big' }, search)), grid);
+  root.replaceChildren(h('section', { class: 'welcome' }, h('h1', {}, 'Play against an opening'), h('p', {}, 'Pick the opening your opponents play. Learn the best answer to each of its lines, and the traps to set if they go wrong. Most played first.'), h('label', { class: 'search-big' }, search)), grid);
   draw();
 }
 
@@ -50,8 +50,8 @@ function study(root, fam) {
     h(
       'div',
       { style: 'padding-top:6px' },
-      h('p', { class: 'crumb' }, h('a', { href: '#/crush' }, '← All openings to crush')),
-      h('h1', { class: 'title' }, `Crush the ${fam.name}`),
+      h('p', { class: 'crumb' }, h('a', { href: '#/against' }, '← All openings')),
+      h('h1', { class: 'title' }, `Playing against the ${fam.name}`),
       h('p', { class: 'blurb' }, `You play ${you === 'white' ? 'White' : 'Black'}. Each card is one way your opponent can play the ${fam.name}: learn your moves against it first, then the traps for when they go wrong.`),
       h('div', { class: 'section-h', style: 'margin-top:8px' }, h('h2', {}, 'Pick their line'), h('span', {}, `${plural(courses.length, 'variation')} · ${plural(traps.length, 'trap')}`)),
       h('div', { class: 'cards' }, ...cards),
@@ -62,6 +62,6 @@ function study(root, fam) {
 export function render(root, { slug }) {
   if (!slug) return index(root);
   const fam = D.famBySlug.get(slug);
-  if (!fam) return void root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that opening.', h('div', {}, h('a', { class: 'btn primary', href: '#/crush' }, 'Back'))));
+  if (!fam) return void root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that opening.', h('div', {}, h('a', { class: 'btn primary', href: '#/against' }, 'Back'))));
   study(root, fam);
 }

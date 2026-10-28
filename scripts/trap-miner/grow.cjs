@@ -30,7 +30,7 @@ const BRANCH = [4, 3, 3, 2, 2, 2, 1];
   const names = new Map(); // san path -> [eco, name]
   const fams = new Map();
   for (const [eco, name, san, , src] of j.lines) {
-    if (src === 1) continue;
+    if (src === 1 || src === 3) continue; // open data only
     const ms = san.split(' ');
     names.set(san, [eco, name]);
     const c = new Chess();

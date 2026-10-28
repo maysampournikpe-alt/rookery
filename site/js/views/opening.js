@@ -34,7 +34,7 @@ export function render(root, { slug, query }) {
       h('div', { class: 'who' }, h('span', {}, 'You play'), sideSeg),
       h('div', { class: 'section-h', style: 'margin-top:8px' }, h('h2', {}, courses.length > 1 ? 'Pick a variation' : 'Your lessons'), h('span', {}, `${courses.length} to choose from`)),
       grid,
-      h('div', { class: 'panel', style: 'display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:28px' }, h('div', {}, h('h3', {}, `Facing the ${fam.name}?`), h('div', { style: 'color:var(--muted)' }, `Learn how to beat it, with traps for when your opponent goes wrong.`)), h('a', { class: 'btn primary', href: `#/crush/${fam.slug}` }, `Crush the ${fam.name}`)),
+      h('div', { class: 'panel', style: 'display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:28px' }, h('div', {}, h('h3', {}, `Facing the ${fam.name}?`), h('div', { style: 'color:var(--muted)' }, `Learn how to beat it, with traps for when your opponent goes wrong.`)), h('a', { class: 'btn primary', href: `#/against/${fam.slug}` }, `Play against the ${fam.name}`)),
     ),
   );
   draw();

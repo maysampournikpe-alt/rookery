@@ -18,8 +18,7 @@ function sideBadge(side) {
 }
 
 export function card(fam) {
-  const lessons = allLessons(fam, fam.side);
-  const c = counts(lessons.map((l) => l.id));
+  const c = counts(fam.lines.map((l) => l.id)); // cheap: building every course for every card is too slow
   const nCourses = coursesOf(fam).length;
   const nTraps = trapsOf(fam).length;
   const canvas = h('canvas', { 'aria-hidden': 'true' });
@@ -35,7 +34,7 @@ export function card(fam) {
       { class: 'body' },
       h('h3', {}, fam.name),
       h('p', {}, fam.blurb || `${nCourses} ways to play the ${fam.name}.`),
-      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${nCourses} variation${nCourses > 1 ? 's' : ''} · ${deepestCount(fam, fam.side)} lines${nTraps ? ` · ${nTraps} trap${nTraps > 1 ? 's' : ''}` : ''} · ${c.learned} learned`),
+      h('div', { class: 'count' }, fam.mine ? 'Your own lessons' : `${nCourses} variation${nCourses > 1 ? 's' : ''} · ${fam.lines.length} lines${nTraps ? ` · ${nTraps} trap${nTraps > 1 ? 's' : ''}` : ''} · ${c.learned} learned`),
       h('div', { class: 'go' }, (() => { const b = h('div', { class: 'bar' }, h('i')); requestAnimationFrame(() => (b.firstChild.style.width = c.total ? (c.learned / c.total) * 100 + '%' : '0')); return b; })(), h('span', { class: 'play' }, verb)),
     ),
     sideBadge(fam.side),

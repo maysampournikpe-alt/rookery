@@ -23,7 +23,7 @@ const epdOf = (c) => c.fen().split(' ').slice(0, 4).join(' ');
 const known = new Set();
 const eco = new Map();
 for (const [e, , san, , src] of JSON.parse(readFileSync(join(root, 'site/data/openings.json'), 'utf8')).lines) {
-  if (src === 1) continue; // skip earlier authored lines
+  if (src === 1 || src === 3) continue; // skip earlier authored and engine lines
   const c = new Chess();
   for (const m of san.split(' ')) {
     c.move(m);

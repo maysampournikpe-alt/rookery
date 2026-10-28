@@ -28,7 +28,7 @@ const tokens = (pgn) =>
 
 for (const file of files) {
   const rel = relative(root, file);
-  const src = rel.includes('/lichess/') ? 'lichess' : rel.includes('sources') ? 'scid' : 'book';
+  const src = rel.includes('/lichess/') ? 'lichess' : rel.includes('sources') ? 'scid' : rel.endsWith('engine.tsv') ? 'engine' : 'book';
   const rows = readFileSync(file, 'utf8').split('\n').slice(1);
   for (const row of rows) {
     if (!row.trim()) continue;
@@ -57,6 +57,6 @@ const lines = [...seen.values()].sort(
 mkdirSync(join(root, 'site/data'), { recursive: true });
 writeFileSync(
   join(root, 'site/data/openings.json'),
-  JSON.stringify({ v: 1, built: new Date().toISOString().slice(0, 10), lines: lines.map((l) => [l.eco, l.name, l.san, l.epd, l.src === 'lichess' ? 0 : l.src === 'scid' ? 2 : 1]) }),
+  JSON.stringify({ v: 1, built: new Date().toISOString().slice(0, 10), lines: lines.map((l) => [l.eco, l.name, l.san, l.epd, l.src === 'lichess' ? 0 : l.src === 'scid' ? 2 : l.src === 'engine' ? 3 : 1]) }),
 );
 console.log(`${lines.length} lines written (${bad} skipped as illegal) from ${files.length} files`);

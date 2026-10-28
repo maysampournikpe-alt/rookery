@@ -3,13 +3,12 @@ import { Chess } from '../../vendor/chess.js';
 import { D, nameFor, fenAfter } from '../data.js';
 import { Board, drawMini } from '../board.js';
 import { counts, isLearned, isDiscovered } from '../store.js';
-import { allCoursesOf, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
+import { findCourse, trapsInLine, trapLabel, crushTitle, buildCourse, tiersOf, defaultTier } from '../repertoire.js';
 import { h } from '../ui.js';
 
 export function render(root, { slug, key, query }) {
   const fam = D.famBySlug.get(slug);
-  const courses = fam ? allCoursesOf(fam) : [];
-  const course = courses.find((c) => c.key === key);
+  const course = fam && findCourse(fam, key, query.get('side') || fam.side);
   if (!fam || !course) {
     root.replaceChildren(h('div', { class: 'empty' }, 'We could not find that variation.', h('div', {}, h('a', { class: 'btn primary', href: fam ? `#/opening/${fam.slug}` : '#/' }, 'Back'))));
     return;
@@ -17,6 +16,8 @@ export function render(root, { slug, key, query }) {
   let side = query.get('side') || course.side || fam.side;
   let tier = query.get('tier') || defaultTier(tiersOf(fam, course, side)).key;
   let tab = query.get('tab') === 'practice' ? 'practice' : 'learn';
+  const crush = query.get('crush') === '1';
+  const backHref = course.parent ? `#/variation/${fam.slug}/${course.parent.key}?side=${side}${crush ? '&crush=1' : ''}` : crush ? `#/crush/${fam.slug}` : course.trap ? `#/traps/${fam.slug}` : `#/opening/${fam.slug}?side=${side}`;
   const game = new Chess();
   const board = new Board(h('div'), {});
   const panel = h('div', { class: 'panel-card' });
@@ -112,7 +113,7 @@ export function render(root, { slug, key, query }) {
     for (const m of course.path) node = node.kids.get(m) || node;
 
     panel.replaceChildren(
-      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: course.trap ? `#/traps/${fam.slug}` : `#/opening/${fam.slug}?side=${side}`, 'aria-label': course.trap ? 'Back to traps' : `Back to ${fam.name}` }, '←'), h('h1', { class: 'pc-title' }, course.name), h('span', { class: 'pc-side' }, '')),
+      h('div', { class: 'pc-head' }, h('a', { class: 'back', href: backHref, 'aria-label': 'Back' }, '←'), h('h1', { class: 'pc-title' }, crush && !course.trap ? crushTitle(course.name) : course.name), h('span', { class: 'pc-side' }, '')),
       h(
         'div',
         { class: 'pc-body' },
@@ -129,6 +130,18 @@ export function render(root, { slug, key, query }) {
         tier === 'expert' ? h('p', { class: 'meta', style: 'margin:0' }, 'Expert has every line we know, so some positions have more than one good move for you.') : null,
         tiers.length > 1 ? h('div', { class: 'depth', role: 'group', 'aria-label': 'How deep?' }, tiers.map((t) => h('button', { type: 'button', title: t.hint, 'aria-pressed': String(t.key === tier), onclick: () => ((tier = t.key), (selected = null), draw()) }, `${t.label} · ${t.count} ${t.count === 1 ? 'line' : 'lines'}`))) : null,
         h('ul', { class: 'line-list' }, ...rows),
+        (() => {
+          // the traps you can set in this line, for when the opponent goes wrong
+          if (course.trap) return null;
+          const traps = trapsInLine(fam, course, side);
+          if (!traps.length) return null;
+          return h(
+            'div',
+            { class: 'trap-box' },
+            h('h3', {}, `Traps if they go wrong · ${traps.length}`),
+            h('ul', { class: 'line-list' }, ...traps.map((t) => h('li', { tabindex: 0, onclick: () => (location.hash = `#/course/${fam.slug}/${t.key}?side=${t.side || side}${crush ? '&crush=1' : ''}`) }, h('span', { class: 'st' }, '!'), h('span', { class: 'nm' }, trapLabel(t)), h('span', { class: 'ct' }, /Mating|Mate/.test(t.name) ? 'mate' : /Fork/.test(t.name) ? 'fork' : 'wins material')))),
+          );
+        })(),
         h(
           'details',
           { class: 'branches-box' },

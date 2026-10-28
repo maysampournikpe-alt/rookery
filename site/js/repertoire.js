@@ -492,3 +492,81 @@ export function popularRank(fam) {
   const i = MOST_PLAYED.indexOf(fam.name);
   return i >= 0 ? i : MOST_PLAYED.length + 1 / (1 + fam.lines.length);
 }
+
+// ---- sub-variations: a big variation (the Najdorf) split into its own lines (English Attack, 6.Bg5 ...) ----
+const subCache = new Map();
+export function subCoursesOf(fam, course, side = fam.side) {
+  const ck = fam.slug + '|' + course.key + '|' + side;
+  if (subCache.has(ck)) return subCache.get(ck);
+  let out = [];
+  if (!course.trap && !course.custom && course.lines.length >= 8) {
+    const base = course.path.length;
+    const owner = side === 'white'; // group by the other side's choices
+    const named = new Map();
+    const loose = [];
+    for (const l of course.lines) {
+      if (l.san.length <= base) continue;
+      const segs = strip(l.sub).split(/,\s*/).slice(1).map((x) => cleanName(x)).filter(Boolean);
+      const name = segs[0];
+      if (name && !/^(main line|normal|traps?)$/i.test(name)) {
+        if (!named.has(name)) named.set(name, []);
+        named.get(name).push(l);
+      } else loose.push(l);
+    }
+    for (const [name, ls] of named) if (ls.length < 3) { loose.push(...ls); named.delete(name); }
+    // the rest: grouped by the opponent's first choice after the start of the variation
+    const byMove = new Map();
+    const rest = [];
+    for (const l of loose) {
+      let i = base;
+      while (i < l.san.length && (i % 2 === 0) === owner) i++;
+      if (i >= l.san.length) { rest.push(l); continue; }
+      const label = `${Math.floor(i / 2) + 1}${i % 2 ? '...' : '.'}${l.san[i]}`;
+      if (!byMove.has(label)) byMove.set(label, []);
+      byMove.get(label).push(l);
+    }
+    const groups = [...named].map(([name, ls]) => [name, ls]);
+    for (const [label, ls] of byMove) if (ls.length >= 3) groups.push([`vs ${label}`, ls]); else rest.push(...ls);
+    if (rest.length >= 3) groups.push(['Other lines', rest]);
+    groups.sort((a, b) => b[1].length - a[1].length);
+    for (const [name, ls] of groups.slice(0, 24)) {
+      const t = trunk(ls);
+      const c = { key: course.key + '~' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), name, idea: `${ls.length} lines in the ${course.name}: ${name}.`, path: t.path.length >= course.path.length ? t.path : course.path, node: t.node, lines: ls, parent: course };
+      if (tiersOf(fam, c, side).at(-1).count >= 2) out.push(c);
+    }
+    if (out.length < 2) out = [];
+  }
+  subCache.set(ck, out);
+  return out;
+}
+
+// a variation or one of its sub-variations, by key ("najdorf" or "najdorf~english-attack")
+export function findCourse(fam, key, side = fam.side) {
+  const [top, sub] = (key || '').split('~');
+  const course = allCoursesOf(fam).find((c) => c.key === top);
+  if (!course || !sub) return course;
+  return subCoursesOf(fam, course, side).find((c) => c.key === key) || subCoursesOf(fam, course).find((c) => c.key === key);
+}
+
+// the side that plays against an opening (you, when you want to crush it)
+export const antiSide = (fam) => (fam.side === 'white' ? 'black' : 'white');
+
+// traps you can set in this line: same side to play, and the trap starts inside it
+export function trapsInLine(fam, course, side) {
+  const p = course.path;
+  return trapsOf(fam).filter((t) => (t.side || fam.side) === side && t.lines.some((l) => p.every((m, i) => l.san[i] === m)));
+}
+
+// "If they play 9...Na5": the opponent's mistake a trap waits for
+export function trapLabel(t) {
+  const long = [...t.lines].sort((x, y) => y.san.length - x.san.length)[0]?.san || [];
+  const i = t.path.length;
+  return long[i] ? `If they play ${Math.floor(i / 2) + 1}${i % 2 ? '...' : '.'}${long[i]}` : t.name;
+}
+
+// a variation's title when you are the one playing against the opening: its own names describe the
+// opening side ("Najdorf" -> "vs the Najdorf"), while "vs 3...Bg7" / "Against ...e6" describe your own choice
+export function crushTitle(name) {
+  const own = /^(vs|against)\s+(.*)$/i.exec(name);
+  return own ? `With ${own[2]}` : `vs the ${name}`;
+}

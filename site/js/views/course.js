@@ -17,7 +17,7 @@ export function render(root, { slug, key, query }) {
   let tier = query.get('tier') || defaultTier(tiersOf(fam, course, side)).key;
   let tab = query.get('tab') === 'practice' ? 'practice' : 'learn';
   const crush = query.get('crush') === '1';
-  const backHref = course.parent ? `#/variation/${fam.slug}/${course.parent.key}?side=${side}${crush ? '&crush=1' : ''}` : crush ? `#/crush/${fam.slug}` : course.trap ? `#/traps/${fam.slug}` : `#/opening/${fam.slug}?side=${side}`;
+  const backHref = course.parent ? `#/variation/${fam.slug}/${course.parent.key}?side=${side}${crush ? '&crush=1' : ''}` : crush ? `#/against/${fam.slug}` : course.trap ? `#/traps/${fam.slug}` : `#/opening/${fam.slug}?side=${side}`;
   const game = new Chess();
   const board = new Board(h('div'), {});
   const panel = h('div', { class: 'panel-card' });

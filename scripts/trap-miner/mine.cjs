@@ -23,7 +23,7 @@ const shard = +process.argv[2], shards = +process.argv[3];
   const MAXPLY = +process.env.MAXPLY || (BOOK ? 20 : 12);
   const MINPLY = +process.env.MINPLY || 2; // only positions at least this deep (to extend an earlier run)
   for (const [, name, san, , src] of j.lines) {
-    if ((src === 1) !== BOOK) continue;
+    if ((src === 1 || src === 3) !== BOOK) continue;
     if (only && !only.has(famOf(name))) continue;
     const ms = san.split(' ');
     const c = new Chess();

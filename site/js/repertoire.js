@@ -251,7 +251,7 @@ export function allCoursesOf(fam) {
           const label = `${g.i % 2 === 0 ? `${g.i / 2 + 1}.` : `${(g.i + 1) / 2}...`}${mv}`;
           const t = trunk(g.ls);
           const c = { key: 'vs-' + label.replace(/[^A-Za-z0-9]+/g, '-').toLowerCase(), name: `vs ${label}`, idea: `${g.ls.length} known lines after ${label}.`, path: t.path, node: t.node, lines: g.ls };
-          if (tiersOf(fam, c, fam.side).at(-1).count >= 2) out.push(c);
+          if (tiersOf(fam, c, fam.side, false).at(-1).count >= 2) out.push(c);
         }
       }
     }
@@ -261,7 +261,7 @@ export function allCoursesOf(fam) {
       if (rest.length >= 8 && out.length < MAX_VARIATIONS + 1) {
         const t = trunk(rest);
         const c = { key: 'more', name: 'More lines', idea: `${rest.length} more known lines in the ${fam.name}.`, path: t.path, node: t.node, lines: rest };
-        if (tiersOf(fam, c, fam.side).at(-1).count >= 2) out.push(c);
+        if (tiersOf(fam, c, fam.side, false).at(-1).count >= 2) out.push(c);
       }
     }
     for (const [k, ls] of groups) {
@@ -278,7 +278,7 @@ export function allCoursesOf(fam) {
   }
   // a variation with a single lesson is not worth a tab
   if (!fam.mine) {
-    const deep = out.filter((c) => c.trap || tiersOf(fam, c, fam.side).at(-1).count >= 2);
+    const deep = out.filter((c) => c.trap || tiersOf(fam, c, fam.side, false).at(-1).count >= 2);
     if (deep.length) out = deep;
   }
   fam._courses = out;
@@ -316,7 +316,7 @@ function labelFor(san, course, side) {
   let named = '';
   for (let i = san.length; i > course.path.length; i--) {
     const ls = nodeAt(san.slice(0, i))?.lines || [];
-    const ok = (x) => x.sub && !/Tactics in Junior/i.test(x.name) && cleanName(x.sub);
+    const ok = (x) => x.sub && !/Tactics in Junior/i.test(x.name) && !trapName(x.sub) && cleanName(x.sub);
     const l = ls.find((x) => x.src !== 'book' && ok(x)) || ls.find(ok);
     if (l) {
       named = cleanName(l.sub);
@@ -329,9 +329,55 @@ function labelFor(san, course, side) {
 }
 
 // Builds the lessons and the move tree for one variation, from the point of view of `side`.
-export function buildCourse(fam, course, side, tier = 'essentials') {
+// A variation as a complete repertoire: besides its own lines it covers every way the opponent can leave it
+// earlier in the opening (the Najdorf also answers 2.c3, 2.Nc3, the Smith-Morra 2.d4, 3.Bb5+ ...).
+const fullCache = new Map();
+// every known line that starts with these moves (indexed once per start)
+const fromCache = new Map();
+function linesFrom(root) {
+  const k = root.join(' ');
+  if (!fromCache.has(k)) fromCache.set(k, D.lines.filter((l) => l.san.length > root.length && root.every((m, i) => l.san[i] === m)));
+  return fromCache.get(k);
+}
+export function fullCourse(fam, course) {
+  if (course.trap || course.custom || course.parent || !fam.root) return course;
+  const ck = fam.slug + '|' + course.key;
+  if (fullCache.has(ck)) return fullCache.get(ck);
+  const P = course.path;
+  // start from where the opening begins, or where this variation leaves the opening's usual start
+  let r = 0;
+  while (r < fam.root.san.length && r < P.length && fam.root.san[r] === P[r]) r++;
+  const root = P.slice(0, r >= 2 ? r : Math.min(3, P.length - 1)); // systems like the London start after their first moves
+  let out = course;
+  if (root.length >= 2 && P.length > root.length) {
+    const ownerWhite = fam.side === 'white';
+    const have = new Set(course.lines);
+    const side = [];
+    for (const l of linesFrom(root)) {
+      if (have.has(l) || l.mine || l.san.length <= root.length) continue;
+      // the first move where the line leaves the variation must be the opponent's, after the opening's start
+      let d = 0;
+      while (d < P.length && d < l.san.length && l.san[d] === P[d]) d++;
+      if (d < root.length || d >= P.length || d >= l.san.length) continue;
+      if ((d % 2 === 0) === ownerWhite) continue;
+      if (/^Traps?,/.test(l.sub || '') || /: Traps?,/.test(l.name)) continue;
+      side.push(l);
+    }
+    if (side.length) {
+      const lines = [...course.lines, ...side];
+      let node = groupTrie(lines);
+      for (const m of root) node = node?.kids.get(m);
+      out = { ...course, path: root, node, lines, full: true, mainPath: P };
+    }
+  }
+  fullCache.set(ck, out);
+  return out;
+}
+
+export function buildCourse(fam, course, side, tier = 'essentials', full = true) {
+  if (full && side === fam.side) course = fullCourse(fam, course);
   const T = TIERS[tier] || TIERS.essentials;
-  const ck = `${fam.slug}|${course.key}|${side}|${tier}`;
+  const ck = `${fam.slug}|${course.key}|${side}|${tier}|${course.full ? 'full' : ''}`;
   if (cache.has(ck)) return cache.get(ck);
   let paths = [];
   if (course.custom) {
@@ -416,11 +462,11 @@ function dedupe(paths) {
 }
 
 // the depths worth offering for a variation: a deeper level only appears if it adds lines
-export function tiersOf(fam, course, side) {
+export function tiersOf(fam, course, side, full = true) {
   const out = [];
   let prev = 0;
   for (const key of course.custom ? ['essentials'] : Object.keys(TIERS)) {
-    const b = buildCourse(fam, course, side, key);
+    const b = buildCourse(fam, course, side, key, full);
     if (b.leaves.length > prev || !out.length) out.push({ key, ...TIERS[key], count: b.leaves.length });
     prev = Math.max(prev, b.leaves.length);
   }
@@ -467,7 +513,7 @@ export function trapGroups(fam) {
     .map((g) => {
       // a variation with more known games is more likely to be met; a trap that springs earlier is met more often
       const key = g.name.toLowerCase();
-      g.weight = g.name === 'Main line' ? 1e6 : fam.lines.filter((l) => l.src !== 'book' && (l.sub || '').toLowerCase().includes(key)).length;
+      g.weight = g.name === 'Main line' ? 1e6 : fam.lines.filter((l) => l.src !== 'book' && l.src !== 'engine' && (l.sub || '').toLowerCase().includes(key)).length;
       g.chapters.sort((x, y) => Math.min(...x.course.lines.map((l) => l.san.length)) - Math.min(...y.course.lines.map((l) => l.san.length)));
       // each chapter is named after the mistake it waits for ("Taimanov: 7...Bd6"), so they can be told apart at a glance
       const seen = new Map();
@@ -532,7 +578,7 @@ export function subCoursesOf(fam, course, side = fam.side) {
     for (const [name, ls] of groups.slice(0, 24)) {
       const t = trunk(ls);
       const c = { key: course.key + '~' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), name, idea: `${ls.length} lines in the ${course.name}: ${name}.`, path: t.path.length >= course.path.length ? t.path : course.path, node: t.node, lines: ls, parent: course };
-      if (tiersOf(fam, c, side).at(-1).count >= 2) out.push(c);
+      if (tiersOf(fam, c, side, false).at(-1).count >= 2) out.push(c);
     }
     if (out.length < 2) out = [];
   }
